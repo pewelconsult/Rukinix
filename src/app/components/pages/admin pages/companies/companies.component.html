@@ -1,0 +1,350 @@
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <app-adminsidebar></app-adminsidebar>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header Section -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Companies</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                    <i class="fas fa-plus me-2"></i>Add New Company
+                </button>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section p-3 mb-4">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" placeholder="Company name...">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-select">
+                                <option>All</option>
+                                <option>Active</option>
+                                <option>Inactive</option>
+                                <option>Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">Subscription</label>
+                            <select class="form-select">
+                                <option>All Plans</option>
+                                <option>Enterprise</option>
+                                <option>Pro</option>
+                                <option>Basic</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-label">Sort By</label>
+                            <select class="form-select">
+                                <option>Name</option>
+                                <option>Date Added</option>
+                                <option>Users Count</option>
+                                <option>Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button class="btn btn-secondary w-100">
+                            <i class="fas fa-filter me-2"></i>Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Companies Table -->
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Users</th>
+                                <th>Subscription</th>
+                                <th>Status</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (isLoading) {
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            } @else {
+                                @for (company of companies; track $index; let i = $index) {
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="company-logo bg-primary-light text-primary">
+                                                    @if (company.logoUrl) {
+                                                        <img [src]="imageBaseUrl + company.logoUrl" 
+                                                             alt="{{company.companyName}}"
+                                                             class="rounded-circle"
+                                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                                    } @else {
+                                                        <i class="fas fa-building"></i>
+                                                    }
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-0">{{company.companyName}}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{company.users}}</td>
+                                        <td>{{company.subscriptionPlan}}</td>
+                                        <td>
+                                            <span 
+                                            class="status-badge" 
+                                            [ngClass]="{
+                                                'bg-warning text-dark': company.status === 'pending',
+                                                'bg-success text-white': company.status === 'active',
+                                                'bg-danger text-white': company.status !== 'active' && company.status !== 'pending'
+                                            }">
+                                            {{ company.status }}
+                                            </span>
+                                        </td>
+                                        <td>2 hours ago</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-outline-primary" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#updateCompanyModal" 
+                                                        (click)="onEdit(company)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" (click) = "onDelete(company.id)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                } @empty {
+                                    <tr>
+                                        <td colspan="6" class="text-center">No companies found</td>
+                                    </tr>
+                                }
+                            }
+                    
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Company Modal -->
+    <div class="modal fade" id="addCompanyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Company</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form #companiesForm="ngForm"  novalidate>
+                        <div class="mb-3">
+                            <label class="form-label">Company Logo</label>
+                            <div class="d-flex align-items-center gap-3">
+                                <!-- Logo Preview -->
+                                <div *ngIf="logoPreview" class="mb-2">
+                                    <img [src]="logoPreview" class="rounded" style="max-width: 100px; max-height: 100px;">
+                                </div>
+                                <!-- File Input -->
+                                <div>
+                                    <input 
+                                        [(ngModel)] = "company.companyLogo"
+                                        name="logo"
+                                        type="file" 
+                                        class="form-control" 
+                                        (change)="onLogoSelected($event)"
+                                        accept="image/*"
+                                        required>
+                                    <small class="text-muted">Recommended size: 200x200px. Max size: 2MB</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-control" name="companyName" required [(ngModel)] = "company.companyName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name of Contact Person</label>
+                            <input type="text" class="form-control" name="contactPersonName" required [(ngModel)] = "company.contactPersonName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone of Contact Person</label>
+                            <input type="text" class="form-control" name="contactPersonPhone" required [(ngModel)] = "company.contactPersonPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Company Email</label>
+                            <input type="email" class="form-control" name="companyEmail" required [(ngModel)] = "company.companyEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subscription Plan</label>
+                            <select class="form-select" name="subscriptionPlan" required [(ngModel)] = "company.subscriptionPlan">
+                                <option value="">Select Plan</option>
+                                <option>Enterprise</option>
+                                <option>Pro</option>
+                                <option>Basic</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" rows="3" name="address"  [(ngModel)] = "company.address" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click) = "onAddCompany()">Add Company</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update Company Modal -->
+<div class="modal fade" id="updateCompanyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Company</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form #updateCompanyForm="ngForm" novalidate>
+                    <div class="mb-3">
+                        <label class="form-label">Company Logo</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <!-- Logo Preview -->
+                            <div *ngIf="updateLogoPreview || selectedCompany.logoUrl" class="mb-2">
+                                <img [src]="updateLogoPreview || (imageBaseUrl + selectedCompany.logoUrl)" 
+                                     class="rounded" 
+                                     style="max-width: 100px; max-height: 100px;">
+                            </div>
+                            <!-- File Input -->
+                            <div>
+                                <input 
+                                    type="file" 
+                                    class="form-control" 
+                                    (change)="onUpdateLogoSelected($event)"
+                                    accept="image/*">
+                                <small class="text-muted">Recommended size: 200x200px. Max size: 2MB</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" 
+                               class="form-control" 
+                               name="companyName" 
+                               required 
+                               [(ngModel)]="selectedCompany.companyName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name of Contact Person</label>
+                        <input type="text" 
+                               class="form-control" 
+                               name="contactPersonName" 
+                               required 
+                               [(ngModel)]="selectedCompany.contactPersonName">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone of Contact Person</label>
+                        <input type="text" 
+                               class="form-control" 
+                               name="contactPersonPhone" 
+                               required 
+                               [(ngModel)]="selectedCompany.contactPersonPhone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Company Email</label>
+                        <input type="email" 
+                               class="form-control" 
+                               name="companyEmail" 
+                               required 
+                               [(ngModel)]="selectedCompany.companyEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Total Users</label>
+                        <input type="number" 
+                               class="form-control" 
+                               name="companyUsers" 
+                               required 
+                               [(ngModel)]="selectedCompany.users">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Subscription Plan</label>
+                        <select class="form-select" 
+                                name="subscriptionPlan" 
+                                required 
+                                [(ngModel)]="selectedCompany.subscriptionPlan">
+                            <option value="">Select Plan</option>
+                            <option>Enterprise</option>
+                            <option>Pro</option>
+                            <option>Basic</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" 
+                                name="status" 
+                                required 
+                                [(ngModel)]="selectedCompany.status">
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" 
+                                  rows="3" 
+                                  name="address" 
+                                  [(ngModel)]="selectedCompany.address" 
+                                  required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="onUpdateCompany()">Update Company</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

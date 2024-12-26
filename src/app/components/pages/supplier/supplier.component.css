@@ -1,0 +1,142 @@
+.main-content {
+    margin-left: 240px;
+    padding: 30px;
+  }
+
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  .table-container {
+    margin-top: 30px;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  table th, table td {
+    text-align: center;
+  }
+
+  .card-footer {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+
+
+  /* Base Responsive Styles */
+@media (max-width: 1200px) {
+    .main-content {
+      margin-left: 0; /* Remove sidebar margin on larger tablets and smaller screens */
+      padding: 15px;
+     
+    }
+  }
+  
+  @media (max-width: 992px) {
+    /* Table Responsiveness */
+    .table-container {
+      overflow-x: auto;
+    }
+  
+    table {
+      min-width: 600px; /* Ensure horizontal scrolling on smaller screens */
+    }
+  
+    /* Hide less critical columns on mobile */
+    table thead th:nth-child(3),
+    table tbody td:nth-child(3),
+    table thead th:nth-child(4),
+    table tbody td:nth-child(4) {
+      display: none;
+    }
+  
+    /* Card Adjustments */
+    .card {
+      margin-bottom: 15px;
+    }
+  
+    .card-header {
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* Search Bar */
+    .mb-4 input {
+      width: 100%;
+    }
+  
+    /* Modal Adjustments */
+    .modal-dialog {
+      margin: 1.75rem 0.5rem;
+      max-width: calc(100% - 1rem);
+    }
+  
+    /* Form Inputs */
+    .form-control,
+    .form-select {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Compact Mobile View */
+    .main-content {
+      padding: 10px;
+      margin-top: 60px;
+    }
+  
+    /* Typography Adjustments */
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    /* Button Styles */
+    .btn-primary {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    /* Modal Footer Buttons */
+    .modal-footer .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    /* Status Badges */
+    .badge {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
+  /* Accessibility Improvements */
+  @media (max-width: 992px) {
+    /* Ensure touch targets are at least 44x44px */
+    .btn,
+    .form-control,
+    .form-select {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  
+    /* Prevent automatic zoom on iOS */
+    .form-control,
+    .form-select {
+      font-size: 16px;
+    }
+  }
+  
+  /* Smooth Transitions */
+  .main-content,
+  .card,
+  .table-container {
+    transition: all 0.3s ease;
+  }

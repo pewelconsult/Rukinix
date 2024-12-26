@@ -1,0 +1,350 @@
+<app-sidebar></app-sidebar>
+<div class="main-content">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1 class="page-title">Inventory Management</h1>
+            <div class="button-group">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                    <span>+</span>
+                    Add Item
+                </button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCatModal">
+                    <span>+</span>
+                    Add Category
+                </button>
+                <button class="btn btn-dark" (click)="exportToExcel()">
+                    <span>↓</span>
+                    Export
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div>
+                        <p class="stat-label">Total Items</p>
+                        <h3 class="stat-value">{{totalItems}}</h3>
+                    </div>
+                    <span>📦</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div>
+                        <p class="stat-label">Low Stock</p>
+                        <h3 class="stat-value" style="color: #F97316;">{{totalLowStocks}}</h3>
+                    </div>
+                    <span>⚠️</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div>
+                        <p class="stat-label">Categories</p>
+                        <h3 class="stat-value">{{totalCategories}}</h3>
+                    </div>
+                    <span>📦</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div>
+                        <p class="stat-label">Total Value</p>
+                        <h3 class="stat-value">GHC {{totalRevenue}}</h3>
+                    </div>
+                    <span>📦</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div>
+                        <p class="stat-label">Total Cost</p>
+                        <h3 class="stat-value">GHC {{totalCost}}</h3>
+                    </div>
+                    <span>📦</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="search-section">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Search inventory..." class="search-input" (input)="onSearch($event)">
+            </div>
+            <button class="btn btn-dark">
+                <span>⚡</span>
+                Filter
+            </button>
+        </div>
+
+        <!-- Inventory Table -->
+        <div class="table-container">
+            @if (isLoading) {
+                <div class="text-center p-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading inventory items...</p>
+                </div>
+            } @else {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Cost Price (GHC)</th>
+                        <th>Selling Price (GHC)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (product of filteredProducts; track $index) {
+                        <tr>
+                            <td>{{product.itemName}}</td>
+                            <td>{{product.itemCode}}</td>
+                            <td>{{product.category}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>{{product.costPrice}}</td>
+                            <td>{{product.sellingPrice}}</td>
+                            <td>
+                                <span class="status-badge" 
+                                      [ngClass]="{'status-low': product.quantity <= product.reorderLevel, 
+                                                 'status-ok': product.quantity > product.reorderLevel}">
+                                    {{product.quantity <= product.reorderLevel ? 'Low Stock' : 'In Stock'}}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#editItemModal" (click)="onEdit(product)">Edit</button>
+                                <button class="delete-btn" (click) = "deleteProduct(product.id)">Delete</button>
+                            </td>
+                        </tr>
+                      }
+                </tbody>
+            </table>
+        }
+         </div>
+    
+
+
+
+
+         <!-- Inventory Table -->
+          <h3 class="low-stock-title">Low Stock Data</h3>
+        <div class="table-container">
+            @if (isLoading) {
+                <div class="text-center p-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading inventory items...</p>
+                </div>
+            } @else {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Cost Price (GHC)</th>
+                        <th>Selling Price (GHC)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (product of lowStockItems; track $index) {
+                        <tr>
+                            <td>{{product.itemName}}</td>
+                            <td>{{product.itemCode}}</td>
+                            <td>{{product.category}}</td>
+                            <td>{{product.quantity}}</td>
+                            <td>{{product.costPrice}}</td>
+                            <td>{{product.sellingPrice}}</td>
+                            <td><span class="status-badge status-low">Out of stock</span></td>
+                        </tr>
+                      }
+                </tbody>
+            </table>
+        }
+         </div>
+         
+         <!-- Modal for Adding Item -->
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addItemModalLabel">Add New Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="addItemForm" #productsForm="ngForm"  novalidate>
+                    <div class="mb-3">
+                        <label for="itemName" class="form-label">Item Name</label>
+                        <input type="text" name="itemName" class="form-control" id="itemName" required [(ngModel)] = "product.itemName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="productCode" class="form-label">Product Code</label>
+                        <input type="text" name="productCode" class="form-control" id="productCode" [(ngModel)] = "product.itemCode">
+                    </div>
+                    <div class="mb-3">
+                        <label for="itemCategory" class="form-label">Category</label>
+                        <select class="form-control" name="itemCategory" id="itemCategory" required [(ngModel)] = "product.category">
+                            <option value="">Select a category</option>
+                            @for (item of allcategories; track $index) {
+                                <option value="{{item.categoryName}}">{{item.categoryName}}</option>
+                              }
+                        </select>
+                    </div>
+                    
+                
+                    <div class="form-row">
+                        <div>
+                            <label for="Brand" class="form-label">Brand</label>
+                            <input type="text" name="brand" class="form-control" id="brand" required [(ngModel)] = "product.brand">
+                        </div>
+                        <div>
+                            <label for="reorder" class="form-label">Re-Order Level</label>
+                            <input type="number" name="reorder" class="form-control" id="size" [(ngModel)] = "product.reorderLevel">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" name="quantity" class="form-control" id="quantity" required [(ngModel)] = "product.quantity">
+                        </div>
+                        <div>
+                            <label for="size" class="form-label">Size</label>
+                            <input type="text" name="size" class="form-control" id="size" [(ngModel)] = "product.size">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="itemCost" class="form-label">Cost Price (GHC)</label>
+                            <input type="number" name="itemcost" class="form-control" id="itemCost" required [(ngModel)] = "product.costPrice">
+                        </div>
+                        <div>
+                            <label for="itemPrice" class="form-label">Selling Price (GHC)</label>
+                            <input type="number" name="itemprice" class="form-control" id="itemPrice" required [(ngModel)] = "product.sellingPrice">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="addItemForm" class="btn btn-primary" (click) = "onAddProduct()">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+         <!-- Modal for Adding Category -->
+         <div class="modal fade" id="addCatModal" tabindex="-1" aria-labelledby="addCatModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCatModal">Add New Category</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addItemForm" #categoryForm="ngForm">
+                            <div class="mb-3">
+                                <label for="itemName" class="form-label">Category Name</label>
+                                <input type="text" name="category" class="form-control" id="itemName" required [(ngModel)]="CategoryData.name">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" form="addItemForm" class="btn btn-success" (click) = "onAddCategory()">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="editItemForm" #editProductForm="ngForm" novalidate>
+                    <div class="mb-3">
+                        <label for="editItemName" class="form-label">Item Name</label>
+                        <input type="text" name="itemName" class="form-control" id="editItemName" required [(ngModel)]="selectedProduct.itemName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editProductCode" class="form-label">Product Code</label>
+                        <input type="text" name="productCode" class="form-control" id="editProductCode" [(ngModel)]="selectedProduct.itemCode">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editItemCategory" class="form-label">Category</label>
+                        <select class="form-control" name="itemCategory" id="editItemCategory" required [(ngModel)]="selectedProduct.category">
+                            <option value="">Select a category</option>
+                            @for (item of allcategories; track $index) {
+                                <option value="{{item.categoryName}}">{{item.categoryName}}</option>
+                            }
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="editBrand" class="form-label">Brand</label>
+                            <input type="text" name="brand" class="form-control" id="editBrand" required [(ngModel)]="selectedProduct.brand">
+                        </div>
+                        <div>
+                            <label for="editReorder" class="form-label">Re-Order Level</label>
+                            <input type="number" name="reorder" class="form-control" id="editReorder" [(ngModel)]="selectedProduct.reorderLevel">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="editQuantity" class="form-label">Quantity</label>
+                            <input type="number" name="quantity" class="form-control" id="editQuantity" required [(ngModel)]="selectedProduct.quantity">
+                        </div>
+                        <div>
+                            <label for="editSize" class="form-label">Size</label>
+                            <input type="text" name="size" class="form-control" id="editSize" [(ngModel)]="selectedProduct.size">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label for="editItemCost" class="form-label">Cost Price (GHC)</label>
+                            <input type="number" name="itemcost" class="form-control" id="editItemCost" required [(ngModel)]="selectedProduct.costPrice">
+                        </div>
+                        <div>
+                            <label for="editItemPrice" class="form-label">Selling Price (GHC)</label>
+                            <input type="number" name="itemprice" class="form-control" id="editItemPrice" required [(ngModel)]="selectedProduct.sellingPrice">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="editItemForm" class="btn btn-primary" (click)="onUpdateProduct()">Update Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+ </div>
+
+</div>

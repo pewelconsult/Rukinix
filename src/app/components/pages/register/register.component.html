@@ -1,0 +1,220 @@
+<div class="container">
+    <div class="form-header">
+        <i class="fas fa-user-plus"></i>
+        <h1>Create Account</h1>
+        <p>Please fill in your information</p>
+    </div>
+    <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)" novalidate>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="firstName" 
+                    name="firstName" 
+                    #firstName="ngModel"
+                    [(ngModel)]="register.firstName"
+                    required
+                    minlength="2"
+                    placeholder="Enter your first name"
+                >
+                <i class="fas fa-user"></i>
+            </div>
+            <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error-message">
+                <div *ngIf="firstName.errors?.['required']">First name is required.</div>
+                <div *ngIf="firstName.errors?.['minlength']">First name must be at least 2 characters long.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="lastName" 
+                    name="lastName" 
+                    #lastName="ngModel"
+                    [(ngModel)]="register.lastName"
+                    required
+                    minlength="2"
+                    placeholder="Enter your last name"
+                >
+                <i class="fas fa-user"></i>
+            </div>
+            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error-message">
+                <div *ngIf="lastName.errors?.['required']">Last name is required.</div>
+                <div *ngIf="lastName.errors?.['minlength']">Last name must be at least 2 characters long.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <div class="input-container">
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    #phone="ngModel"
+                    [(ngModel)]="register.phone"
+                    required
+                    pattern="^[0-9]{10}$"
+                    placeholder="Enter your phone number"
+                >
+                <i class="fas fa-phone"></i>
+            </div>
+            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
+                <div *ngIf="phone.errors?.['required']">Phone number is required.</div>
+                <div *ngIf="phone.errors?.['pattern']">Please enter a valid 10-digit phone number.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <div class="input-container">
+                <input 
+                    type="date" 
+                    id="dob" 
+                    name="dob" 
+                    #dob="ngModel"
+                    [(ngModel)]="register.dateOfBirth"
+                    required
+                >
+                <i class="fas fa-calendar"></i>
+            </div>
+            <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="error-message">
+                <div *ngIf="dob.errors?.['required']">Date of birth is required.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="address">Address</label>
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    id="address" 
+                    name="address" 
+                    #address="ngModel"
+                    [(ngModel)]="register.address"
+                    required
+                    minlength="5"
+                    placeholder="Enter your address"
+                >
+                <i class="fas fa-home"></i>
+            </div>
+            <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error-message">
+                <div *ngIf="address.errors?.['required']">Address is required.</div>
+                <div *ngIf="address.errors?.['minlength']">Address must be at least 5 characters long.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <div class="input-container">
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    #email="ngModel"
+                    [(ngModel)]="register.email"
+                    required
+                    email
+                    placeholder="Enter your email"
+                >
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+                <div *ngIf="email.errors?.['required']">Email is required.</div>
+                <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+            </div>
+        </div>
+    
+        <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-container">
+            <input 
+                [type]="showPassword ? 'text' : 'password'"
+                id="password" 
+                name="password" 
+                #password="ngModel"
+                [(ngModel)]="register.password"
+                required
+                minlength="8"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                placeholder="Create a password"
+            >
+            <i class="fas fa-lock"></i>
+            <button 
+                type="button" 
+                class="password-toggle" 
+                (click)="showPassword = !showPassword"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            >
+                <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+            <div *ngIf="password.errors?.['required']">Password is required.</div>
+            <div *ngIf="password.errors?.['minlength']">Password must be at least 8 characters long.</div>
+            <div *ngIf="password.errors?.['pattern']">Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="input-container">
+            <input 
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                id="confirmPassword" 
+                name="confirmPassword" 
+                #confirmPassword="ngModel"
+                [(ngModel)]="register.confirmPassword"
+                required
+                placeholder="Confirm your password"
+                [pattern]="register.password"
+            >
+            <i class="fas fa-lock"></i>
+            <button 
+                type="button" 
+                class="password-toggle" 
+                (click)="showConfirmPassword = !showConfirmPassword"
+                [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'"
+            >
+                <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+            </button>
+        </div>
+        <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="error-message">
+            <div *ngIf="confirmPassword.errors?.['required']">Please confirm your password.</div>
+            <div *ngIf="confirmPassword.errors?.['pattern']">Passwords do not match.</div>
+        </div>
+    </div>
+    
+       
+    
+        <div class="terms-container">
+            <label class="checkbox-container">
+                <input 
+                    type="checkbox" 
+                    name="acceptTerms"
+                    #acceptTerms="ngModel"
+                    [(ngModel)]="register.acceptTerms"
+                    required
+                >
+                <span class="checkmark"></span>
+                I agree to the <a href="#"> Terms of Service </a> and <a href="#">Privacy Policy</a>
+            </label>
+            <div *ngIf="acceptTerms.invalid && (acceptTerms.dirty || acceptTerms.touched)" class="error-message">
+                <div *ngIf="acceptTerms.errors?.['required']">You must accept the terms and conditions.</div>
+            </div>
+        </div>
+    
+        <button type="submit" [disabled]="!registerForm.form.valid">
+            <i class="fas fa-user-plus"></i>
+            Create Account
+        </button>
+        <div class="login-link">
+            Already have an account? <a routerLink="/login">Login</a>
+        </div>
+    </form>
+
+    
+</div>

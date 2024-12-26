@@ -1,0 +1,99 @@
+<!-- Sidebar -->
+<app-sidebar></app-sidebar>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container">
+    <h2 class="mb-4 fade-in">Returns</h2>
+
+    <!-- Returns Form -->
+    <div class="card mb-4 fade-in glass-card">
+      <div class="card-header">
+        Product Returns
+      </div>
+      <div class="card-body">
+        <form id="returnsForm">
+          <div class="row">
+            <!-- Return Type: In or Out -->
+            <div class="col-md-3 mb-3">
+              <label for="returnType" class="form-label">Return Type</label>
+              <select id="returnType" class="form-control" required>
+                <option value="">Select Return Type</option>
+                <option value="in">Return In</option>
+                <option value="out">Return Out</option>
+              </select>
+            </div>
+
+            <!-- Search Product -->
+            <div class="col-md-4 mb-3">
+              <label for="productSearch" class="form-label">Search Product</label>
+              <select id="productSearch" class="form-control" required>
+                <option value="">Type or Select a Product</option>
+                <option value="prod1" data-price="20">Product 1 - GHS 20</option>
+                <option value="prod2" data-price="15">Product 2 - GHS 15</option>
+                <option value="prod3" data-price="30">Product 3 - GHS 30</option>
+                <option value="prod4" data-price="25">Product 4 - GHS 25</option>
+              </select>
+            </div>
+
+            <!-- Quantity -->
+            <div class="col-md-2 mb-3">
+              <label for="quantity" class="form-label">Quantity</label>
+              <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" min="1" value="1">
+            </div>
+
+            <!-- Add to Table Button -->
+            <div class="col-md-3 d-flex align-items-end">
+              <button type="button" class="btn btn-primary w-100">
+                Add to Returns
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Returns Table -->
+    <div class="card fade-in glass-card">
+      <div class="card-header">
+        List of Returns
+      </div>
+      <div class="card-body table-container">
+        <table class="table table-bordered table-hover" id="returnsTable">
+          <thead>
+            <tr>
+              <th>Return Type</th>
+              <th>Product</th>
+              <th>Price (GHS)</th>
+              <th>Quantity</th>
+              <th>Total (GHS)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Return In</td>
+              <td>Product 1</td>
+              <td>20</td>
+              <td>2</td>
+              <td>40</td>
+              <td><button class="btn btn-danger btn-sm">Remove</button></td>
+            </tr>
+            <tr class="custom-bg">
+              <td>Return Out</td>
+              <td>Product 3</td>
+              <td>30</td>
+              <td>1</td>
+              <td>30</td>
+              <td><button class="btn btn-danger btn-sm">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="total-row text-end mt-2">
+          Grand Total: <span class="text-primary">GHS 70.00</span>
+        </div>
+        <button class="btn btn-success mt-3 float-end">Finalize Returns</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,13 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../../../interfaces/classes/Products';
+import { BaseUrl } from '../../../interfaces/classes/BaseUrl';
+import * as XLSX from 'xlsx';
+import { NgClass } from '@angular/common';
+
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [SidebarComponent, FormsModule],
+  imports: [SidebarComponent, FormsModule, NgClass],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css'
 })
@@ -15,7 +19,13 @@ export class InventoryComponent implements OnInit{
 
    ngOnInit(): void {
     this.getAllCategories()
+    this.getAllProducts()
    }
+
+  searchTerm: string = '';
+  filteredProducts: any[] = [];
+
+   private baseurl = new BaseUrl()
 
    CategoryData:any={
     name:""
@@ -23,15 +33,37 @@ export class InventoryComponent implements OnInit{
 
    http = inject(HttpClient)
    allcategories: any[] = [];
+   allproducts: any[] = [];
    product: Product = new Product();
+   isLoading: boolean = true; 
+   totalItems: number = 0;
+   totalCost: number = 0;
+   totalRevenue: number = 0;
+   totalCategories: number = 0;
+   lowStockItems: any[] = [];
+   totalLowStocks: number = 0;
+   editProduct: any = {};
+   selectedProduct : any = {};
+ 
+    
+
+   private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('auth_token'); // or get from auth service
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+  }
+
+  
 
    onAddCategory() {
-
+    const headers = this.getAuthHeaders();
     const categoryData = {
       category: this.CategoryData.name
     }
-    this.http.post("http://localhost:3000/add-category", categoryData).subscribe((res:any)=> {
-      console.log(res)
+    this.http.post(this.baseurl.url + "add-category", categoryData, { headers }).subscribe((res:any)=> {
+      alert(this.CategoryData.name + " Category added successfully")
       this.CategoryData.name=""
       this.getAllCategories()
     })
@@ -39,22 +71,148 @@ export class InventoryComponent implements OnInit{
 
 
    onAddProduct() {
-      const categoryData = {
-        category: this.CategoryData.name
-      }
-      this.http.post("http://localhost:3000/add-category", categoryData).subscribe((res:any)=> {
-        console.log(res)
-        this.CategoryData.name=""
-        this.getAllCategories()
-      })
-   }
+    const headers = this.getAuthHeaders();
+    const productsData = this.product;
+    
+    this.http.post(this.baseurl.url + "add-products", productsData, {headers}).subscribe({
+        next: (res: any) => {
+            this.product = new Product();
+            alert("Product added successfully");
+            this.getAllProducts();
+        },
+        error: (error) => {
+            // Check if there's an error message from the backend
+            console.log(error)
+            const errorMessage = error.error?.message || 'An error occurred while adding the product';
+            alert(errorMessage);
+            console.error('Error adding product:', error);
+        }
+    });
+}
+
+
+calculateTotals() {
+  this.totalCost = this.allproducts.reduce((sum, product) => 
+    sum + (product.costPrice * product.quantity), 0);
+  
+  this.totalRevenue = this.allproducts.reduce((sum, product) => 
+    sum + (product.sellingPrice * product.quantity), 0);
+}
+
+
+calculateLowStocks() {
+  // Filter products where quantity is less than or equal to reorderLevel
+  this.lowStockItems = this.allproducts.filter(product => 
+    product.quantity <= product.reorderLevel
+  );
+  this.totalLowStocks = this.lowStockItems.length;
+}
+
+// Add search method
+onSearch(event: any) {
+  const term = event.target.value.toLowerCase();
+  this.filteredProducts = this.allproducts.filter(product => 
+    product.itemName.toLowerCase().includes(term) ||
+    product.itemCode.toLowerCase().includes(term) ||
+    product.category.toLowerCase().includes(term) ||
+    product.brand.toLowerCase().includes(term)
+  );
+}
+
 
    getAllCategories() {
-    this.http.get("http://localhost:3000/categories").subscribe((res:any)=> {
+    const headers = this.getAuthHeaders();
+    this.http.get(this.baseurl.url + "categories", {headers}).subscribe((res:any)=> {
       this.allcategories = res.data
-      console.log(this.allcategories)
+      this.totalCategories = this.allcategories.length
     })
    }
+
+
+   getAllProducts() {
+    const headers = this.getAuthHeaders();
+    this.isLoading = true;
+    this.http.get(this.baseurl.url+"products", {headers}).subscribe((res:any)=> {
+      this.allproducts = res.data;
+      this.totalItems = this.allproducts.length
+      this.filteredProducts = this.allproducts;
+      this.calculateTotals();
+      this.calculateLowStocks()
+      this.isLoading = false;
+      console.log(this.allproducts)
+    }, error => {
+      this.isLoading = false;
+    })
+   }
+
+
+   exportToExcel(): void {
+    const exportData = this.allproducts.map(product => ({
+      'Item Name': product.itemName,
+      'SKU': product.itemCode,
+      'Category': product.category,
+      'Brand': product.brand,
+      'Stock': product.quantity,
+      'Cost Price (GHC)': product.costPrice,
+      'Selling Price (GHC)': product.sellingPrice,
+      'Size': product.size
+    }));
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Inventory');
+
+    const fileName = `inventory_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(wb, fileName);
+  }
+
+
+  deleteProduct(productId: string) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      const headers = this.getAuthHeaders();
+      
+      this.http.delete(`${this.baseurl.url}delete-product/${productId}`, { headers })
+        .subscribe({
+          next: (res: any) => {
+            alert('Product deleted successfully');
+            this.getAllProducts(); // Refresh the product list
+          },
+          error: (error) => {
+            console.error('Error deleting product:', error);
+            alert('Failed to delete product. Please try again.');
+          }
+        });
+    }
+  }
+
+
+
+  onEdit(product: any) {
+    console.log(product)
+    this.selectedProduct = product;
+    //console.log(this.selectedProduct)
+  }
+  
+  onUpdateProduct() {
+    const selectedProductData = this.selectedProduct;
+    console.log(selectedProductData);
+    const productId = selectedProductData.id
+    const headers = this.getAuthHeaders();
+    
+    this.http.put(`${this.baseurl.url}update-product/${productId}`, selectedProductData, {headers})
+      .subscribe(
+        (res: any) => {
+          alert('Product updated successfully!');
+          this.getAllProducts();
+          this.selectedProduct = new Product();
+        },
+        (error) => {
+          console.error('Error updating product:', error);
+          alert('An error occurred while updating the product. Please try again.');
+        }
+      );
+  }
+
 }
 
 

@@ -1,0 +1,84 @@
+<!-- checkout.component.html -->
+<div class="checkout-container">
+    <div class="checkout-grid">
+      <!-- Order Summary Section -->
+      <div class="order-summary">
+        <div class="card">
+          <h2>Order Summary</h2>
+          <div class="cart-items">
+            @for (item of cartItems; track item.id) {
+              <div class="cart-item">
+                <div class="item-details">
+                  <h3>{{item.itemName}}</h3>
+                  <p class="quantity">Qty: {{item.quantity}}</p>
+                </div>
+                <p class="price">GHS {{item.sellingPrice * item.quantity | number:'1.2-2'}}</p>
+              </div>
+            }
+          </div>
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>GHS {{calculateSubtotal() | number:'1.2-2'}}</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (3%)</span>
+              <span>GHS {{calculateTax() | number:'1.2-2'}}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>GHS {{calculateTotal() | number:'1.2-2'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Checkout Form Section -->
+      <div class="checkout-form">
+        <div class="card">
+          <h2>Complete Your Order</h2>
+          <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label>Customer Name</label>
+              <input type="text" formControlName="customerName" placeholder="Enter customer name">
+            </div>
+  
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" formControlName="phoneNumber" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+              <label>Payment Method</label>
+              <div class="payment-methods">
+                @for (method of paymentMethods; track method) {
+                  <div class="payment-method" 
+                       [class.selected]="selectedPaymentMethod === method"
+                       (click)="selectedPaymentMethod = method">
+                    <i class="fas" [ngClass]="{
+                      'fa-money-bill': method === 'Cash',
+                      'fa-mobile': method === 'Mobile Money',
+                      'fa-credit': method === 'Credit'
+                    }"></i>
+                    <span>{{method}}</span>
+                  </div>
+                }
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label>Notes (Optional)</label>
+              <textarea formControlName="notes" rows="3" placeholder="Add any special instructions"></textarea>
+            </div>
+  
+            <button type="submit" class="submit-btn" [disabled]="!checkoutForm.valid || isProcessing">
+              @if (isProcessing) {
+                <i class="fas fa-spinner fa-spin"></i> Processing...
+              } @else {
+                Complete Order
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

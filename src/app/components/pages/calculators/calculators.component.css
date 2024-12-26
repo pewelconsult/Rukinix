@@ -1,0 +1,269 @@
+/* Custom CSS for Calculators Page */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .sidebar {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    width: 220px;
+  }
+
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .sidebar a:hover {
+    background-color: #007bff;
+  }
+
+  .main-content {
+    margin-left: 240px;
+    padding: 30px;
+  }
+
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  .calculator-card {
+    margin-top: 30px;
+  }
+
+  .form-control {
+    margin-bottom: 15px;
+  }
+
+  .card-footer {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+
+  .result {
+    font-weight: bold;
+    color: #007bff;
+    margin-top: 15px;
+  }
+
+  /* Centering the main content */
+  .container {
+    max-width: 800px;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Making the forms narrower and more compact */
+  .form-control, .btn {
+    width: 100%;
+  }
+
+  /* Styling the header */
+  h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .card-body {
+    padding: 25px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+
+  /* Base styles */
+.main-content {
+  margin-left: 240px;
+  padding: 30px;
+  transition: margin-left 0.3s ease;
+}
+
+.container {
+  max-width: 800px;
+  padding: 0 15px;
+}
+
+.calculator-card {
+  margin-top: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+}
+
+.card-header i {
+  font-size: 1.2rem;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+}
+
+/* Responsive breakpoints */
+@media screen and (max-width: 1200px) {
+  .main-content {
+    margin-left: 220px;
+    margin-top: 60px;
+  }
+  
+  .container {
+    max-width: 700px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
+  .calculator-card {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  .card-header {
+    font-size: 1.1rem;
+    padding: 12px 15px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding: 20px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .btn-primary {
+    padding: 10px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .description {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .main-content {
+    padding: 15px;
+  }
+  
+  .calculator-card {
+    margin-top: 15px;
+  }
+  
+  .card-header {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .form-control {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+  
+  .btn-primary {
+    font-size: 0.9rem;
+  }
+  
+  .result {
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+}
+
+/* Handle very small screens */
+@media screen and (max-width: 360px) {
+  .main-content {
+    padding: 10px;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
+  
+  .card-header i {
+    font-size: 1rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .main-content {
+    margin-left: 0;
+    padding: 0;
+  }
+  
+  .calculator-card {
+    break-inside: avoid;
+    margin: 15px 0;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .btn-primary {
+    display: none;
+  }
+  
+  .result {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+}

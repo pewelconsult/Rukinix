@@ -1,0 +1,37 @@
+.dashboard-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px;
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+  }
+  
+  .company-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+  }
+  
+  .card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }

@@ -1,0 +1,116 @@
+
+  
+
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+ 
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <h2>Suppliers</h2>
+      <p>Manage your suppliers and their details below.</p>
+      
+      <!-- Supplier Details Card -->
+      <div class="card">
+        <div class="card-header">
+          Supplier List
+        </div>
+        <div class="card-body">
+          <!-- Search Bar -->
+          <div class="mb-4">
+            <input type="text" class="form-control" placeholder="Search Suppliers..." />
+          </div>
+          
+          <!-- Supplier Table -->
+          <div class="table-container">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Supplier Name</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>ABC Supplies</td>
+                  <td>John Doe</td>
+                  <td>abc.supplies.com</td>
+                  <td>+233 123 456 789</td>
+                  <td><span class="badge bg-success">Active</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>XYZ Suppliers</td>
+                  <td>Jane Smith</td>
+                  <td>xyz.suppliers.com</td>
+                  <td>+233 987 654 321</td>
+                  <td><span class="badge bg-warning">Inactive</span></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>123 Supplies</td>
+                  <td>David Lee</td>
+                  <td>123.supplies.com</td>
+                  <td>+233 654 321 987</td>
+                  <td><span class="badge bg-success">Active</span></td>
+                </tr>
+                <!-- Add more supplier rows here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">Add New Supplier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Add Supplier -->
+  <div class="modal fade" id="addSupplierModal" tabindex="-1" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSupplierModalLabel">Add New Supplier</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="supplierName" class="form-label">Supplier Name</label>
+              <input type="text" class="form-control" id="supplierName" placeholder="Enter Supplier Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="contactPerson" class="form-label">Contact Person</label>
+              <input type="text" class="form-control" id="contactPerson" placeholder="Enter Contact Person Name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone</label>
+              <input type="tel" class="form-control" id="phone" placeholder="Enter Phone Number" required>
+            </div>
+            <div class="mb-3">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select" id="status" required>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Supplier</button>
+        </div>
+      </div>
+    </div>
+  </div>

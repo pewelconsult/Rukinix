@@ -1,0 +1,256 @@
+/* Main Content */
+.main-content {
+    margin-left: 250px; /* For Sidebar */
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+  }
+  
+  /* Glassmorphism Card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 10px 10px 0 0;
+  }
+
+  /* Table Styling */
+  .table-container {
+    position: relative;
+    padding: 0; /* Remove default card-body padding */
+    overflow: hidden; /* Ensures everything stays within bounds */
+  }
+  
+
+  .table-responsive {
+    position: relative;
+    margin: 0;
+    padding: 0 15px; /* Add padding inside the scrollable area */
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 400px; /* Adjust this value as needed */
+    width: 100%
+  }
+  
+  .table-responsive::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  
+  .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  .table-responsive::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+  
+  .table thead {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    z-index: 1;
+  }
+  
+  .table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    z-index: 1;
+    padding: 12px;
+    border-bottom: 2px solid #0056b3;
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  /* Table Column Widths */
+  .table th,
+  .table td {
+    min-width: 120px;
+    white-space: nowrap;
+    padding: 12px;
+    vertical-align: middle;
+  }
+  
+  .table th:nth-child(1), 
+  .table td:nth-child(1) { min-width: 100px; } /* Return Type */
+  .table th:nth-child(2),
+  .table td:nth-child(2) { min-width: 150px; } /* Product */
+  .table th:nth-child(3),
+  .table td:nth-child(3) { min-width: 100px; } /* Price */
+  .table th:nth-child(4),
+  .table td:nth-child(4) { min-width: 100px; } /* Quantity */
+  .table th:nth-child(5),
+  .table td:nth-child(5) { min-width: 100px; } /* Total */
+  .table th:nth-child(6),
+  .table td:nth-child(6) { min-width: 100px; } /* Actions */
+  
+  /* Button Styling */
+  .btn-primary, .btn-danger, .btn-success {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .btn-danger:hover {
+    background-color: #dc3545;
+    transform: scale(1.05);
+  }
+  
+  .btn-success:hover {
+    background-color: #28a745;
+    transform: scale(1.05);
+  }
+  
+  /* Total Row Styling */
+  .total-row {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 15px;
+    margin: 0;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  /* Fade-In Animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 1024px) {
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+      margin-top: 60px;
+    }
+    
+    .table-responsive {
+      max-height: 450px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .glass-card {
+      margin-bottom: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .table-responsive {
+      max-height: 400px;
+    }
+    
+    .table th,
+    .table td {
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    .card-header {
+      font-size: 1.1rem;
+      padding: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .main-content {
+      padding: 15px;
+    }
+    
+    .glass-card {
+      padding: 10px;
+    }
+    
+    .form-group label {
+      font-size: 0.9rem;
+    }
+    
+    .table thead th {
+      font-size: 0.9rem;
+    }
+    
+    .table tbody td {
+      font-size: 0.85rem;
+      padding: 8px;
+    }
+    
+    .total-row {
+      font-size: 1rem;
+    }
+    
+    .table-responsive {
+      max-height: 350px;
+    }
+  }
+  
+  /* Fix for very small screens */
+  @media screen and (max-width: 400px) {
+    .table {
+      font-size: 0.8rem;
+    }
+    
+    .btn {
+      font-size: 0.9rem;
+      padding: 8px;
+    }
+    
+    .card-header {
+      font-size: 1rem;
+    }
+    
+    .table-responsive {
+      max-height: 300px;
+    }
+  }

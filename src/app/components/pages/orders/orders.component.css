@@ -1,0 +1,180 @@
+.content {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  padding-left: 25%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  padding: 10px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  min-width: 250px;
+  font-size: 14px;
+}
+
+.add-product-btn {
+  padding: 10px 20px;
+  background-color: #3B82F6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.add-product-btn:hover {
+  background-color: #2563EB;
+}
+
+/* Table Styling */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* Ensures table doesn't get too squeezed */
+}
+
+thead tr {
+  background-color: #3B82F6;
+  color: #fff;
+}
+
+th {
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Status Styling */
+.status {
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  display: inline-block;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.status.in-stock {
+  color: #059669;
+  background-color: #ecfdf5;
+}
+
+.status.low-stock {
+  color: #d97706;
+  background-color: #fffbeb;
+}
+
+.status.reorder {
+  color: #dc2626;
+  background-color: #fef2f2;
+}
+
+/* Button Styling */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  min-width: 70px;
+}
+
+.edit-btn {
+  background-color: #3B82F6;
+}
+
+.delete-btn {
+  background-color: #EF4444;
+}
+
+.edit-btn:hover {
+  background-color: #2563EB;
+}
+
+.delete-btn:hover {
+  background-color: #DC2626;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .content{
+    padding-left: 24px;
+    margin-top: 60px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+  }
+  
+  .search-bar {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .add-product-btn {
+    width: 100%;
+  }
+  
+  th, td {
+    padding: 12px 16px;
+  }
+  
+  /* Optional: Hide less important columns on mobile */
+  .hide-sm {
+    display: none;
+  }
+}

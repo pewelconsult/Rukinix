@@ -1,0 +1,83 @@
+
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+    <!-- Content Section -->
+    <div class="content flex-grow-1 p-4">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Sales Records</h1>
+        
+      </div>
+
+      <!-- Sales Overview Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Today's Sales</h5>
+              <p class="card-text fs-4 fw-bold">GHC {{totalSales4Today}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">This Week Sales</h5>
+              <p class="card-text fs-4 fw-bold">GHC {{totalSales4TheWeek}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">This Month Sales</h5>
+              <p class="card-text fs-4 fw-bold">GHC {{totalSales4TheMonth}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Total Orders</h5>
+              <p class="card-text fs-4 fw-bold">{{totalOrders4Today}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Table -->
+      <div class="table-responsive bg-white p-3 rounded shadow-sm">
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>No.</th>
+              <th>Product Name</th>
+              <th>Customer Name</th>
+              <th>Quantity</th>
+              <th>Total Amount (GHC)</th>
+              <th>Mode</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (sale of processedSales; track $index) {
+            <tr>
+              <td>{{$index+1}}</td>
+              <td>{{sale.productName}}</td>
+              <td>{{sale.customerName}}</td>
+              <td>{{sale.quantity}}</td>
+              <td>{{sale.totalAmount}}</td>
+              <td>{{sale.paymentMode}}</td>
+              <td>{{sale.date}}</td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+
+ 
+
+ 

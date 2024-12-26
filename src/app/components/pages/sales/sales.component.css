@@ -1,0 +1,126 @@
+
+  
+ 
+  
+  /* Content Area */
+  .content {
+    margin-left: 270px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+  }
+  
+  .card {
+    border: none;
+  }
+  
+  .card-title {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+
+  /* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .content {
+    margin-left: 0; /* Remove sidebar margin on larger tablets and smaller screens */
+    padding: 1rem;
+  }
+  
+}
+
+@media (max-width: 992px) {
+  /* Sales Overview Cards */
+  .row > div {
+    margin-bottom: 1rem;
+  }
+
+  /* Header Layout */
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+
+  /* Search and Add Button */
+  .form-control.w-auto {
+    width: 100% !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn-primary.ms-2 {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Table Responsiveness */
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  /* Hide less critical columns on mobile */
+  .table thead th:nth-child(4),
+  .table tbody td:nth-child(4),
+  .table thead th:nth-child(6),
+  .table tbody td:nth-child(6) {
+    display: none;
+  }
+
+  /* Modal Adjustments */
+  .modal-dialog {
+    margin: 1.75rem 0.5rem;
+    max-width: calc(100% - 1rem);
+  }
+
+  .content{
+    margin-top: 60px; /* Match the body padding */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Compact Cards */
+  .content{
+    margin-top: 60px; /* Match the body padding */
+  }
+  .card-body {
+    text-align: center;
+  }
+
+  .card-text {
+    font-size: 1.5rem !important;
+  }
+
+  /* Action Buttons */
+  .btn-sm {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Form Inputs */
+  .form-control {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Accessibility Improvements */
+@media (max-width: 992px) {
+  .btn, .form-control {
+    min-height: 44px; /* Ensure touch targets are at least 44x44px */
+    min-width: 44px;
+  }
+}
+
+/* Additional Responsive Tweaks */
+.content {
+  transition: margin-left 0.3s ease;
+}

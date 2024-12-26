@@ -1,0 +1,254 @@
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+  }
+  
+  /* Glassmorphism Card */
+  .glassmorphism-card {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    color: #333;
+  }
+  
+  .card-header {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  /* Table */
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+  
+  .table thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .btn-primary, .btn-danger {
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .btn-danger:hover {
+    background-color: #dc3545;
+    transform: scale(1.05);
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Base styles */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* Glassmorphism Card */
+  .glassmorphism-card {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Table Container */
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 15px;
+  }
+  
+  /* Responsive breakpoints */
+  @media screen and (max-width: 1200px) {
+    .main-content {
+      margin-left: 220px;
+      padding: 25px;
+      margin-top: 60px;
+    }
+    
+    .btn-lg {
+      padding: 0.5rem 1rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+    }
+    
+    .card-header {
+      font-size: 1.1rem;
+    }
+    
+    /* Modal adjustments */
+    .modal-dialog {
+      margin: 0.5rem;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .main-content {
+      padding: 15px;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+    
+    /* Table adjustments */
+    .table th,
+    .table td {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Button adjustments */
+    .btn-sm {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.25rem;
+    }
+    
+    /* Modal form */
+    .modal-body {
+      padding: 1rem;
+    }
+    
+    .form-label {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .main-content {
+      padding: 10px;
+    }
+    
+    .card-header {
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+    
+    /* Table modifications */
+    .table thead {
+      display: none; /* Hide headers on very small screens */
+    }
+    
+    .table tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #dee2e6;
+    }
+    
+    .table tbody td {
+      display: block;
+      text-align: right;
+      padding: 0.5rem;
+      position: relative;
+      padding-left: 50%;
+    }
+    
+    .table tbody td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 45%;
+      padding-left: 0.5rem;
+      font-weight: bold;
+      text-align: left;
+    }
+    
+    /* Modal adjustments */
+    .modal-dialog {
+      margin: 0;
+      max-width: 100%;
+      height: 100%;
+    }
+    
+    .modal-content {
+      border-radius: 0;
+      min-height: 100%;
+    }
+    
+    .row {
+      margin: 0;
+    }
+    
+    .col-md-6 {
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  /* Print styles */
+  @media print {
+    .main-content {
+      margin-left: 0;
+      padding: 0;
+    }
+    
+    .btn,
+    .modal,
+    .btn-close {
+      display: none !important;
+    }
+    
+    .glassmorphism-card {
+      box-shadow: none;
+      border: 1px solid #dee2e6;
+    }
+    
+    .table th,
+    .table td {
+      padding: 0.5rem;
+    }
+  }
+  
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

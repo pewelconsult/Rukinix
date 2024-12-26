@@ -1,0 +1,67 @@
+<app-sidebar></app-sidebar>
+
+<div class="main-content">
+  <div class="container">
+    <h2 class="title">Calculators</h2>
+    <p class="description">Use these calculators for various financial calculations.</p>
+
+    <div class="card calculator-card">
+      <div class="card-header">
+        <i class="fa-solid fa-calculator"></i>
+        Tax Calculator
+      </div>
+      <div class="card-body">
+        <form id="taxCalculatorForm">
+          <div class="form-group">
+            <label for="grossSalary">Gross Salary (GHS)</label>
+            <input type="number" class="form-control" id="grossSalary" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Calculate Tax</button>
+        </form>
+        <div id="taxResult" class="result mt-3"></div>
+      </div>
+    </div>
+
+    <div class="card calculator-card">
+      <div class="card-header">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        SSNIT Contribution Calculator
+      </div>
+      <div class="card-body">
+        <form id="ssnitCalculatorForm">
+          <div class="form-group">
+            <label for="grossSalarySSNIT">Gross Salary (GHS)</label>
+            <input type="number" class="form-control" id="grossSalarySSNIT" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Calculate SSNIT</button>
+        </form>
+        <div id="ssnitResult" class="result mt-3"></div>
+      </div>
+    </div>
+
+    <div class="card calculator-card">
+      <div class="card-header">
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+        Loan Repayment Calculator
+      </div>
+      <div class="card-body">
+        <form id="loanCalculatorForm">
+          <div class="form-group">
+            <label for="loanAmount">Loan Amount (GHS)</label>
+            <input type="number" class="form-control" id="loanAmount" required>
+          </div>
+          <div class="form-group">
+            <label for="interestRate">Interest Rate (%)</label>
+            <input type="number" class="form-control" id="interestRate" required>
+          </div>
+          <div class="form-group">
+            <label for="loanTerm">Loan Term (Years)</label>
+            <input type="number" class="form-control" id="loanTerm" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Calculate Repayment</button>
+        </form>
+        <div id="loanResult" class="result mt-3"></div>
+      </div>
+    </div>
+  </div>
+</div>

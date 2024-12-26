@@ -1,0 +1,351 @@
+
+/* Container Styles */
+
+.container {
+  width: 75%;
+  margin-left: 270px;
+  padding: 30px;
+  height: 100vh;
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  height: calc(100vh - 40px);
+}
+
+@media (min-width: 768px) {
+  
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Card Styles */
+.card {
+  display: flex;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100vh - 40px);
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; /* Important for Firefox */
+}
+
+/* Typography */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #2563eb; /* blue-600 */
+}
+
+/* Search Input */
+.search-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container{
+    margin-top: 60px;
+  }
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.product-card:hover {
+  background-color: #eff6ff; /* blue-50 */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-name {
+  font-weight: 600;
+}
+
+.product-price {
+  color: #16a34a; /* green-600 */
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.decrease-btn {
+  color: #ef4444; /* red-500 */
+}
+
+.increase-btn {
+  color: #22c55e; /* green-500 */
+}
+
+.remove-btn {
+  color: #ef4444; /* red-500 */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Cart Footer */
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.grand-total {
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.payment-form {
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-left: 1.3px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.payment-input,
+.payment-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.payment-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.sale-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #34d399, #059669); /* Green gradient */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+}
+
+.sale-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #059669, #34d399); /* Reverse gradient */
+}
+
+.sale-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sale-btn.disabled,
+.sale-btn:disabled {
+  background: linear-gradient(135deg, #d1d5db, #9ca3af); /* Grey gradient for disabled */
+  color: #6b7280; /* Grey text for disabled */
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.8;
+}
+
+.change {
+  font-weight: 500;
+  color: #4CAF50;
+}
+
+.checkout-btn {
+  background-color: #22c55e; /* green-500 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.checkout-btn:hover {
+  background-color: #16a34a; /* green-600 */
+}
+
+.checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* Loading Animation */
+@keyframes pulse {
+  0% {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+  50% {
+    background-color: rgba(37, 99, 235, 0.2);
+  }
+  100% {
+    background-color: rgba(37, 99, 235, 0.1);
+  }
+}
+
+.skeleton-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-name {
+  height: 20px;
+  background-color: #e5e7eb;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-price {
+  height: 20px;
+  background-color: #e5e7eb;
+  border-radius: 0.25rem;
+  width: 60%;
+}
+
+.skeleton-card .skeleton-name,
+.skeleton-card .skeleton-price {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+
+
+
+/* Responsive Adjustments */
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* Stack items vertically */
+    gap: 1rem;
+  }
+
+  .card {
+    height: auto; /* Adjust height dynamically based on content */
+  }
+
+  .scrollable-content {
+    max-height: 300px; /* Restrict height to avoid overflow */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Show one product per row */
+  }
+
+  .product-card {
+    padding: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem; /* Smaller titles */
+  }
+
+  .payment-input,
+  .payment-select {
+    font-size: 0.875rem; /* Adjust input font size for smaller screens */
+  }
+
+  .sale-btn {
+    padding: 8px; /* Smaller button padding */
+  }
+}

@@ -1,0 +1,77 @@
+<app-sidebar></app-sidebar>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <h2>Reports</h2>
+      <p>View detailed reports related to your business operations.</p>
+      
+      <!-- Filter Form for Reports -->
+      <div class="filter-form mb-4">
+        <input type="date" class="form-control" placeholder="Start Date">
+        <input type="date" class="form-control" placeholder="End Date">
+        <select class="form-select">
+          <option selected>Choose Report Type</option>
+          <option value="1">Sales Report</option>
+          <option value="2">Inventory Report</option>
+          <option value="3">Supplier Report</option>
+        </select>
+        <button class="btn btn-primary">Generate Report</button>
+      </div>
+
+      <!-- Report Data Card -->
+      <div class="card">
+        <div class="card-header">
+          Report Data
+        </div>
+        <div class="card-body">
+          <!-- Report Table -->
+          <div class="table-container">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Report Type</th>
+                  <th>Date</th>
+                  <th>Total Sales</th>
+                  <th>Total Inventory</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Sales Report</td>
+                  <td>2024-12-01</td>
+                  <td>$1000</td>
+                  <td>500 units</td>
+                  <td><span class="badge bg-success">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Inventory Report</td>
+                  <td>2024-12-05</td>
+                  <td>N/A</td>
+                  <td>600 units</td>
+                  <td><span class="badge bg-warning">Pending</span></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Supplier Report</td>
+                  <td>2024-12-10</td>
+                  <td>N/A</td>
+                  <td>N/A</td>
+                  <td><span class="badge bg-success">Completed</span></td>
+                </tr>
+                <!-- Add more report rows here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-secondary">Download Report</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

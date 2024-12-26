@@ -1,0 +1,65 @@
+
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+ 
+  <div class="content">
+    <div class="header">
+      <h1>Customer Orders</h1>
+      <div class="header-actions">
+        <input type="text" placeholder="Search products..." class="search-bar">
+        <button class="add-product-btn">+ Add Order</button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th class="hide-sm">Category</th>
+            <th>Stock Quantity</th>
+            <th class="hide-sm">Price (GHC)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>101</td>
+            <td>Cement Bag</td>
+            <td class="hide-sm">Building</td>
+            <td>50</td>
+            <td class="hide-sm">55</td>
+            <td><span class="status in-stock">In Stock</span></td>
+          </tr>
+          <tr>
+            <td>102</td>
+            <td>Nails (Box)</td>
+            <td class="hide-sm">Fasteners</td>
+            <td>20</td>
+            <td class="hide-sm">5</td>
+            <td><span class="status low-stock">Low Stock</span></td>
+          </tr>
+          <tr>
+            <td>103</td>
+            <td>Paint (20L)</td>
+            <td class="hide-sm">Paints</td>
+            <td>2</td>
+            <td class="hide-sm">5</td>
+            <td><span class="status reorder">Reorder</span></td>
+            <td>
+            </td>
+          </tr>
+          <tr>
+            <td>104</td>
+            <td>Hammer</td>
+            <td class="hide-sm">Tools</td>
+            <td>30</td>
+            <td class="hide-sm">5</td>
+            <td><span class="status in-stock">In Stock</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

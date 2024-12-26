@@ -1,0 +1,58 @@
+<button class="mobile-menu-toggle" (click)="toggleSidebar()">☰ Menu</button>
+
+<div 
+    class="sidebar-overlay" 
+    [class.show]="isSidebarOpen"
+    (click)="toggleSidebar()"
+></div>
+
+<div 
+    class="sidebar" 
+    [class.show]="isSidebarOpen"
+>
+    <h3 class="mb-4">Rukinix Store</h3>
+    <nav class="nav flex-column">
+        <a routerLink="/storemanager" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">🏠</span> Dashboard
+        </a>
+        <a routerLink="/inventory" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">📦</span> Inventory
+        </a>
+        <a routerLink="/sales" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">🛒</span> Sales
+        </a>
+        <a routerLink="/orders" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">📑</span> Orders
+        </a>
+        <a routerLink="/suppliers" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">🚛</span> Suppliers
+        </a>
+        <a routerLink="/pointofsale" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">💰</span> Point of Sale
+        </a>
+        <a routerLink="/debtors" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">👜</span> Debtors
+        </a>
+        <a routerLink="/returns" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">↩️</span> Returns
+        </a>
+        <a routerLink="/reports" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">📊</span> Reports
+        </a>
+        <a routerLink="/calculators" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">🧮</span> Calculators
+        </a>
+        <button  class="nav-link" (click) = "onLogOut()">
+            <span class="sidebar-icon">🚪</span> Logout
+        </button>
+    </nav>
+
+    <hr>
+    <div class="user-profile">
+        <a routerLink="/userprofile"  >
+            <img src="images.jpg" alt="Admin Image" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
+            <span class="admin-name">Admin Name</span>
+        </a>
+        
+    </div>
+</div>
