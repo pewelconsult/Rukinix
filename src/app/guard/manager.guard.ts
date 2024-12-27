@@ -5,7 +5,7 @@ export const managerGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
     const userRole = localStorage.getItem('user_role');
   
-    if (userRole === 'Manager') {
+    if (userRole === 'Manager' || userRole === 'Admin') {
       return true;
     }
   

@@ -50,8 +50,10 @@ export class SidebarComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    return this.getUserRole() === 'admin';
-  }
+    const userRole = this.getUserRole();
+    return userRole === 'Admin' || userRole === 'Manager';
+}
+
 
 setCompanyName() {
   const name = localStorage.getItem('company_name') ?? 'Rukinix';
