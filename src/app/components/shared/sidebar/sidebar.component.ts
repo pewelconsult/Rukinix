@@ -1,16 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive], // Added RouterLinkActive
+  imports: [RouterLink, RouterLinkActive, CommonModule], // Added RouterLinkActive
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  ngOnInit(): void {
+    this.setCompanyName()
+  }
   isSidebarOpen = false;
   activeLink = 'dashboard';
+  companyName:string = ''
+
+ 
 
   private router = inject(Router)
 
@@ -37,4 +44,18 @@ export class SidebarComponent {
     localStorage.removeItem('auth_token'); 
     this.router.navigate(['/login']);
   }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('user_role');
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'admin';
+  }
+
+setCompanyName() {
+  const name = localStorage.getItem('company_name') ?? 'Rukinix';
+  this.companyName = name;
+}
+
 }

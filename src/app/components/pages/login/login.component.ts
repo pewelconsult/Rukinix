@@ -39,8 +39,18 @@ export class LoginComponent {
         (response) => {
           if (response.token) {
             localStorage.setItem('auth_token', response.token);
+            localStorage.setItem('token_expiry', response.token_expiry);
+            localStorage.setItem('user_role', response.userRole);
+            localStorage.setItem('company_name', response.companyName);
             console.log('Login successful:', response);
-            this.router.navigate(["storemanager"]);
+            if (response.userRole === 'Manager') {
+              this.router.navigate(["storemanager"]);
+            }else if (response.userRole === 'Admin') {
+              this.router.navigate(["admin"]);
+            } else {
+              this.router.navigate(["pointofsale"]);
+            }
+            
           } else {
             console.error("Missing token in response");
           }

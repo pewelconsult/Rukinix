@@ -10,11 +10,13 @@
     class="sidebar" 
     [class.show]="isSidebarOpen"
 >
-    <h3 class="mb-4">Rukinix Store</h3>
+    <h3 class="mb-4">{{companyName}}</h3>
     <nav class="nav flex-column">
-        <a routerLink="/storemanager" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">🏠</span> Dashboard
-        </a>
+        @if (isAdmin()) {
+            <a routerLink="/storemanager" routerLinkActive="active" class="nav-link">
+              <span class="sidebar-icon">🏠</span> Dashboard
+            </a>
+          }
         <a routerLink="/inventory" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">📦</span> Inventory
         </a>

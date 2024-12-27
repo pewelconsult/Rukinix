@@ -20,6 +20,8 @@ import { AnalyticsComponent } from './components/pages/admin pages/analytics/ana
 import { SubscriptionsComponent } from './components/pages/admin pages/subscriptions/subscriptions.component';
 import { AdminComponent } from './components/pages/admin/admin.component';
 import { CheckoutComponent } from './components/pages/subcomponents/checkout/checkout.component';
+import { adminGuard } from './guard/admin.guard';
+import { managerGuard } from './guard/manager.guard';
 
 export const routes: Routes = [
     {
@@ -31,19 +33,19 @@ export const routes: Routes = [
     {
         path: "admin",
         component: AdminComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
     },
 
     {
         path: "companies",
         component: CompaniesComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
     },
 
     {
         path: "users",
         component: UsersComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
     },
 
     {
@@ -55,13 +57,13 @@ export const routes: Routes = [
     {
         path: "subscription",
         component: SubscriptionsComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
     },
 
     {
         path: "analytics",
         component: AnalyticsComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, adminGuard]
     },
 
     {
@@ -75,7 +77,7 @@ export const routes: Routes = [
     {
        path: "storemanager",
        component: StoremanagerComponent,
-       canActivate: [authGuard]
+       canActivate: [authGuard, managerGuard]
     },
 
     {
@@ -144,8 +146,6 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
 
-    { 
-        path: '*', 
-        component: NopagefoundComponent,
-    },
+
+    { path: '**', redirectTo: 'login' }
 ];
