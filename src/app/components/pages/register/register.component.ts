@@ -31,9 +31,7 @@ export class RegisterComponent {
       confirmPassword: undefined 
     };
     
-    console.log('Registration Data:', registrationData);
     this.http.post(this.baseurl.url + "register", registrationData).subscribe((res:any)=> {
-      console.log(res)
       this.register = new User()
       this.router.navigate(['login'])
     })

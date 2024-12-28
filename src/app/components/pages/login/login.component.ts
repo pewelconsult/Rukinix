@@ -25,7 +25,7 @@ export class LoginComponent {
 
   onLogin() {
     if (!this.login.email || !this.login.password) {
-      console.error("Email or password is missing.");
+      alert("Email or password is missing.");
       return;
     }
   
@@ -42,7 +42,7 @@ export class LoginComponent {
             localStorage.setItem('token_expiry', response.token_expiry);
             localStorage.setItem('user_role', response.userRole);
             localStorage.setItem('company_name', response.companyName);
-            console.log('Login successful:', response);
+            alert('Login successful');
             if (response.userRole === 'Manager') {
               this.router.navigate(["storemanager"]);
             }else if (response.userRole === 'Admin') {
@@ -52,16 +52,16 @@ export class LoginComponent {
             }
             
           } else {
-            console.error("Missing token in response");
+            alert("An error occured, check and try again");
           }
           this.login.email = "";
           this.login.password = "";
         },
         (error) => {
           // Handle login error
-          console.error('Login failed:', error);
+          alert("Error occured, check and try again")
           if (error.error) {
-            console.error(error.error.message); // Log specific error message from backend
+            alert("Error occured, check and try again") // Log specific error message from backend
           }
           // Display error message to user (e.g., using a toast notification)
         }

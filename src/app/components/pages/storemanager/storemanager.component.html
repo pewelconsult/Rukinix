@@ -16,8 +16,8 @@
             <div class="card p-3 d-flex align-items-center">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
-                    <h6>Total Revenue</h6>
-                    <h5>GHC 45,230</h5>
+                    <h6>Total Revenue for {{thisCurrentYear}}</h6>
+                    <h5>GHC {{totalRevenue}}</h5>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="card-icon card-green">📦</div>
                 <div class="text-center">
                     <h6>Total Products</h6>
-                    <h5>342</h5>
+                    <h5>{{allproducts.length}}</h5>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="card-icon card-red">⚠️</div>
                 <div class="text-center">
                     <h6>Low Stock Items</h6>
-                    <h5>7</h5>
+                    <h5>{{totalLowStocks}}</h5>
                 </div>
             </div>
         </div>

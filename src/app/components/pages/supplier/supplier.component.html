@@ -36,31 +36,16 @@
                 </tr>
               </thead>
               <tbody>
+                @for (item of suppliers; track $index) {
                 <tr>
-                  <td>1</td>
-                  <td>ABC Supplies</td>
-                  <td>John Doe</td>
-                  <td>abc.supplies.com</td>
-                  <td>+233 123 456 789</td>
-                  <td><span class="badge bg-success">Active</span></td>
+                  <td>{{$index+1}}</td>
+                  <td>{{item.businessName}}</td>
+                  <td>{{item.contactPersonName}}</td>
+                  <td>{{item.email}}</td>
+                  <td>{{item.phone}}</td>
+                  <td><span class="badge bg-success">{{item.status}}</span></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>XYZ Suppliers</td>
-                  <td>Jane Smith</td>
-                  <td>xyz.suppliers.com</td>
-                  <td>+233 987 654 321</td>
-                  <td><span class="badge bg-warning">Inactive</span></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>123 Supplies</td>
-                  <td>David Lee</td>
-                  <td>123.supplies.com</td>
-                  <td>+233 654 321 987</td>
-                  <td><span class="badge bg-success">Active</span></td>
-                </tr>
-                <!-- Add more supplier rows here -->
+              }
               </tbody>
             </table>
           </div>
@@ -83,24 +68,24 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="supplierName" class="form-label">Supplier Name</label>
-              <input type="text" class="form-control" id="supplierName" placeholder="Enter Supplier Name" required>
+              <label for="supplierName" class="form-label">Supplier Business Name</label>
+              <input type="text" name="supplierName"  class="form-control" id="supplierName" placeholder="Enter Supplier Name" required [(ngModel)] ="supplier.businessName">
             </div>
             <div class="mb-3">
               <label for="contactPerson" class="form-label">Contact Person</label>
-              <input type="text" class="form-control" id="contactPerson" placeholder="Enter Contact Person Name" required>
+              <input type="text" name="contactPerson" class="form-control" id="contactPerson" placeholder="Enter Contact Person Name" required  [(ngModel)] ="supplier.contactPersonName">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter Email" required>
+              <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" [(ngModel)] ="supplier.email">
             </div>
             <div class="mb-3">
               <label for="phone" class="form-label">Phone</label>
-              <input type="tel" class="form-control" id="phone" placeholder="Enter Phone Number" required>
+              <input type="tel" name="phone" class="form-control" id="phone" placeholder="Enter Phone Number" required [(ngModel)] ="supplier.phone">
             </div>
             <div class="mb-3">
               <label for="status" class="form-label">Status</label>
-              <select class="form-select" id="status" required>
+              <select class="form-select" id="status" required [(ngModel)] ="supplier.status" name="status"> 
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
@@ -109,7 +94,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Supplier</button>
+          <button type="button" class="btn btn-primary" (click)="onSaveSupplier()">Save Supplier</button>
         </div>
       </div>
     </div>

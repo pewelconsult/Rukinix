@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BaseUrl } from '../../../interfaces/classes/BaseUrl';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { v4 as uuidv4 } from 'uuid';
 
+declare var bootstrap: any; // Declare Bootstrap for accessing its modal API.
 
 @Component({
   selector: 'app-pointofsale',
@@ -29,11 +31,15 @@ export class PointofsaleComponent {
   paymentMode: string = '';
   customerName: string = ""
   isProcessing = false;
-  amount2BePaid: number = 0
+  amount2BePaid: number = 0;
+  receiptNumber = "";
+  currentDate = new Date();
+  companyName = localStorage.getItem('company_name');
+  companyAddress = ""
+  companyPhone = ""
 
   ngOnInit(): void {
     this.getAllProducts()
-    console.log(this.Array(this.placeholderCount))
   }
 
   private getAuthHeaders(): HttpHeaders {
@@ -55,11 +61,28 @@ export class PointofsaleComponent {
         this.isLoading = false; // Set loading to false after data arrives
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
         this.isLoading = false; // Don't forget to handle errors
       }
     });
   }
+
+
+  getCompanyByName() {
+    const name = localStorage.getItem('company_name')
+    const headers = this.getAuthHeaders();
+    this.http.get(this.baseurl.url + "companies/name/" + name, {headers}).subscribe({
+      next: (res: any) => {
+        const data = res;
+        this.companyAddress = data.address
+        this.companyPhone = data.contactPersonPhone
+      },
+      error: (error) => {
+        alert('Error fetching company');
+        this.isLoading = false;
+      }
+    });
+}
+
 
   get filteredProducts() {
     return this.products.filter(product => 
@@ -120,32 +143,30 @@ export class PointofsaleComponent {
 
   makeSale(): void {
     if (this.isProcessing) return;
-
+    this.receiptNumber = 'INV-' + `INV-${uuidv4()}`;
     const saleData = {
       items: this.cartItems,
       total: this.calculateTotal(),
       amountPaid: this.amountPaid,
       change: this.calculateChange(),
       paymentMode: this.paymentMode,
-      customerName: this.customerName
+      customerName: this.customerName,
+      receiptNumber: this.receiptNumber
     };
 
     this.isProcessing = true;
     const headers = this.getAuthHeaders();
-
+    saleData.receiptNumber = this.receiptNumber
     this.http.post(this.baseurl.url + "make-sales", saleData, { headers }).subscribe({
       next: (response: any) => {
         alert('Sale completed successfully');
-        this.resetCart();
         this.isProcessing = false;
-
-        // Optionally print receipt or perform other post-sale actions
-        if (response?.saleId) {
-          this.printReceipt(response.saleId);
-        }
+        // Show the receipt modal
+        this.getCompanyByName()
+       const receiptModal = new bootstrap.Modal(document.getElementById('receiptModal'), {});
+       receiptModal.show();
       },
       error: (error) => {
-        console.error('Error processing sale:', error);
         alert('Failed to process sale. Please try again.');
         this.isProcessing = false;
       }
@@ -159,8 +180,23 @@ export class PointofsaleComponent {
     this.paymentMode = '';
   }
 
-  private printReceipt(saleId: string): void {
-    console.log('Printing receipt for sale:', saleId);
+
+  printReceipt(): void {
+    const printContent = document.getElementById('receiptContent');
+    const WindowPrt = window.open('', '', 'width=900,height=650');
+    if (WindowPrt && printContent) {
+      WindowPrt.document.write(printContent.innerHTML);
+      WindowPrt.document.close();
+      WindowPrt.focus();
+      WindowPrt.print();
+      WindowPrt.close();
+      this.resetCart();
+    }
   }
 
+
+
+
 }
+
+

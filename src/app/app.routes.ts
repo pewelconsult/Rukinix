@@ -107,7 +107,7 @@ export const routes: Routes = [
     {
         path: 'reports', 
         component: ReportsComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard, managerGuard]
     },
 
     {

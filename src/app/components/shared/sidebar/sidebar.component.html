@@ -38,9 +38,11 @@
         <a routerLink="/returns" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">↩️</span> Returns
         </a>
+        @if (isAdmin()) {
         <a routerLink="/reports" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">📊</span> Reports
         </a>
+       }
         <a routerLink="/calculators" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">🧮</span> Calculators
         </a>

@@ -6,14 +6,12 @@
     <!-- Products Section -->
     <div class="card products-card">
       <h2 class="section-title">Select Products</h2>
-      
       <input 
         type="text" 
         [(ngModel)]="searchTerm"
         placeholder="Search Product" 
         class="search-input"
       />
-
       <div class="scrollable-content">
         @if (isLoading) {
           <div class="product-grid">
@@ -30,6 +28,7 @@
               <div class="product-card" (click)="addToCart(product)">
                 <div class="product-name">{{product.itemName}}</div>
                 <div class="product-price">GHS {{product.sellingPrice}}</div>
+                <div class="product-price">Quantity: {{product.quantity}}</div>
               </div>
             }
           </div>
@@ -87,7 +86,6 @@
       </div>
 
       <div class="cart-footer">
-        
         <div class="row payment-form">
           <div class="col form-group">
             <label for="amountPaid">Amount Paid (GHS)</label>
@@ -97,7 +95,6 @@
               [(ngModel)]="amountPaid" 
               class="payment-input"
               [min]="0"
-              value="{{amount2BePaid}}"
             >
           </div>
       
@@ -147,6 +144,98 @@
         Make Sale
       </button>
 
+    </div>
+  </div>
+
+
+  
+</div>
+
+
+
+
+
+
+<!-- Receipt Modal -->
+<!-- Receipt Modal Content -->
+<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="receiptModalLabel">Sales Receipt</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="receiptContent" class="receipt-paper">
+          <!-- Receipt Header -->
+          <div class="receipt-header">
+            <h4 class="company-name">{{companyName}}</h4>
+            <p class="receipt-info">{{companyAddress}}</p>
+            <p class="receipt-info">Phone: {{companyPhone}}</p>
+            <p class="receipt-info">Date: {{currentDate | date:'short'}}</p>
+            <div class="receipt-divider">================================</div>
+          </div>
+
+          <!-- Customer Info -->
+          <div class="customer-info">
+            <p>Customer: {{customerName || 'Walk-in Customer'}}</p>
+            <p>Receipt No: {{receiptNumber}}</p>
+            <div class="receipt-divider">--------------------------------</div>
+          </div>
+
+          <!-- Items Table -->
+          <div class="receipt-items">
+            <div class="item-header">
+              <span class="item-name">Item</span>
+              <span class="item-qty">Qty</span>
+              <span class="item-price">Price</span>
+              <span class="item-total">Total</span>
+            </div>
+            <div class="receipt-divider">--------------------------------</div>
+            @for (item of cartItems; track item.id) {
+              <div class="item-row">
+                <span class="item-name">{{item.itemName}}</span>
+                <span class="item-qty">{{item.quantity}}</span>
+                <span class="item-price">{{item.sellingPrice}}</span>
+                <span class="item-total">{{item.sellingPrice * item.quantity}}</span>
+              </div>
+            }
+            <div class="receipt-divider">--------------------------------</div>
+          </div>
+
+          <!-- Totals -->
+          <div class="receipt-totals">
+            <div class="total-row">
+              <span>Sub Total:</span>
+              <span>GHS {{calculateTotal() | number:'1.2-2'}}</span>
+            </div>
+            <div class="total-row">
+              <span>Amount Paid:</span>
+              <span>GHS {{amountPaid | number:'1.2-2'}}</span>
+            </div>
+            <div class="total-row">
+              <span>Change:</span>
+              <span>GHS {{calculateChange() | number:'1.2-2'}}</span>
+            </div>
+            <div class="total-row">
+              <span>Payment Mode:</span>
+              <span>{{paymentMode | titlecase}}</span>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="receipt-footer">
+            <div class="receipt-divider">================================</div>
+            <p>Thank you for your purchase!</p>
+            <p>Please come again</p>
+            <small class="designer-credit">Designed by pewel consult: +233544717479</small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="printReceipt()">Print Receipt</button>
+      </div>
     </div>
   </div>
 </div>

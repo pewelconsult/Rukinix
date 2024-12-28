@@ -56,6 +56,17 @@ export class InventoryComponent implements OnInit{
   }
 
   
+  formatCurrency(value: number): string {
+    return value.toLocaleString('en-GH', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  // Helper function to parse currency string back to number
+  parseCurrency(value: string): number {
+    return parseFloat(value.replace(/,/g, ''));
+  }
 
    onAddCategory() {
     const headers = this.getAuthHeaders();
@@ -81,11 +92,7 @@ export class InventoryComponent implements OnInit{
             this.getAllProducts();
         },
         error: (error) => {
-            // Check if there's an error message from the backend
-            console.log(error)
-            const errorMessage = error.error?.message || 'An error occurred while adding the product';
-            alert(errorMessage);
-            console.error('Error adding product:', error);
+            alert("Error occured, check and try again")
         }
     });
 }
@@ -97,7 +104,11 @@ calculateTotals() {
   
   this.totalRevenue = this.allproducts.reduce((sum, product) => 
     sum + (product.sellingPrice * product.quantity), 0);
+  const reve = this.formatCurrency(this.totalRevenue).toString();
+  
 }
+
+
 
 
 calculateLowStocks() {
@@ -120,13 +131,21 @@ onSearch(event: any) {
 }
 
 
-   getAllCategories() {
-    const headers = this.getAuthHeaders();
-    this.http.get(this.baseurl.url + "categories", {headers}).subscribe((res:any)=> {
-      this.allcategories = res.data
-      this.totalCategories = this.allcategories.length
-    })
-   }
+getAllCategories() {
+  const headers = this.getAuthHeaders();
+  this.http.get(this.baseurl.url + "categories", { headers }).subscribe((res: any) => {
+      this.allcategories = res.data;
+
+      // Sort the categories by categoryName
+      this.allcategories.sort((a: any, b: any) => {
+          if (a.categoryName < b.categoryName) return -1;
+          if (a.categoryName > b.categoryName) return 1;
+          return 0;
+      });
+      this.totalCategories = this.allcategories.length;
+  });
+}
+
 
 
    getAllProducts() {
@@ -139,7 +158,6 @@ onSearch(event: any) {
       this.calculateTotals();
       this.calculateLowStocks()
       this.isLoading = false;
-      console.log(this.allproducts)
     }, error => {
       this.isLoading = false;
     })
@@ -178,7 +196,6 @@ onSearch(event: any) {
             this.getAllProducts(); // Refresh the product list
           },
           error: (error) => {
-            console.error('Error deleting product:', error);
             alert('Failed to delete product. Please try again.');
           }
         });
@@ -188,14 +205,11 @@ onSearch(event: any) {
 
 
   onEdit(product: any) {
-    console.log(product)
     this.selectedProduct = product;
-    //console.log(this.selectedProduct)
   }
   
   onUpdateProduct() {
     const selectedProductData = this.selectedProduct;
-    console.log(selectedProductData);
     const productId = selectedProductData.id
     const headers = this.getAuthHeaders();
     
@@ -207,7 +221,6 @@ onSearch(event: any) {
           this.selectedProduct = new Product();
         },
         (error) => {
-          console.error('Error updating product:', error);
           alert('An error occurred while updating the product. Please try again.');
         }
       );
