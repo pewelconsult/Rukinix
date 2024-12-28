@@ -1,6 +1,5 @@
 <app-sidebar></app-sidebar>
 <div class="main-content">
-
     <div class="header-bar">
         <input type="text" class="form-control search-input" placeholder="Search...">
         <div>
@@ -16,8 +15,8 @@
             <div class="card p-3 d-flex align-items-center">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
-                    <h6>Total Revenue for {{thisCurrentYear}}</h6>
-                    <h5>GHC {{totalRevenue}}</h5>
+                    <h6>Total Revenue</h6>
+                    <h5>GHC 45,230</h5>
                 </div>
             </div>
         </div>
@@ -26,7 +25,7 @@
                 <div class="card-icon card-green">📦</div>
                 <div class="text-center">
                     <h6>Total Products</h6>
-                    <h5>{{allproducts.length}}</h5>
+                    <h5>342</h5>
                 </div>
             </div>
         </div>
@@ -44,7 +43,7 @@
                 <div class="card-icon card-red">⚠️</div>
                 <div class="text-center">
                     <h6>Low Stock Items</h6>
-                    <h5>{{totalLowStocks}}</h5>
+                    <h5>7</h5>
                 </div>
             </div>
         </div>
@@ -102,107 +101,140 @@
             <h5 class="text-center" style="font-weight: bold;">Orders Summary</h5>
             <canvas id="ordersSummaryChart" style="width: 200%; max-width: 400px; height: auto;"></canvas>
         </div>
-    </div> <br><br><br>
+    </div><br><br>
 
-    <div class="row">
-        <div class="col-lg-6 table-container">
-            <h5 class="text-center" style="font-weight: bold;">Products Overview</h5>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Restock</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Product 1</td>
-                        <td>Category 1</td>
-                        <td>50</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <td>Product 2</td>
-                        <td>Category 2</td>
-                        <td>30</td>
-                        <td>15</td>
-                    </tr>
 
-                    <tr>
-                        <td>Product 3</td>
-                        <td>Category 3</td>
-                        <td>30</td>
-                        <td>15</td>
-                    </tr>
-
-                    <tr>
-                        <td>Product 4</td>
-                        <td>Category 4</td>
-                        <td>30</td>
-                        <td>15</td>
-                    </tr>
-
-                    <tr>
-                        <td>Product 5</td>
-                        <td>Category 5</td>
-                        <td>30</td>
-                        <td>15</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+    <!-- Top 10 Sales Table -->
+    <div class="row mt-4">
+        <div class="col-lg-12 table-container">
+            <h5 class="text-center" style="font-weight: bolder; font-size: 40px; color: rgb(3, 28, 80); font-family: 'Courier New', Courier, monospace;">Top 10 Sales</h5>
+            <ul class="nav nav-tabs" id="salesTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="day-tab" data-bs-toggle="tab" href="#day" role="tab" aria-controls="day" aria-selected="true">Daily</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="week-tab" data-bs-toggle="tab" href="#week" role="tab" aria-controls="week" aria-selected="false">Weekly</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="month-tab" data-bs-toggle="tab" href="#month" role="tab" aria-controls="month" aria-selected="false">Monthly</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="salesTabContent">
+                <div class="tab-pane fade show active" id="day" role="tabpanel" aria-labelledby="day-tab">
+                    <div class="container">
+                        <div class="sales-table">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Smartphone</td>
+                                        <td>Electronics</td>
+                                        <td>14 - 05 - 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wireless Headphones</td>
+                                        <td>Accessories</td>
+                                        <td>14 - 05 - 2025</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Laptop</td>
+                                        <td>Computers</td>
+                                        <td>14 - 05 - 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tablet</td>
+                                        <td>Electronics</td>
+                                        <td>14 - 05 - 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="week" role="tabpanel" aria-labelledby="week-tab">
+                    <div class="container">
+                        <div class="sales-table">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Weeks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Smartphone</td>
+                                        <td>Electronics</td>
+                                        <td>Week1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wireless Headphones</td>
+                                        <td>Accessories</td>
+                                        <td>Week2</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Laptop</td>
+                                        <td>Computers</td>
+                                        <td>Week4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tablet</td>
+                                        <td>Electronics</td>
+                                        <td>Week5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="month" role="tabpanel" aria-labelledby="month-tab">
+                    <div class="container">
+                        <div class="sales-table">
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Smartphone</td>
+                                        <td>Electronics</td>
+                                        <td>December 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wireless Headphones</td>
+                                        <td>Accessories</td>
+                                        <td>January 2025</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Laptop</td>
+                                        <td>Computers</td>
+                                        <td>March 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tablet</td>
+                                        <td>Electronics</td>
+                                        <td>April 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-6 table-container">
-            <h5 class="text-center" style="font-weight: bolder;">Sales Summary</h5>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Sold Qty</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Product A</td>
-                        <td>Category A</td>
-                        <td>GHC 10</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>Product B</td>
-                        <td>Category B</td>
-                        <td>GHC 15</td>
-                        <td>80</td>
-                    </tr>
-
-                    <tr>
-                        <td>Product c</td>
-                        <td>Category c</td>
-                        <td>GHC 15</td>
-                        <td>80</td>
-                    </tr>
-
-                    <tr>
-                        <td>Product D</td>
-                        <td>Category D</td>
-                        <td>GHC 15</td>
-                        <td>80</td>
-                    </tr>
-
-                    <tr>
-                        <td>Product E</td>
-                        <td>Category E</td>
-                        <td>GHC 15</td>
-                        <td>80</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
+    </div> 
 </div>

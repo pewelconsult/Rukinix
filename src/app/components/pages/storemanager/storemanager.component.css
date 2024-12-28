@@ -1,6 +1,7 @@
 .main-content {
-    margin-left: 270px;
+    margin-left: 250px;
     padding: 30px;
+    background-color: #eef7fd;
 }
 .dashboard-title {
     font-size: 24px;
@@ -41,8 +42,6 @@ h5, h6 {
 .table {
     border-radius: 20px;
     overflow: hidden;
-    border: 5px solid #dee2e6;
-    background-color: #343a40;
 }
 .table thead {
     color: white; 
@@ -56,12 +55,27 @@ background-color: #ffffff;
 padding: 15px;
 border-radius: 15px;
 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-margin-bottom: 30px; /* Increase margin-bottom for more space between cards */
+margin-bottom: 30px; 
 display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
 }
+
+.table-container {
+    margin-top: 20px;
+}
+.search-input {
+    width: 300px;
+    margin-right: 15px;
+}
+.card-icon {
+    font-size: 2rem;
+}
+.card-blue { background-color: #e7f1ff; }
+.card-green { background-color: #e7ffe7; }
+.card-yellow { background-color: #fff9e7; }
+.card-red { background-color: #ffe7e7; }
 
 
 /* Responsive Adjustments */
@@ -72,3 +86,56 @@ flex-direction: column;
         padding: 15px;
     }
 }
+
+.sales-table {
+    margin: 30px auto;
+    width: 90%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 10px rgba(1, 17, 88, 0.15);
+}
+
+.sales-table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.sales-table tbody tr:nth-child(odd) {
+    background-color: #f1f8ff;
+}
+
+.sales-table tbody tr:nth-child(even) {
+    background-color: #e9ecef;
+}
+
+.sales-table tbody tr:hover {
+    background-color: #5a046bad;
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+
+.sales-table tbody tr {
+    transition: all 0.3s ease-in-out;
+}
+
+.sales-table th, .sales-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 5px solid #dee2e6;
+}
+
+.sales-table th {
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.sales-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.sales-table tbody td {
+    color: #495057;
+}
+
+
+

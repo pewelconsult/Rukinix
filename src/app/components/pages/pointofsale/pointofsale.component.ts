@@ -94,7 +94,6 @@ export class PointofsaleComponent {
   addToCart(product: any) {
     // Check if item already exists in cart
     const existingItem = this.cartItems.find(item => item.id === product.id);
-    
     if (existingItem) {
       // If item exists, increment quantity
       existingItem.quantity += 1;
@@ -104,7 +103,8 @@ export class PointofsaleComponent {
         id: product.id,
         itemName: product.itemName,
         sellingPrice: product.sellingPrice,
-        quantity: 1
+        quantity: 1,
+        category: product.catgory
       });
     }
     
@@ -112,11 +112,12 @@ export class PointofsaleComponent {
   }
 
   calculateTotal() {
-    const res =  this.cartItems.reduce((total, item) => 
+    const res = this.cartItems.reduce((total, item) => 
       total + (item.sellingPrice * item.quantity), 0
     );
-    this.amount2BePaid=res
-    return res
+    this.amount2BePaid = res;
+    this.amountPaid = res; // Set amountPaid to match the total
+    return res;
   }
 
   // Add method to remove item from cart
@@ -153,7 +154,6 @@ export class PointofsaleComponent {
       customerName: this.customerName,
       receiptNumber: this.receiptNumber
     };
-
     this.isProcessing = true;
     const headers = this.getAuthHeaders();
     saleData.receiptNumber = this.receiptNumber

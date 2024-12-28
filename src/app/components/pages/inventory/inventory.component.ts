@@ -203,6 +203,15 @@ getAllCategories() {
   }
 
 
+  addCommas(value: number | string): string {
+    const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+    if (isNaN(numericValue)) {
+      throw new Error('Input must be a valid number or numeric string');
+    }
+    // Format the number with commas
+    return numericValue.toLocaleString();
+  }
+  
 
   onEdit(product: any) {
     this.selectedProduct = product;

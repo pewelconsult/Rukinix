@@ -20,54 +20,57 @@
             </div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Total Items</p>
-                        <h3 class="stat-value">{{totalItems}}</h3>
-                    </div>
-                    <span>📦</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Low Stock</p>
-                        <h3 class="stat-value" style="color: #F97316;">{{totalLowStocks}}</h3>
-                    </div>
-                    <span>⚠️</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Categories</p>
-                        <h3 class="stat-value">{{totalCategories}}</h3>
-                    </div>
-                    <span>📦</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Total Value</p>
-                        <h3 class="stat-value">GHC {{totalRevenue}}</h3>
-                    </div>
-                    <span>📦</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-content">
-                    <div>
-                        <p class="stat-label">Total Cost</p>
-                        <h3 class="stat-value">GHC {{totalCost}}</h3>
-                    </div>
-                    <span>📦</span>
+        <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card p-3 d-flex align-items-center">
+                <div class="card-icon card-blue">📦</div>
+                <div class="text-center">
+                    <h6>Total Items</h6>
+                    <h5>{{addCommas(totalItems)}}</h5>
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card p-3 d-flex align-items-center">
+                <div class="card-icon card-blue">⚠️</div>
+                <div class="text-center">
+                    <h6>Low Stock</h6>
+                    <h5>{{addCommas(totalLowStocks)}}</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card p-3 d-flex align-items-center">
+                <div class="card-icon card-blue">📦</div>
+                <div class="text-center">
+                    <h6>Categories</h6>
+                    <h5>{{addCommas(totalCategories)}}</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card p-3 d-flex align-items-center">
+                <div class="card-icon card-blue">💵</div>
+                <div class="text-center">
+                    <h6>Total Value</h6>
+                    <h5>GHC {{addCommas(totalRevenue)}}</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card p-3 d-flex align-items-center">
+                <div class="card-icon card-blue">💵</div>
+                <div class="text-center">
+                    <h6>Total Cost</h6>
+                    <h5>GHC {{addCommas(totalCost)}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Search and Filter -->
         <div class="search-section">
@@ -110,9 +113,9 @@
                             <td>{{product.itemName}}</td>
                             <td>{{product.itemCode}}</td>
                             <td>{{product.category}}</td>
-                            <td>{{product.quantity}}</td>
-                            <td>{{product.costPrice}}</td>
-                            <td>{{product.sellingPrice}}</td>
+                            <td>{{addCommas(product.quantity)}}</td>
+                            <td>{{addCommas(product.costPrice)}}</td>
+                            <td>{{addCommas(product.sellingPrice)}}</td>
                             <td>
                                 <span class="status-badge" 
                                       [ngClass]="{'status-low': product.quantity <= product.reorderLevel, 
@@ -164,9 +167,9 @@
                             <td>{{product.itemName}}</td>
                             <td>{{product.itemCode}}</td>
                             <td>{{product.category}}</td>
-                            <td>{{product.quantity}}</td>
-                            <td>{{product.costPrice}}</td>
-                            <td>{{product.sellingPrice}}</td>
+                            <td>{{addCommas(product.quantity)}}</td>
+                            <td>{{addCommas(product.costPrice)}}</td>
+                            <td>{{addCommas(product.sellingPrice)}}</td>
                             <td><span class="status-badge status-low">Out of stock</span></td>
                         </tr>
                       }
@@ -345,8 +348,6 @@
     </div>
 </div>
 
-
-
-
+ </div>
 
 </div>

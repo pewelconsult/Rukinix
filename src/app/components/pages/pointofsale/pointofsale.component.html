@@ -119,6 +119,7 @@
               id="customerName" 
               [(ngModel)]="customerName" 
               class="payment-input"
+              required
             >
           </div>
           <div class="payment-summary">
@@ -137,8 +138,8 @@
       </div>
       <button 
         class="sale-btn"
-        [disabled]="!cartItems.length || !paymentMode"
-        [class.disabled]="!cartItems.length || !paymentMode"
+        [disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0"
+        [class.disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0"
         (click)="makeSale()"
       >
         Make Sale

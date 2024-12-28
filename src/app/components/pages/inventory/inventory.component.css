@@ -1,6 +1,7 @@
 .main-content {
-    margin-left: 270px;
+    margin-left: 250px;
     padding: 30px;
+    background-color: #ecf1f7;
 }
 
 .container {
@@ -53,36 +54,6 @@
 .btn-secondary {
     border: 1px solid #E5E7EB;
     background-color: white;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.stat-card {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.stat-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.stat-label {
-    color: #6B7280;
-    margin-bottom: 0.25rem;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: bold;
 }
 
 .search-section {
@@ -395,12 +366,6 @@ select.form-control {
         width: 100%;
         justify-content: flex-start;
     }
-    
-
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
-        gap: 0.75rem;
-    }
 
     .search-section {
         flex-direction: column;
@@ -432,9 +397,7 @@ select.form-control {
 
 
 @media (max-width: 480px) {
-    .stats-grid {
-        grid-template-columns: 1fr; /* Single column on mobile */
-    }
+   
     .main-content {
         margin-top: 60px; /* Match the body padding */
         padding: 15px;
@@ -491,3 +454,27 @@ select.form-control {
         margin: 0.5rem;
     }
 }
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(8, 0, 0, 0.2); /* Darker, more visible shadow */
+    border: none;
+    transition: all 0.3s ease; 
+    }
+    
+    .card:hover {
+    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3); /* Larger, darker shadow on hover */
+    transform: translateY(-5px); 
+    }
+
+    h5{
+        font-weight: bolder;
+        font-size: 20px;
+    }
+    h6{
+        font-weight: bolder;
+        font-size: 20px;
+    }
+    .card-icon{
+        font-size: 30px;
+    }
