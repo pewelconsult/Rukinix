@@ -7,46 +7,14 @@
             <i class="fas fa-user"></i>
         </div>
         <div class="profile-info">
-            <h1>John Doe</h1>
-            <p><i class="fas fa-briefcase"></i> Store Manager</p>
+            <h1>{{user.fullName}}</h1>
+            <p><i class="fas fa-briefcase"></i>{{user.role}}</p>
             <button class="edit-button">
                 <i class="fas fa-edit"></i> Edit Profile
             </button>
         </div>
     </div>
 
-    <div class="profile-stats">
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <h3>Total Sales Made</h3>
-            <p>GHC 125,430</p>
-            <div class="stat-trend positive">
-                <i class="fas fa-arrow-up"></i> 12% from last month
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-box"></i>
-            </div>
-            <h3>Orders Processed</h3>
-            <p>1,234</p>
-            <div class="stat-trend positive">
-                <i class="fas fa-arrow-up"></i> 8% from last month
-            </div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon">
-                <i class="fas fa-star"></i>
-            </div>
-            <h3>Average Rating</h3>
-            <p>4.8/5.0</p>
-            <div class="stat-trend neutral">
-                <i class="fas fa-minus"></i> Same as last month
-            </div>
-        </div>
-    </div>
 
     <div class="profile-details">
         <div class="detail-group">
@@ -54,15 +22,15 @@
             <div class="detail-row">
                 <div class="detail-item">
                     <label><i class="fas fa-user"></i> Full Name</label>
-                    <p>John Doe</p>
+                    <p>{{user.fullName}}</p>
                 </div>
                 <div class="detail-item">
                     <label><i class="fas fa-envelope"></i> Email</label>
-                    <p>john.doe&#64;rukinix.com</p>
+                    <p>{{user.email}}</p>
                 </div>
                 <div class="detail-item">
                     <label><i class="fas fa-phone"></i> Phone</label>
-                    <p>+233 20 123 4567</p>
+                    <p>{{user.phoneNumber}}</p>
                 </div>
             </div>
         </div>
@@ -72,15 +40,15 @@
             <div class="detail-row">
                 <div class="detail-item">
                     <label><i class="fas fa-id-badge"></i> Position</label>
-                    <p>Store Manager</p>
+                    <p>{{user.role}}</p>
                 </div>
                 <div class="detail-item">
                     <label><i class="fas fa-building"></i> Department</label>
                     <p>Sales</p>
                 </div>
                 <div class="detail-item">
-                    <label><i class="fas fa-calendar-alt"></i> Join Date</label>
-                    <p>January 15, 2023</p>
+                    <label><i class="fas fa-calendar-alt"></i>Date of Birth</label>
+                    <p>{{user.dateOfBirth}}</p>
                 </div>
             </div>
         </div>
