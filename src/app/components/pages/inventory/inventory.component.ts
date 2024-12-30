@@ -104,8 +104,6 @@ calculateTotals() {
   
   this.totalRevenue = this.allproducts.reduce((sum, product) => 
     sum + (product.sellingPrice * product.quantity), 0);
-  const reve = this.formatCurrency(this.totalRevenue).toString();
-  
 }
 
 
@@ -203,14 +201,19 @@ getAllCategories() {
   }
 
 
-  addCommas(value: number | string): string {
+  addCommas(value: number | string | null): string {
+    // Early return if value is null or undefined
+    if (value === null || value === undefined) {
+        return '0'; // or return '' or any default value you prefer
+    }
+
     const numericValue = typeof value === 'string' ? parseFloat(value) : value;
     if (isNaN(numericValue)) {
-      throw new Error('Input must be a valid number or numeric string');
+        return '0'; // Instead of throwing error, return a default value
     }
-    // Format the number with commas
+    
     return numericValue.toLocaleString();
-  }
+}
   
 
   onEdit(product: any) {

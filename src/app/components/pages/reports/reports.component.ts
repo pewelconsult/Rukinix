@@ -155,7 +155,7 @@ export class ReportsComponent implements OnInit{
           'Quantity': item.quantity,
           'Re-Order Level': item.reorderLevel,
           'Selling Price': item.sellingPrice,
-          'Entered By': item.createdBy
+          'Category': item.category
         }));
         fileName = 'inventory_report.xlsx';
       } else {
