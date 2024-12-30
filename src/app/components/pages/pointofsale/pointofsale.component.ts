@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { ProductService } from '../../../services/product.service';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ declare var bootstrap: any; // Declare Bootstrap for accessing its modal API.
   templateUrl: './pointofsale.component.html',
   styleUrl: './pointofsale.component.css'
 })
+
 export class PointofsaleComponent {
 
   searchTerm = '';
@@ -38,6 +39,8 @@ export class PointofsaleComponent {
   companyAddress = ""
   companyPhone = ""
 
+  private cdr = inject(ChangeDetectorRef)
+
   ngOnInit(): void {
     this.getAllProducts()
   }
@@ -57,6 +60,7 @@ export class PointofsaleComponent {
     this.http.get(this.baseurl.url+"products", {headers}).subscribe({
       next: (res: any) => {
         this.products = res.data;
+        console.log(this.products)
         this.placeholderCount = this.products.length;
         this.isLoading = false; // Set loading to false after data arrives
       },
@@ -92,37 +96,41 @@ export class PointofsaleComponent {
 
  
   addToCart(product: any) {
-    // Check if item already exists in cart
     const existingItem = this.cartItems.find(item => item.id === product.id);
     if (existingItem) {
-      // If item exists, increment quantity
       existingItem.quantity += 1;
     } else {
-      // If item doesn't exist, add it with quantity 1
       this.cartItems.push({
         id: product.id,
         itemName: product.itemName,
         sellingPrice: product.sellingPrice,
         quantity: 1,
-        category: product.catgory
+        category: product.category
       });
     }
     
-    this.calculateTotal();
+    this.updateCartTotals();
   }
+
+  
+  private updateCartTotals() {
+    const total = this.calculateTotal();
+    this.amount2BePaid = total;
+    this.amountPaid = total;
+    this.cdr.detectChanges();
+  }
+
 
   calculateTotal() {
-    const res = this.cartItems.reduce((total, item) => 
+    return this.cartItems.reduce((total, item) => 
       total + (item.sellingPrice * item.quantity), 0
     );
-    this.amount2BePaid = res;
-    this.amountPaid = res; // Set amountPaid to match the total
-    return res;
   }
 
-  // Add method to remove item from cart
+  // Modified removeFromCart method
   removeFromCart(itemId: number) {
     this.cartItems = this.cartItems.filter(item => item.id !== itemId);
+    this.updateCartTotals();
   }
 
   // Add methods to update quantity
@@ -132,19 +140,35 @@ export class PointofsaleComponent {
       item.quantity = Math.max(0, item.quantity + change);
       if (item.quantity === 0) {
         this.removeFromCart(itemId);
+      } else {
+        this.updateCartTotals();
+      }
+    }
+  }
+
+  // Modified updatePrice method
+  updatePrice(itemId: number, event: Event) {
+    const target = event.target as HTMLInputElement;
+    const newPrice = parseFloat(target.value);
+    
+    if (!isNaN(newPrice)) {
+      const item = this.cartItems.find(item => item.id === itemId);
+      if (item) {
+        item.sellingPrice = Math.max(0, newPrice);
+        this.updateCartTotals();
       }
     }
   }
 
   calculateChange(): number {
-    return this.amountPaid - this.calculateTotal();
+    return this.amountPaid - this.amount2BePaid;
   }
 
 
 
   makeSale(): void {
     if (this.isProcessing) return;
-    this.receiptNumber = 'INV-' + `INV-${uuidv4()}`;
+    this.receiptNumber = 'INV-' + `${uuidv4()}`;
     const saleData = {
       items: this.cartItems,
       total: this.calculateTotal(),
@@ -154,6 +178,7 @@ export class PointofsaleComponent {
       customerName: this.customerName,
       receiptNumber: this.receiptNumber
     };
+
     this.isProcessing = true;
     const headers = this.getAuthHeaders();
     saleData.receiptNumber = this.receiptNumber
@@ -161,6 +186,7 @@ export class PointofsaleComponent {
       next: (response: any) => {
         alert('Sale completed successfully');
         this.isProcessing = false;
+        this.getAllProducts()
         // Show the receipt modal
         this.getCompanyByName()
        const receiptModal = new bootstrap.Modal(document.getElementById('receiptModal'), {});
@@ -173,7 +199,7 @@ export class PointofsaleComponent {
     });
   }
 
-  private resetCart(): void {
+   resetCart(): void {
     this.cartItems = [];
     this.amountPaid = 0;
     this.customerName = '';
@@ -184,16 +210,28 @@ export class PointofsaleComponent {
   printReceipt(): void {
     const printContent = document.getElementById('receiptContent');
     const WindowPrt = window.open('', '', 'width=900,height=650');
+    
     if (WindowPrt && printContent) {
       WindowPrt.document.write(printContent.innerHTML);
       WindowPrt.document.close();
       WindowPrt.focus();
+      
+      // Add event listener for afterprint
+      WindowPrt.onafterprint = () => {
+        this.resetCart();
+        WindowPrt.close();
+      };
+  
+      // Add event listener for when window is closed without printing
+      WindowPrt.onbeforeunload = () => {
+        // Do nothing if window is closed without printing
+        WindowPrt.onafterprint = null; // Remove afterprint listener
+      };
+  
       WindowPrt.print();
-      WindowPrt.close();
-      this.resetCart();
     }
+  
   }
-
 
 
 

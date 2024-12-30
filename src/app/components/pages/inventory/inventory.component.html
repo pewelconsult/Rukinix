@@ -100,6 +100,7 @@
                         <th>Item Name</th>
                         <th>SKU</th>
                         <th>Category</th>
+                        <th>Brand</th>
                         <th>Stock</th>
                         <th>Cost Price (GHC)</th>
                         <th>Selling Price (GHC)</th>
@@ -113,6 +114,7 @@
                             <td>{{product.itemName}}</td>
                             <td>{{product.itemCode}}</td>
                             <td>{{product.category}}</td>
+                            <td>{{product.brand}}</td>
                             <td>{{addCommas(product.quantity)}}</td>
                             <td>{{addCommas(product.costPrice)}}</td>
                             <td>{{addCommas(product.sellingPrice)}}</td>
@@ -138,45 +140,38 @@
 
 
 
-         <!-- Inventory Table -->
-          <h3 class="low-stock-title">Low Stock Data</h3>
-        <div class="table-container">
-            @if (isLoading) {
-                <div class="text-center p-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Loading inventory items...</p>
-                </div>
-            } @else {
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>SKU</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Cost Price (GHC)</th>
-                        <th>Selling Price (GHC)</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (product of lowStockItems; track $index) {
-                        <tr>
-                            <td>{{product.itemName}}</td>
-                            <td>{{product.itemCode}}</td>
-                            <td>{{product.category}}</td>
-                            <td>{{addCommas(product.quantity)}}</td>
-                            <td>{{addCommas(product.costPrice)}}</td>
-                            <td>{{addCommas(product.sellingPrice)}}</td>
-                            <td><span class="status-badge status-low">Out of stock</span></td>
-                        </tr>
-                      }
-                </tbody>
-            </table>
-        }
-         </div>
+
+         <!-- Add this after your existing tables -->
+<h3 class="category-summary-title mt-4">Category Summary</h3>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Total Products</th>
+                <th>Total Quantity</th>
+                <th>Low Stock Items</th>
+                <th>Total Value (GHC)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (category of categorySummaries; track category.categoryName) {
+                <tr>
+                    <td>{{category.categoryName}}</td>
+                    <td>{{addCommas(category.productCount)}}</td>
+                    <td>{{addCommas(category.totalQuantity)}}</td>
+                    <td>
+                        <span class="status-badge" 
+                              [ngClass]="{'status-low': category.lowStockCount > 0, 'status-ok': category.lowStockCount === 0}">
+                            {{category.lowStockCount}}
+                        </span>
+                    </td>
+                    <td>{{addCommas(category.totalValue)}}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
          
          <!-- Modal for Adding Item -->
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">

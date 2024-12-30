@@ -200,6 +200,21 @@ tbody tr {
   margin-bottom: 0.5rem;
 }
 
+
+.price-input {
+  width: 80px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
 .payment-summary {
   display: flex;
   justify-content: space-between;

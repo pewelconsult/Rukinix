@@ -42,7 +42,6 @@ export class LoginComponent {
             localStorage.setItem('token_expiry', response.token_expiry);
             localStorage.setItem('user_role', response.userRole);
             localStorage.setItem('company_name', response.companyName);
-            alert('Login successful');
             if (response.userRole === 'Manager') {
               this.router.navigate(["storemanager"]);
             }else if (response.userRole === 'Admin') {
