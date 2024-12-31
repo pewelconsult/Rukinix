@@ -34,6 +34,21 @@ export class StoremanagerComponent implements OnInit{
     }
 
 
+    addCommas(value: number | string | null): string {
+      // Early return if value is null or undefined
+      if (value === null || value === undefined) {
+          return '0'; // or return '' or any default value you prefer
+      }
+  
+      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+      if (isNaN(numericValue)) {
+          return '0'; // Instead of throwing error, return a default value
+      }
+      
+      return numericValue.toLocaleString();
+  }
+
+
     getTotalRevenueForTheYear() {
       const currentYear = new Date().getFullYear();
       const startDate = `${currentYear}-01-01`;
@@ -52,11 +67,11 @@ export class StoremanagerComponent implements OnInit{
                   const sales = res.data.sales;
                   this.totalRevenue = sales.reduce((acc: number, sale: any) => acc + sale.total, 0);
               } else {
-                  alert("Failed to fetch sales data");
+                  //alert("Failed to fetch sales data");
               }
           },
           (err: any) => {
-              alert("Error fetching total revenue");
+              //alert("Error fetching total revenue");
           }
       );
   }
