@@ -12,8 +12,11 @@
         <select class="form-select" [(ngModel)] = "report.reportType" required>
           <option value="">Choose Report Type</option>
           <option value="Sales Report">Sales Report</option>
+          <option value="Expenses Report">Expenses Report</option>
+          <option value="Assets Report">Assets Report</option>
           <option value="Inventory Report">Inventory Report</option>
           <option value="Supplier Report">Supplier Report</option>
+          <option value="Profit or Loss">Profit or Loss Statement</option>
         </select>
         <button class="btn btn-primary" (click) = "onGenerateReport()">Generate Report</button>
       </div>

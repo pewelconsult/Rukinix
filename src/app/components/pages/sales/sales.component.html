@@ -47,34 +47,7 @@
       </div>
 
       <!-- Sales Table -->
-      <div class="table-responsive bg-white p-3 rounded shadow-sm">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr>
-              <th>No.</th>
-              <th>Product Name</th>
-              <th>Customer Name</th>
-              <th>Quantity</th>
-              <th>Total Amount (GHC)</th>
-              <th>Mode</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (sale of processedSales4Today; track $index) {
-            <tr>
-              <td>{{$index+1}}</td>
-              <td>{{sale.productName}}</td>
-              <td>{{sale.customerName}}</td>
-              <td>{{sale.quantity}}</td>
-              <td>{{sale.totalAmount}}</td>
-              <td>{{sale.paymentMode}}</td>
-              <td>{{sale.date}}</td>
-            </tr>
-          }
-          </tbody>
-        </table>
-      </div>
+      <app-sales-table [processedSales]="processedSales4Today"></app-sales-table>
     </div>
   
 

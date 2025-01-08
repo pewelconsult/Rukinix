@@ -1,0 +1,37 @@
+<!-- sales-table.component.html -->
+<div class="table-responsive bg-white p-3 rounded shadow-sm">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>No.</th>
+          <th>Product Name</th>
+          <th>Customer</th>
+          <th>Quantity</th>
+          <th>Amount</th>
+          <th>Mode</th>
+          <th>Date</th>
+          @if (isAdmin()) {
+          <th>Action</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (sale of processedSales; track $index) {
+        <tr>
+          <td>{{$index+1}}</td>
+          <td>{{sale.productName}}</td>
+          <td>{{sale.customerName}}</td>
+          <td>{{sale.quantity}}</td>
+          <td>GHC {{addCommas(sale.totalAmount)}}</td>
+          <td>{{sale.paymentMode}}</td>
+          <td>{{sale.date}}</td>
+          @if (isAdmin()) {
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="onDeleteSale(sale.saleId, sale.productCode)">Delete</button>
+          </td>
+        }
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>

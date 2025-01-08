@@ -3,6 +3,7 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseUrl } from '../../../interfaces/classes/BaseUrl';
 import { ProcessedSale, Sale } from '../../../interfaces/sales';
+import { SalesTableComponent } from './sales-table/sales-table.component';
 
 
 
@@ -10,7 +11,7 @@ import { ProcessedSale, Sale } from '../../../interfaces/sales';
 @Component({
   selector: 'app-sales',
   standalone: true,
-  imports: [SidebarComponent],
+  imports: [SidebarComponent, SalesTableComponent],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -57,9 +58,12 @@ export class SalesComponent implements OnInit {
                     productName: item.itemName,
                     customerName: sale.customerName,
                     quantity: item.quantity,
+                    sellingPrice: item.sellingPrice,
                     totalAmount: item.sellingPrice * item.quantity,
                     paymentMode: sale.paymentMode,
                     date: new Date(sale.createOn).toLocaleDateString(),
+                    createdBy: sale.createdBy,
+                    saleId: sale.id
                 }))
             ).flat();
 
@@ -87,15 +91,19 @@ getSaleForToday() {
   this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe({
       next: (res: any) => {
           this.mainSales = res.data.sales;
+          //console.log(this.mainSales)
           const processed = this.mainSales.map(sale => 
               sale.items.map(item => ({
                   productCode: item.id,
                   productName: item.itemName,
                   customerName: sale.customerName,
                   quantity: item.quantity,
+                  sellingPrice: item.sellingPrice,
                   totalAmount: item.sellingPrice * item.quantity,
                   paymentMode: sale.paymentMode,
                   date: new Date(sale.createOn).toLocaleDateString(),
+                  createdBy: sale.createdBy,
+                  saleId: sale.id
               }))
           ).flat();
 
@@ -133,9 +141,12 @@ getSalesForThisWeek() {
                   productName: item.itemName,
                   customerName: sale.customerName,
                   quantity: item.quantity,
+                  sellingPrice: item.sellingPrice,
                   totalAmount: item.sellingPrice * item.quantity,
                   paymentMode: sale.paymentMode,
                   date: new Date(sale.createOn).toLocaleDateString(),
+                  createdBy: sale.createdBy,
+                  saleId: sale.id
               }))
           ).flat();
  
@@ -171,9 +182,12 @@ getSalesForThisWeek() {
                   productName: item.itemName,
                   customerName: sale.customerName,
                   quantity: item.quantity,
+                  sellingPrice: item.sellingPrice,
                   totalAmount: item.sellingPrice * item.quantity,
                   paymentMode: sale.paymentMode,
                   date: new Date(sale.createOn).toLocaleDateString(),
+                  createdBy: sale.createdBy,
+                  saleId: sale.id
               }))
           ).flat();
  

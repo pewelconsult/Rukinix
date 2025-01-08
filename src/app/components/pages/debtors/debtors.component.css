@@ -1,254 +1,261 @@
 /* Main Content */
 .main-content {
-    margin-left: 250px;
-    padding: 30px;
-  }
-  
-  /* Glassmorphism Card */
-  .glassmorphism-card {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    color: #333;
-  }
-  
-  .card-header {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  /* Table */
-  .table-hover tbody tr:hover {
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-  
-  .table thead {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .table th,
-  .table td {
-    vertical-align: middle;
-  }
-  
-  .btn-primary, .btn-danger {
-    transition: transform 0.2s ease, background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .btn-danger:hover {
-    background-color: #dc3545;
-    transform: scale(1.05);
-  }
-  
-  .fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Base styles */
-.main-content {
-    margin-left: 250px;
-    padding: 30px;
-    transition: margin-left 0.3s ease;
-  }
-  
-  /* Glassmorphism Card */
-  .glassmorphism-card {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Table Container */
-  .table-responsive {
-    overflow-x: auto;
-    border-radius: 15px;
-  }
-  
-  /* Responsive breakpoints */
-  @media screen and (max-width: 1200px) {
-    .main-content {
-      margin-left: 220px;
-      padding: 25px;
-      margin-top: 60px;
-    }
-    
-    .btn-lg {
-      padding: 0.5rem 1rem;
-      font-size: 1.1rem;
-    }
-  }
-  
-  @media screen and (max-width: 992px) {
-    .main-content {
+  margin-left: 250px;
+  padding: 30px;
+  background-color: #ecf1f7;
+}
+
+.container {
+  padding: 1.5rem;
+  max-width: 100%;
+}
+
+/* Search Section */
+.search-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9CA3AF;
+}
+
+/* Table Styling */
+.table-container {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+th {
+  background-color: #1f2937;
+  color: white;
+}
+
+tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Action Icons */
+.view-icon,
+.reminder-icon {
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.view-icon {
+  color: #3B82F6;
+}
+
+.reminder-icon {
+  color: #10B981;
+}
+
+.view-icon:hover {
+  color: #2563EB;
+}
+
+.reminder-icon:hover {
+  color: #059669;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 0.5rem;
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.modal-body .form-label {
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
       margin-left: 0;
-      padding: 20px;
-    }
-    
-    .card-header {
-      font-size: 1.1rem;
-    }
-    
-    /* Modal adjustments */
-    .modal-dialog {
-      margin: 0.5rem;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .main-content {
       padding: 15px;
-    }
-    
-    h2 {
-      font-size: 1.5rem;
-    }
-    
-    /* Table adjustments */
-    .table th,
-    .table td {
-      padding: 0.5rem;
-      font-size: 0.9rem;
-    }
-    
-    /* Button adjustments */
-    .btn-sm {
-      display: block;
+  }
+
+  .search-section {
+      flex-direction: column;
+  }
+
+  .search-container {
       width: 100%;
-      margin-bottom: 0.25rem;
-    }
-    
-    /* Modal form */
-    .modal-body {
-      padding: 1rem;
-    }
-    
-    .form-label {
-      font-size: 0.9rem;
-    }
   }
-  
-  @media screen and (max-width: 576px) {
-    .main-content {
-      padding: 10px;
-    }
-    
-    .card-header {
-      padding: 0.75rem;
-      font-size: 1rem;
-    }
-    
-    /* Table modifications */
-    .table thead {
-      display: none; /* Hide headers on very small screens */
-    }
-    
-    .table tbody tr {
-      display: block;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #dee2e6;
-    }
-    
-    .table tbody td {
-      display: block;
-      text-align: right;
+
+  table {
+      font-size: 0.875rem;
+  }
+
+  th, td {
       padding: 0.5rem;
-      position: relative;
-      padding-left: 50%;
-    }
-    
-    .table tbody td:before {
-      content: attr(data-label);
-      position: absolute;
-      left: 0;
-      width: 45%;
-      padding-left: 0.5rem;
-      font-weight: bold;
-      text-align: left;
-    }
-    
-    /* Modal adjustments */
-    .modal-dialog {
-      margin: 0;
-      max-width: 100%;
-      height: 100%;
-    }
-    
-    .modal-content {
-      border-radius: 0;
-      min-height: 100%;
-    }
-    
-    .row {
-      margin: 0;
-    }
-    
-    .col-md-6 {
-      padding: 0;
-      margin-bottom: 1rem;
-    }
   }
-  
-  /* Print styles */
-  @media print {
-    .main-content {
-      margin-left: 0;
-      padding: 0;
-    }
-    
-    .btn,
-    .modal,
-    .btn-close {
-      display: none !important;
-    }
-    
-    .glassmorphism-card {
-      box-shadow: none;
-      border: 1px solid #dee2e6;
-    }
-    
-    .table th,
-    .table td {
-      padding: 0.5rem;
-    }
-  }
-  
-  /* Animation */
-  .fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.2); 
+  border-radius: 15px; 
+  backdrop-filter: blur(10px); 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.3); 
+  overflow: hidden; 
+}
+
+.modal-header {
+  background: rgba(255, 255, 255, 0.25); 
+  backdrop-filter: blur(5px); 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  padding: 1rem; /* Padding inside the header */
+  border-radius: 15px 15px 0 0; 
+}
+
+.modal-title {
+  font-weight: 600; /* Bold text */
+  color: #1a1a1a; /* Dark text color */
+}
+
+.modal-body {
+  padding: 1rem 1.5rem; /* Padding inside the body */
+}
+
+.modal-body .form-label {
+  color: #0c0000; /* Dark text color */
+  font-size: 1rem; /* Larger font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 5px; /* Space below labels */
+}
+
+/* Modal Footer Styling */
+.modal-footer {
+  background: rgba(255, 255, 255, 0.15); /* Semi-transparent background */
+  backdrop-filter: blur(5px); /* Subtle blur */
+  border-top: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  padding: 0.75rem; /* Padding inside the footer */
+  border-radius: 0 0 15px 15px; /* Rounded bottom corners */
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+/* Modal Button Styling */
+.modal-footer .btn {
+  margin-left: 0.5rem; /* Space between buttons */
+  padding: 0.5rem 1.25rem; /* Padding inside buttons */
+  border-radius: 5px; /* Rounded corners */
+  transition: all 0.3s ease-in-out; /* Smooth hover transition */
+}
+
+.modal-footer .btn-primary {
+  background: rgba(63, 94, 251, 0.8); /* Blue gradient */
+  border: none; /* Remove border */
+  color: white; /* White text */
+  font-weight: bold; /* Bold text */
+}
+
+.modal-footer .btn-dark {
+  background: rgba(0, 0, 0, 0.6); /* Dark semi-transparent */
+  border: none; /* Remove border */
+  color: white; /* White text */
+}
+
+.modal-footer .btn-primary:hover,
+.modal-footer .btn-dark:hover {
+  background: rgba(63, 94, 251, 1); /* Solid blue on hover */
+  transform: translateY(-3px); /* Slight lift on hover */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow on hover */
+}
+
+/* Input Fields Styling */
+.modal-body .form-control {
+  background: rgba(255, 255, 255, 0.1); /* Light background */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  color: #000; /* Black text */
+  padding: 0.75rem; /* Padding inside inputs */
+  backdrop-filter: blur(5px); /* Subtle blur */
+  transition: all 0.3s ease; /* Smooth hover transition */
+}
+
+.modal-body .form-control:focus {
+  border-color: rgba(63, 94, 251, 0.8); /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(63, 94, 251, 0.5); /* Blue shadow on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Form Layout Styling */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 1rem; /* Space between columns */
+  margin-bottom: 1rem; /* Space below the row */
+}
+
+.form-control {
+  width: 100%; /* Full width */
+  padding: 0.625rem 0.875rem; /* Padding inside inputs */
+  border: 1px solid #dee2e6; /* Light border */
+  border-radius: 0.5rem; /* Rounded corners */
+  font-size: 0.9375rem; /* Smaller font size */
+  transition: border-color 0.2s ease; /* Smooth hover transition */
+}
+
+.form-control:focus {
+  border-color: #3B82F6; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); /* Blue shadow on focus */
+}
+
+/* Select Styling */
+select.form-control {
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236B7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); /* Custom arrow */
+  background-repeat: no-repeat; /* Prevent repeating */
+  background-position: right 0.875rem center; /* Position the arrow */
+  background-size: 12px; /* Arrow size */
+  padding-right: 2.5rem; /* Space for the arrow */
+}
+
+.form-label {
+  display: block; /* Block-level element */
+  margin-bottom: 0.5rem; /* Space below labels */
+  font-weight: 500; /* Medium font weight */
+  color: #4b5563; /* Dark gray text */
+  font-size: 0.875rem; /* Smaller font size */
+}

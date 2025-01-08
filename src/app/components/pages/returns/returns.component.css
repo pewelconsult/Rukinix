@@ -7,20 +7,6 @@
     border-radius: 10px;
   }
   
-  /* Glassmorphism Card */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .glass-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  }
   
   .card-header {
     background-color: #007bff;
@@ -36,7 +22,7 @@
     padding: 0; /* Remove default card-body padding */
     overflow: hidden; /* Ensures everything stays within bounds */
   }
-  
+
 
   .table-responsive {
     position: relative;
@@ -77,14 +63,14 @@
     position: sticky;
     top: 0;
     background-color: #007bff;
-    z-index: 1;
+  
   }
   
   .table thead th {
     position: sticky;
     top: 0;
     background-color: #007bff;
-    z-index: 1;
+    
     padding: 12px;
     border-bottom: 2px solid #0056b3;
   }
@@ -115,6 +101,15 @@
   .table th:nth-child(6),
   .table td:nth-child(6) { min-width: 100px; } /* Actions */
   
+  .modal {
+    z-index: 1050; /* Bootstrap's default */
+}
+
+.modal-backdrop {
+    z-index: 1; /* Ensure backdrop is below the modal */
+}
+
+
   /* Button Styling */
   .btn-primary, .btn-danger, .btn-success {
     transition: background-color 0.3s ease, transform 0.2s ease;

@@ -24,6 +24,7 @@ import { adminGuard } from './guard/admin.guard';
 import { managerGuard } from './guard/manager.guard';
 import { AssetsComponent } from './components/pages/assets/assets.component';
 import { ExpensesComponent } from './components/pages/expenses/expenses.component';
+import { LiabilitiesComponent } from './components/pages/liabilities/liabilities.component';
 
 export const routes: Routes = [
     {
@@ -119,6 +120,12 @@ export const routes: Routes = [
     {
         path: 'expenses', 
         component: ExpensesComponent,
+        canActivate: [authGuard]
+    },
+
+    {
+        path: 'liabilities', 
+        component: LiabilitiesComponent,
         canActivate: [authGuard]
     },
 

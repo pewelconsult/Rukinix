@@ -60,7 +60,6 @@ export class PointofsaleComponent {
     this.http.get(this.baseurl.url+"products", {headers}).subscribe({
       next: (res: any) => {
         this.products = res.data;
-        console.log(this.products)
         this.placeholderCount = this.products.length;
         this.isLoading = false; // Set loading to false after data arrives
       },
@@ -168,7 +167,7 @@ export class PointofsaleComponent {
 
   makeSale(): void {
     if (this.isProcessing) return;
-    this.receiptNumber = 'INV-' + `${uuidv4()}`;
+    this.receiptNumber = `${uuidv4()}`;
     const saleData = {
       items: this.cartItems,
       total: this.calculateTotal(),
@@ -209,30 +208,184 @@ export class PointofsaleComponent {
 
   printReceipt(): void {
     const printContent = document.getElementById('receiptContent');
-    const WindowPrt = window.open('', '', 'width=900,height=650');
+    const originalStyles = document.getElementsByTagName('style');
+    const cssLinks = document.getElementsByTagName('link');
+    
+    const WindowPrt = window.open('', '', 'width=250,height=auto');
     
     if (WindowPrt && printContent) {
-      WindowPrt.document.write(printContent.innerHTML);
-      WindowPrt.document.close();
-      WindowPrt.focus();
+      WindowPrt.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Print Receipt</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+      `);
+  
+      // Copy stylesheets and styles as before
+      for (let i = 0; i < cssLinks.length; i++) {
+        if (cssLinks[i].rel === 'stylesheet') {
+          WindowPrt.document.write(cssLinks[i].outerHTML);
+        }
+      }
+  
+      for (let i = 0; i < originalStyles.length; i++) {
+        WindowPrt.document.write(originalStyles[i].outerHTML);
+      }
+  
+      WindowPrt.document.write(`
+        <style>
+          @page {
+            margin: 0;
+            padding: 0;
+            size: 72mm auto;
+          }
+          
+          body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background: white;
+          }
+          
+          #receiptContent {
+            width: 90%;
+            max-width: none;
+            margin: 0 auto;
+            padding: 0 6mm;
+            background: white;
+            font-family: 'Courier New', monospace;
+            font-size: 13px; /* Consistent font size */
+            line-height: 1.3; /* Consistent line height */
+            box-sizing: border-box;
+          }
+          
+          .receipt-items {
+            width: 100%;
+            padding: 0 2mm;
+          }
+          
+          /* Modified item row to allow wrapping */
+          .item-row {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 4px;
+            margin: 2px 0;
+            padding: 0 1mm;
+            font-weight: bold; /* Bold font for items */
+          }
+          
+          /* Header row stays on one line */
+          .item-header {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 4px;
+            margin: 2px 0;
+            padding: 0 1mm;
+            white-space: nowrap;
+            font-weight: bold; /* Bold font for headers */
+          }
+          
+          /* Allow item name to wrap */
+          .item-name {
+            padding-right: 6px;
+            white-space: normal;
+            word-wrap: break-word;
+            min-width: 0;
+          }
+          
+          .item-qty {
+            width: 35px;
+            text-align: right;
+            padding-right: 6px;
+          }
+          
+          .item-price {
+            width: 50px;
+            text-align: right;
+            padding-right: 6px;
+          }
+          
+          .item-total {
+            width: 50px;
+            text-align: right;
+          }
+          
+          .receipt-divider {
+            width: 100%;
+            overflow: hidden;
+            padding: 0 2mm;
+            font-weight: bold; /* Bold font for dividers */
+          }
+          
+          .total-row {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2mm;
+            margin: 1px 0;
+            font-weight: bold; /* Bold font for totals */
+          }
+          
+          .receipt-header {
+            text-align: center;
+            padding: 0 2mm;
+          }
+          
+          .receipt-footer {
+            text-align: center;
+            padding: 0 2mm;
+            font-weight: bold; /* Bold font for footer */
+          }
+          
+          @media print {
+            * {
+              background: white !important;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            
+            #receiptContent {
+              width: 90%;
+              margin: 0 auto;
+              padding: 0 6mm;
+            }
+          }
+        </style>
+      `);
+  
+      WindowPrt.document.write('</head><body>');
       
-      // Add event listener for afterprint
-      WindowPrt.onafterprint = () => {
-        this.resetCart();
-        WindowPrt.close();
-      };
+      WindowPrt.document.write(`
+        <div id="receiptContent">
+          ${printContent.innerHTML}
+        </div>
+      `);
+      
+      WindowPrt.document.write('</body></html>');
+      WindowPrt.document.close();
+      
+      WindowPrt.onload = () => {
+        WindowPrt.focus();
+        
+        WindowPrt.onafterprint = () => {
+          this.resetCart();
+          WindowPrt.close();
+        };
   
-      // Add event listener for when window is closed without printing
-      WindowPrt.onbeforeunload = () => {
-        // Do nothing if window is closed without printing
-        WindowPrt.onafterprint = null; // Remove afterprint listener
-      };
+        WindowPrt.onbeforeunload = () => {
+          WindowPrt.onafterprint = null;
+        };
   
-      WindowPrt.print();
+        setTimeout(() => {
+          WindowPrt.print();
+        }, 300);
+      };
     }
-  
   }
-
 
 
 }

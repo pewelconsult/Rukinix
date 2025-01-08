@@ -1,2 +1,79 @@
-<!-- Sidebar -->
-<app-sidebar></app-sidebar>
+<app-sidebar></app-sidebar> <br><br>
+
+<div class="main-content">
+  <div class="container">
+    <!-- Header -->
+    <div class="text-center mb-4">
+      <h1 class="display-5 fw-bold text-primary">Expense Tracker</h1>
+      <h5 class="text-secondary">Track your expenses efficiently and beautifully.</h5>
+    </div>
+
+    <!-- Add Expense Section -->
+    <div class="card expense-card mb-4">
+      <div class="card-body">
+        <h5 class="card-title text-primary">Add Expense</h5>
+        <form>
+          <div class="row g-3">
+            <div class="col-12 col-md-5">
+              <input type="text" class="form-control" placeholder="Description" required [(ngModel)]="expense.item" name="item">
+            </div>
+            <div class="col-12 col-md-3">
+              <input type="number" class="form-control" placeholder="Amount" required [(ngModel)]="expense.amount" name="amount">
+            </div>
+            <div class="col-12 col-md-3">
+              <select class="form-select" required [(ngModel)]="expense.category" name="category">
+                <option value="" selected disabled>Category</option>
+                <option value="Re-Stock">Re-Stock</option>
+                <option value="Utility">Utility</option>
+                <option value="Salaries">Salaries</option>
+                <option value="Asset">Asset</option>
+                <option value="Operational">Operational</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-1">
+              <button type="button" class="btn btn-primary w-100" (click)="onAddExpense()">Add</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Expense List Section -->
+    <div class="card expense-card">
+      <div class="card-body">
+        <h2 class="card-title text-primary text-center">Expense List for the Month</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-primary">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Category</th>
+                <th scope="col">By</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Static Rows -->
+               @for (expense of expenses; track $index) {
+              <tr>
+                <th scope="row">{{$index+1}}</th>
+                <td>{{expense.createdAt}}</td>
+                <td>{{expense.item}}</td>
+                <td>{{addCommas(expense.amount)}}</td>
+                <td>{{expense.category}}</td>
+                <td>{{expense.createdBy}}</td>
+              </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+        <div class="mt-3 total text-center">
+          <h3 class="text">Total Expenses: GHC {{addCommas(totalExpenses)}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

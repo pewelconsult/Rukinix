@@ -32,7 +32,6 @@ export class UserprofileComponent implements OnInit{
   getUser() {
     const headers = this.getAuthHeaders();
     this.http.get(this.baseurl.url + "user", { headers }).subscribe((res: any) => {
-        console.log(res)
         this.user = res
     });
   }

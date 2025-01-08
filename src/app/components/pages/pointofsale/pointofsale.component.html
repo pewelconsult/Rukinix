@@ -25,7 +25,7 @@
         } @else {
           <div class="product-grid">
             @for (product of filteredProducts; track product.id) {
-              @if (product.quantity > 1) {
+              @if (product.quantity > 0) {
               <div class="product-card" (click)="addToCart(product)">
                 <div class="product-name">{{product.itemName}}</div>
                 <div class="product-price">GHS {{product.sellingPrice}}</div>
@@ -172,7 +172,7 @@
 
 
 
-<!-- Receipt Modal -->
+
 <!-- Receipt Modal Content -->
 <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
   <div class="modal-dialog">

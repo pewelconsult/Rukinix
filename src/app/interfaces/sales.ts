@@ -12,6 +12,7 @@ export interface SaleItem {
     customerName: string;
     paymentMode: string;
     createOn: string;
+    createdBy: string
   }
   
   export interface ProcessedSale {
@@ -19,7 +20,10 @@ export interface SaleItem {
     productName: string;
     customerName: string;
     quantity: number;
+    sellingPrice: number;
     totalAmount: number;
     paymentMode: string;
     date: string;
+    createdBy: string;
+    saleId: string;
   }

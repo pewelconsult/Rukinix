@@ -25,6 +25,7 @@ export class InventoryComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     try {
       await this.loadAllData();
+      await this.getAllProducts()
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -208,15 +209,10 @@ getAllProducts() {
 
 private sortProducts(products: any[]): any[] {
   return [...products].sort((a, b) => {
-      // First sort by category
       const categoryComparison = a.category.localeCompare(b.category);
-      
-      // If categories are the same, sort by brand
       if (categoryComparison === 0) {
           return a.brand.localeCompare(b.brand);
       }
-      
-      // Return category comparison if categories are different
       return categoryComparison;
   });
 }

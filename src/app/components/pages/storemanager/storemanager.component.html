@@ -12,38 +12,38 @@
     <!-- Key Statistics Cards -->
     <div class="row mb-4">
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card1">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
-                    <h6>Total Revenue</h6>
+                    <h6>Sales for {{thisCurrentYear}}</h6>
                     <h5>GHC {{addCommas(totalRevenue)}}</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card2">
                 <div class="card-icon card-green">📦</div>
                 <div class="text-center">
                     <h6>Total Products</h6>
-                    <h5>342</h5>
+                    <h5>{{addCommas(totalItems)}}</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card3">
                 <div class="card-icon card-yellow">🛒</div>
                 <div class="text-center">
-                    <h6>Pending Orders</h6>
-                    <h5>24</h5>
+                    <h6>My Debtors</h6>
+                    <h5>{{addCommas(totalDebts)}}</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card4">
                 <div class="card-icon card-red">⚠️</div>
                 <div class="text-center">
                     <h6>Low Stock Items</h6>
-                    <h5>7</h5>
+                    <h5>{{totalLowStocks}}</h5>
                 </div>
             </div>
         </div>
@@ -51,184 +51,134 @@
 
     <div class="row mb-4">
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card5">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
-                    <h6>Sales for the Weekly</h6>
-                    <h5>GHC 15,230</h5>
+                    <h6>Sales this Week</h6>
+                    <h5>GHC {{addCommas(salesForTheWeek)}}</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card6">
                 <div class="card-icon card-green">📦</div>
                 <div class="text-center">
                     <h6>Today's Sales</h6>
-                    <h5>GHC 2,450</h5>
+                    <h5>GHC {{addCommas(salesForToday)}}</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card7">
                 <div class="card-icon card-yellow">🛒</div>
                 <div class="text-center">
-                    <h6>Today's Products</h6>
-                    <h5>342</h5>
+                    <h6>My Liabilities</h6>
+                    <h5>0</h5>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card8">
                 <div class="card-icon card-red">📦</div>
                 <div class="text-center">
-                    <h6>Returns</h6>
-                    <h5>1,000</h5>
+                    <h6>Sales for the Month</h6>
+                    <h5>GHC {{addCommas(salesForTheMonth)}}</h5>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Charts and Tables -->
-    <div class="row g-4">
-        <!-- Sales Overview Chart -->
-        <div class="col-lg-6 chart-container">
-            <h5 class="text-center" style="font-weight: bold;">Sales Overview</h5>
-            <canvas id="salesOverviewChart" style="width: 200%; max-width: 400px; height: auto;"></canvas>
-        </div>
+ <!-- Charts and Tables -->
+<div class="row g-4">
+    <!-- Sales Overview Chart -->
     
-        <!-- Orders Summary Chart -->
-        <div class="col-lg-6 chart-container">
-            <h5 class="text-center" style="font-weight: bold;">Orders Summary</h5>
-            <canvas id="ordersSummaryChart" style="width: 200%; max-width: 400px; height: auto;"></canvas>
-        </div>
-    </div><br><br>
 
+    
+</div>
+<br><br>
 
-    <!-- Top 10 Sales Table -->
-    <div class="row mt-4">
-        <div class="col-lg-12 table-container">
-            <h5 class="text-center" style="font-weight: bolder; font-size: 40px; color: rgb(3, 28, 80); font-family: 'Courier New', Courier, monospace;">Top 10 Sales</h5>
-            <ul class="nav nav-tabs" id="salesTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="day-tab" data-bs-toggle="tab" href="#day" role="tab" aria-controls="day" aria-selected="true">Daily</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="week-tab" data-bs-toggle="tab" href="#week" role="tab" aria-controls="week" aria-selected="false">Weekly</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="month-tab" data-bs-toggle="tab" href="#month" role="tab" aria-controls="month" aria-selected="false">Monthly</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="salesTabContent">
-                <div class="tab-pane fade show active" id="day" role="tabpanel" aria-labelledby="day-tab">
-                    <div class="container">
-                        <div class="sales-table">
+        <!-- Top 10 Sales Table -->
+        <div class="row mt-4">
+            <div class="col-lg-12 table-container">
+                <h5 class="text-center heading">Top 10 Sales</h5> <br>
+                <ul class="nav nav-tabs" id="salesTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="day-tab" data-bs-toggle="tab" href="#day" role="tab" aria-controls="day" aria-selected="true">Daily</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="week-tab" data-bs-toggle="tab" href="#week" role="tab" aria-controls="week" aria-selected="false">Weekly</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="month-tab" data-bs-toggle="tab" href="#month" role="tab" aria-controls="month" aria-selected="false">Monthly</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="salesTabContent">
+                    <div class="tab-pane fade show active" id="day" role="tabpanel" aria-labelledby="day-tab">
+                        <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Product</th>
                                         <th>Quantity</th>
-                                        <th>Date</th>
+                                        <th>Category</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @for (item of top10Sales4Today; track $index) {
                                     <tr>
-                                        <td>Smartphone</td>
-                                        <td>Electronics</td>
-                                        <td>14 - 05 - 2025</td>
+                                        <td>{{item.itemName}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.category}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Wireless Headphones</td>
-                                        <td>Accessories</td>
-                                        <td>14 - 05 - 2025</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Laptop</td>
-                                        <td>Computers</td>
-                                        <td>14 - 05 - 2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tablet</td>
-                                        <td>Electronics</td>
-                                        <td>14 - 05 - 2025</td>
-                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="week" role="tabpanel" aria-labelledby="week-tab">
-                    <div class="container">
-                        <div class="sales-table">
+                    <div class="tab-pane fade" id="week" role="tabpanel" aria-labelledby="week-tab">
+                        <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
+                                        <th>No.</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
-                                        <th>Weeks</th>
+                                        <th>Category</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @for (item of top10Sales4TheWeek; track $index) {
                                     <tr>
-                                        <td>Smartphone</td>
-                                        <td>Electronics</td>
-                                        <td>Week1</td>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.itemName}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.category}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Wireless Headphones</td>
-                                        <td>Accessories</td>
-                                        <td>Week2</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Laptop</td>
-                                        <td>Computers</td>
-                                        <td>Week4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tablet</td>
-                                        <td>Electronics</td>
-                                        <td>Week5</td>
-                                    </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="month" role="tabpanel" aria-labelledby="month-tab">
-                    <div class="container">
-                        <div class="sales-table">
+                    <div class="tab-pane fade" id="month" role="tabpanel" aria-labelledby="month-tab">
+                        <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
+                                        <th>No.</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
-                                        <th>Month</th>
+                                        <th>Category</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @for (item of top10Sales4TheMonth; track $index) {
                                     <tr>
-                                        <td>Smartphone</td>
-                                        <td>Electronics</td>
-                                        <td>December 2025</td>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.itemName}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>{{item.category}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Wireless Headphones</td>
-                                        <td>Accessories</td>
-                                        <td>January 2025</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Laptop</td>
-                                        <td>Computers</td>
-                                        <td>March 2025</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tablet</td>
-                                        <td>Electronics</td>
-                                        <td>April 2025</td>
-                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -236,5 +186,28 @@
                 </div>
             </div>
         </div>
-    </div> 
+
+    <div class="table-container">
+        <h1 class="table-title text-dark text-center heading">Sales Overview for the Day</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Product Category</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(item of salesOverviewForTheDayArray; track $index) {
+                <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.category}}</td>
+                    <td>{{addCommas(item.totalSales)}}</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+

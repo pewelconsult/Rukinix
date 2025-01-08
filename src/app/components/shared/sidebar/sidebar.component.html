@@ -23,35 +23,30 @@
         <a routerLink="/sales" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">🛒</span> Sales
         </a>
-        <a routerLink="/orders" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">📑</span> Orders
-        </a>
         <a routerLink="/suppliers" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">🚛</span> Suppliers
+        </a>
+        <a routerLink="/expenses" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">💸</span> Expenses
         </a>
         <a routerLink="/pointofsale" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">💰</span> Point of Sale
         </a>
         <a routerLink="/debtors" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">👜</span> Debtors
+            <span class="sidebar-icon">💵</span> Debtors
         </a>
-        <a routerLink="/expenses" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">👜</span> Expenses
-        </a>
+        
         <a routerLink="/assets" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">👜</span> Assets
+            <span class="sidebar-icon">📊</span> Assets
         </a>
-        <a routerLink="/returns" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">↩️</span> Returns
-        </a>
+       
+        
         @if (isAdmin()) {
         <a routerLink="/reports" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">📊</span> Reports
         </a>
        }
-        <a routerLink="/calculators" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">🧮</span> Calculators
-        </a>
+       
         <button  class="nav-link" (click) = "onLogOut()">
             <span class="sidebar-icon">🚪</span> Logout
         </button>

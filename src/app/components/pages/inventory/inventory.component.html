@@ -22,7 +22,7 @@
 
         <div class="row mb-4">
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card1">
                 <div class="card-icon card-blue">📦</div>
                 <div class="text-center">
                     <h6>Total Items</h6>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card2">
                 <div class="card-icon card-blue">⚠️</div>
                 <div class="text-center">
                     <h6>Low Stock</h6>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card3">
                 <div class="card-icon card-blue">📦</div>
                 <div class="text-center">
                     <h6>Categories</h6>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card4">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
                     <h6>Total Value</h6>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="col-lg-3 col-md-6 mb-3">
-            <div class="card p-3 d-flex align-items-center">
+            <div class="card p-3 d-flex align-items-center card5">
                 <div class="card-icon card-blue">💵</div>
                 <div class="text-center">
                     <h6>Total Cost</h6>
@@ -84,95 +84,103 @@
             </button>
         </div>
 
+
         <!-- Inventory Table -->
-        <div class="table-container">
-            @if (isLoading) {
-                <div class="text-center p-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-2">Loading inventory items...</p>
-                </div>
-            } @else {
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>SKU</th>
-                        <th>Category</th>
-                        <th>Brand</th>
-                        <th>Stock</th>
-                        <th>Cost Price (GHC)</th>
-                        <th>Selling Price (GHC)</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (product of filteredProducts; track $index) {
-                        <tr>
-                            <td>{{product.itemName}}</td>
-                            <td>{{product.itemCode}}</td>
-                            <td>{{product.category}}</td>
-                            <td>{{product.brand}}</td>
-                            <td>{{addCommas(product.quantity)}}</td>
-                            <td>{{addCommas(product.costPrice)}}</td>
-                            <td>{{addCommas(product.sellingPrice)}}</td>
-                            <td>
-                                <span class="status-badge" 
-                                      [ngClass]="{'status-low': product.quantity <= product.reorderLevel, 
-                                                 'status-ok': product.quantity > product.reorderLevel}">
-                                    {{product.quantity <= product.reorderLevel ? 'Low Stock' : 'In Stock'}}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#editItemModal" (click)="onEdit(product)">Edit</button>
-                                <button class="delete-btn" (click) = "deleteProduct(product.id)">Delete</button>
-                            </td>
-                        </tr>
-                      }
-                </tbody>
-            </table>
-        }
-         </div>
+<div class="table-container">
+    @if (isLoading) {
+        <div class="text-center p-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading inventory items...</p>
+        </div>
+    } @else {
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col" style="font-size: 1.1rem;">Item Name</th>
+                <th scope="col" style="font-size: 1.1rem;">SKU</th>
+                <th scope="col" style="font-size: 1.1rem;">Category</th>
+                <th scope="col" style="font-size: 1.1rem;">Brand</th>
+                <th scope="col" style="font-size: 1.1rem;">Stock</th>
+                <th scope="col" style="font-size: 1.1rem;">Cost Price (GHC)</th>
+                <th scope="col" style="font-size: 1.1rem;">Selling Price (GHC)</th>
+                <th scope="col" style="font-size: 1.1rem;">Status</th>
+                <th scope="col" style="font-size: 1.1rem;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (product of filteredProducts; track $index) {
+                <tr>
+                    <td style="font-size: 1rem;">{{product.itemName}}</td>
+                    <td style="font-size: 1rem;">{{product.itemCode}}</td>
+                    <td style="font-size: 1rem;">{{product.category}}</td>
+                    <td style="font-size: 1rem;">{{product.brand}}</td>
+                    <td style="font-size: 1rem;">{{addCommas(product.quantity)}}</td>
+                    <td style="font-size: 1rem;">{{addCommas(product.costPrice)}}</td>
+                    <td style="font-size: 1rem;">{{addCommas(product.sellingPrice)}}</td>
+                    <td>
+                        <span class="status-badge" 
+                              [ngClass]="{'status-low': product.quantity <= product.reorderLevel, 
+                                           'status-ok': product.quantity > product.reorderLevel}"
+                              style="font-size: 0.9rem;">
+                            {{product.quantity <= product.reorderLevel ? 'Low Stock' : 'In Stock'}}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Action Buttons" style="justify-content: center;">
+                            <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#editItemModal" (click)="onEdit(product)" title="Edit">
+                                <i class="fas fa-edit"></i> <!-- Edit Icon -->
+                            </a>
+                            <a class="delete-icon" (click)="deleteProduct(product.id)" title="Delete">
+                                <i class="fas fa-trash-alt"></i> <!-- Delete Icon -->
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
     
 
 
 
 
-
-         <!-- Add this after your existing tables -->
-<h3 class="category-summary-title mt-4">Category Summary</h3>
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Category</th>
-                <th>Total Products</th>
-                <th>Total Quantity</th>
-                <th>Low Stock Items</th>
-                <th>Total Value (GHC)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (category of categorySummaries; track category.categoryName) {
-                <tr>
-                    <td>{{category.categoryName}}</td>
-                    <td>{{addCommas(category.productCount)}}</td>
-                    <td>{{addCommas(category.totalQuantity)}}</td>
-                    <td>
-                        <span class="status-badge" 
-                              [ngClass]="{'status-low': category.lowStockCount > 0, 'status-ok': category.lowStockCount === 0}">
-                            {{category.lowStockCount}}
-                        </span>
-                    </td>
-                    <td>{{addCommas(category.totalValue)}}</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+         <!-- Inventory Table -->
+         <h3 class="category-summary-title mt-4 text-center fw-b">Category Summary</h3>
+         <div class="table-container">
+             <table>
+                 <thead>
+                     <tr>
+                         <th style="font-size: 1.1rem;">Category</th>
+                         <th style="font-size: 1.1rem;">Total Products</th>
+                         <th style="font-size: 1.1rem;">Total Quantity</th>
+                         <th style="font-size: 1.1rem;">Low Stock Items</th>
+                         <th style="font-size: 1.1rem;">Total Value (GHC)</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     @for (category of categorySummaries; track category.categoryName) {
+                         <tr>
+                             <td style="font-size: 1.1rem;">{{category.categoryName}}</td>
+                             <td style="font-size: 1.1rem;"class="text-center">{{addCommas(category.productCount)}}</td>
+                             <td style="font-size: 1.1rem;"class="text-center">{{addCommas(category.totalQuantity)}}</td>
+                             <td style="font-size: 1.1rem;">
+                                 <span class="status-badge" 
+                                       [ngClass]="{'status-low': category.lowStockCount > 0, 'status-ok': category.lowStockCount === 0}">
+                                     {{category.lowStockCount}}
+                                 </span>
+                             </td>
+                             <td style="font-size: 1.1rem;">{{addCommas(category.totalValue)}}</td>
+                         </tr>
+                     }
+                 </tbody>
+             </table>
+         </div>
          
+
          <!-- Modal for Adding Item -->
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -313,7 +321,7 @@
                     </div>
                     
                     <div class="form-row">
-                        <div>
+                        <div> 
                             <label for="editQuantity" class="form-label">Quantity</label>
                             <input type="number" name="quantity" class="form-control" id="editQuantity" required [(ngModel)]="selectedProduct.quantity">
                         </div>
@@ -346,3 +354,5 @@
  </div>
 
 </div>
+
+

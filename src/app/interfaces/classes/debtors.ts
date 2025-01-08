@@ -3,6 +3,7 @@ export class DebotorDataToSend {
     amountDue: number = 0;
     dateDue: string = "";
     contactNumber:string="";
-    notes: string=""
+    notes: string="";
+    amountPaid?: number
   }
   

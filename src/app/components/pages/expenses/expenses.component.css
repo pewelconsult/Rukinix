@@ -1,0 +1,62 @@
+.container {
+  
+  background-color: #0B132B;
+}
+
+
+.expense-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ecf1f7;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+tbody{
+  background-color: transparent;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 30px;
+  background-color: #ecf1f7;
+}
+
+th{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+h3{
+  font-weight: bold;
+  color: rgb(3, 81, 112);
+  border-top: 500px;
+  font-size: 30px;
+  
+}
+
+
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-content {
+      margin-left: 0; 
+      padding: 15px; 
+  }
+
+  .expense-card {
+      margin-bottom: 20px; /* Smaller margin between cards */
+  }
+
+  .btn {
+      width: 100%; /* Full width for buttons */
+      margin-top: 10px; /* Spacing for buttons on smaller screens */
+  }
+  
+  .table-responsive {
+      margin-top: 20px; /* Spacing for the table on smaller screens */
+  }
+}
