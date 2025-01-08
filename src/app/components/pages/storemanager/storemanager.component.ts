@@ -20,6 +20,7 @@ export class StoremanagerComponent implements OnInit{
     this.getAllProducts();
     this.getAllSales();
     this.fetchDebtors()
+    this.fetchExpenses(this.getStartOfMonth(), this.getEndOfMonth())
   }
 
   salesForTheWeek: number = 0;
@@ -33,6 +34,7 @@ export class StoremanagerComponent implements OnInit{
   totalProducts = 0;
   salesForToday = 0;
   pendingOrderTotal=0;
+  totalExpenses = 0;
   totalDebts = 0;
   top10Sales4Today: any[] = [];
   top10Sales4TheWeek: any[] = [];
@@ -310,5 +312,57 @@ export class StoremanagerComponent implements OnInit{
       });
   }
 
+  fetchExpenses(startDate: Date, endDate: Date) {
+    // Format dates as YYYY-MM-DD
+    const formattedStartDate = startDate.toISOString().split('T')[0];
+    const formattedEndDate = endDate.toISOString().split('T')[0];
+    let expenses: any [] = [];
+  
+    // Make the API call to fetch expenses
+    this.http.get(`${this.baseurl.url}get-expenses?startDate=${formattedStartDate}&endDate=${formattedEndDate}`, { headers: this.getAuthHeaders() })
+      .subscribe({
+        next: (response: any) => {
+          // Format the createdAt timestamp for each expense
+          expenses = response.expenses.map((expense: any) => ({
+            ...expense,
+            createdAt: this.formatFirestoreTimestamp(expense.createdAt)
+          }));
+          
+          // Calculate total expenses
+          this.totalExpenses = expenses.reduce((sum: number, expense: any) => 
+            sum + (expense.amount || 0), 0
+          );
+        },
+        error: (error) => {
+          console.error('Error fetching expenses:', error);
+        }
+      });
+  }
+  
+
+  
+  private formatFirestoreTimestamp(timestamp: { _seconds: number, _nanoseconds: number }): string {
+    const date = new Date(timestamp._seconds * 1000); // Convert seconds to milliseconds
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
+      // Helper method to get first day of current month
+  getStartOfMonth(): Date {
+        const date = new Date();
+        return new Date(date.getFullYear(), date.getMonth(), 1);
+      }
+      
+      // Helper method to get last day of current month
+  getEndOfMonth(): Date {
+        const date = new Date();
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+      }
+  
 
 }
