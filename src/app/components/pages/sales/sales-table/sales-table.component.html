@@ -10,9 +10,6 @@
           <th>Amount</th>
           <th>Mode</th>
           <th>Date</th>
-          @if (isAdmin()) {
-          <th>Action</th>
-          }
         </tr>
       </thead>
       <tbody>
@@ -25,11 +22,7 @@
           <td>GHC {{addCommas(sale.totalAmount)}}</td>
           <td>{{sale.paymentMode}}</td>
           <td>{{sale.date}}</td>
-          @if (isAdmin()) {
-          <td>
-            <button class="btn btn-danger btn-sm" (click)="onDeleteSale(sale.saleId, sale.productCode)">Delete</button>
-          </td>
-        }
+          
         </tr>
         }
       </tbody>
