@@ -135,7 +135,7 @@ export class InventoryComponent implements OnInit{
             this.getAllProducts();
         },
         error: (error) => {
-            alert("Error occured, check and try again")
+            console.log("Error occured, check and try again")
         }
     });
 }

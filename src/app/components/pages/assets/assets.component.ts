@@ -69,7 +69,7 @@ getAllAssets() {
       },
       error: (error) => {
         console.error('Error fetching assets:', error);
-        alert('An error occurred while fetching assets.');
+        console.log('An error occurred while fetching assets.');
       }
     });
 }

@@ -62,7 +62,7 @@ export class ReturnsComponent implements OnInit {
         arrey.push(...processed);
       },
       error: (error) => {
-        alert('Failed to fetch sales data');
+        console.log('Failed to fetch sales data');
       }
     });
   }
@@ -98,7 +98,7 @@ export class ReturnsComponent implements OnInit {
   confirmReturn() {
     const error = this.validateReturn();
     if (error) {
-      alert(error);
+      console.log(error);
       return;
     }
 
@@ -114,12 +114,12 @@ export class ReturnsComponent implements OnInit {
       
       this.http.post(this.baseurl.url + "returns", returnData, { headers }).subscribe({
         next: (response: any) => {
-          alert('Return processed successfully');
+          //alert('Return processed successfully');
           this.getAllSales(this.processedSales); // Refresh the sales list
           this.closeModal();
         },
         error: (error) => {
-          alert('Failed to process return: ' + (error.message || 'Unknown error'));
+          console.log('Failed to process return: ' + (error.message || 'Unknown error'));
         }
       });
     }

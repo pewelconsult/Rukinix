@@ -51,16 +51,16 @@ export class LoginComponent {
             }
             
           } else {
-            alert("An error occured, check and try again");
+            console.log("An error occured, check and try again");
           }
           this.login.email = "";
           this.login.password = "";
         },
         (error) => {
           // Handle login error
-          alert("Error occured, check and try again")
+          console.log("Error occured, check and try again")
           if (error.error) {
-            alert("Error occured, check and try again") // Log specific error message from backend
+            console.log("Error occured, check and try again") // Log specific error message from backend
           }
           // Display error message to user (e.g., using a toast notification)
         }

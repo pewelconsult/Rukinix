@@ -159,7 +159,7 @@ export class ReportsComponent implements OnInit{
         }));
         fileName = 'inventory_report.xlsx';
       } else {
-        alert('No data available to download');
+        console.log('No data available to download');
         return;
       }
   

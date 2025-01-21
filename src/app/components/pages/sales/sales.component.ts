@@ -20,8 +20,8 @@ export class SalesComponent implements OnInit {
   private baseurl = new BaseUrl();
   mainSales: Sale[] = [];
   processedSales: ProcessedSale[] = [];
-  startDate:string = '2024-12-26'; // Replace with actual date from input
-  endDate:string = '2024-12-27';
+  startDate:string = '2025-01-14'; // Replace with actual date from input
+  endDate:string = '2025-01-15';
   processedSales4Today : ProcessedSale[] = [];
   processedSales4Week : ProcessedSale[] = [];
   processedSales4Month : ProcessedSale[] = [];
@@ -72,7 +72,7 @@ export class SalesComponent implements OnInit {
             arrey.push(...processed); // Add new data
         },
         error: (error) => {
-            alert('Failed to fetch sales data');
+            console.log('Failed to fetch sales data');
         }
     });
 }
@@ -113,7 +113,7 @@ getSaleForToday() {
           this.totalSales4Today = this.processedSales4Today.reduce((sum, sale) => sum + sale.totalAmount, 0);
       },
       error: (error) => {
-          alert('Failed to fetch today\'s sales data');
+          console.log('Failed to fetch today\'s sales data');
       }
   });
 }
@@ -155,7 +155,7 @@ getSalesForThisWeek() {
           this.totalSales4TheWeek = this.processedSales4Week.reduce((sum, sale) => sum + sale.totalAmount, 0);
       },
       error: (error) => {
-          alert('Failed to fetch weekly sales data');
+          console.log('Failed to fetch weekly sales data');
       }
   });
  }
@@ -196,7 +196,7 @@ getSalesForThisWeek() {
           this.totalSales4TheMonth = this.processedSales4Month.reduce((sum, sale) => sum + sale.totalAmount, 0);
       },
       error: (error) => {
-          alert('Failed to fetch monthly sales data');
+          console.log('Failed to fetch monthly sales data');
       }
   });
  }

@@ -44,7 +44,7 @@ export class SupplierComponent implements OnInit{
                     alert("Supplier added successfully!")
                 },
                 error: (error) => {
-                    alert('Error adding supplier');
+                    console.log('Error adding supplier');
                 }
             });
     }
@@ -59,7 +59,7 @@ export class SupplierComponent implements OnInit{
                   this.totalSuppliers = this.suppliers.length;
               },
               error: (error) => {
-                  alert("Error occured")
+                  console.log("Error occured")
               }
           });
   }

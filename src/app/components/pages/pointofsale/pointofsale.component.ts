@@ -80,7 +80,7 @@ export class PointofsaleComponent {
         this.companyPhone = data.contactPersonPhone
       },
       error: (error) => {
-        alert('Error fetching company');
+        console.log('Error fetching company');
         this.isLoading = false;
       }
     });
@@ -192,7 +192,7 @@ export class PointofsaleComponent {
        receiptModal.show();
       },
       error: (error) => {
-        alert('Failed to process sale. Please try again.');
+        console.log('Failed to process sale. Please try again.');
         this.isProcessing = false;
       }
     });

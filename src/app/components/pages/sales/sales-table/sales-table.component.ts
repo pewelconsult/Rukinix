@@ -14,6 +14,8 @@ export class SalesTableComponent {
   @Input() processedSales: ProcessedSale[] = [];
   private http = inject(HttpClient)
   baseurl = new BaseUrl()
+
+  
   
 //Delete a sale
 onDeleteSale(saleId: string, productId: string) {

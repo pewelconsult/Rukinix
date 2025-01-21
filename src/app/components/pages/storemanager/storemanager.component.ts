@@ -307,7 +307,7 @@ export class StoremanagerComponent implements OnInit{
         },
         error: (error) => {
           console.error('Error fetching debtors:', error);
-          alert('An error occurred while fetching debtors.');
+          //alert('An error occurred while fetching debtors.');
         }
       });
   }

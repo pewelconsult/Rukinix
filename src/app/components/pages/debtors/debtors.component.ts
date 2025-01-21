@@ -128,7 +128,7 @@ fetchDebtors() {
       },
       error: (error) => {
         console.error('Error fetching debtors:', error);
-        alert('An error occurred while fetching debtors.');
+        console.log('An error occurred while fetching debtors.');
       }
     });
 }
