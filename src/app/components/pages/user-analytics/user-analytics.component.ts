@@ -172,7 +172,7 @@ export class UserAnalyticsComponent implements OnInit {
             },
             callbacks: {
               label: function(context: any) {
-                return ` Sales: $${context.parsed.y.toLocaleString()}`;
+                return ` Sales: ${context.parsed.y.toLocaleString()}`;
               }
             }
           }
@@ -186,7 +186,7 @@ export class UserAnalyticsComponent implements OnInit {
             },
             ticks: {
               callback: function(value: any) {
-                return '$' + value.toLocaleString();
+                return 'GHC' + value.toLocaleString();
               }
             }
           },
