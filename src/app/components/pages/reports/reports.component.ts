@@ -174,4 +174,114 @@ export class ReportsComponent implements OnInit{
       XLSX.writeFile(wb, fileName);
     }
 
+// Add to the component class
+printReport() {
+  let printWindow = window.open('', '', 'width=800,height=600');
+  if (printWindow) {
+    let title = this.report.reportType;
+    let dateRange = `${this.report.startDate} to ${this.report.endDate}`;
+    
+    let printContent = `
+      <html>
+        <head>
+          <title>${title}</title>
+          <style>
+            @page { margin: 1cm; }
+            .report-header { text-align: center; margin-bottom: 20px; }
+            table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f5f5f5; }
+            @media print {
+              button { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="report-header">
+            <h2>${title}</h2>
+            <p>${dateRange}</p>
+          </div>
+    `;
+ 
+    if (this.report.reportType === 'Sales Report') {
+      printContent += this.getSalesPrintTemplate();
+    } else if (this.report.reportType === 'Inventory Report') {
+      printContent += this.getInventoryPrintTemplate();
+    }
+ 
+    printContent += `
+        </body>
+      </html>
+    `;
+ 
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  }
+ }
+ 
+ private getSalesPrintTemplate(): string {
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Customer Name</th>
+          <th>Date</th>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${this.formattedSales.map((item, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${item.customerName}</td>
+            <td>${item.date}</td>
+            <td>${item.productName}</td>
+            <td>${item.quantity}</td>
+            <td>${item.unitPrice.toFixed(2)}</td>
+            <td>${item.totalAmount.toFixed(2)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+ }
+ 
+ private getInventoryPrintTemplate(): string {
+  return `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Product Name</th>
+          <th>Cost Price</th>
+          <th>Quantity</th>
+          <th>Re-Order Level</th>
+          <th>Selling Price</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${this.allproducts.map((item, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${item.itemName}</td>
+            <td>${item.costPrice}</td>
+            <td>${item.quantity}</td>
+            <td>${item.reorderLevel}</td>
+            <td>${item.sellingPrice}</td>
+            <td>${item.category}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+ }
+
 }

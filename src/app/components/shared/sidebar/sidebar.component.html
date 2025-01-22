@@ -14,9 +14,9 @@
     <nav class="nav flex-column">
         @if (isAdmin()) {
             <a routerLink="/storemanager" routerLinkActive="active" class="nav-link">
-              <span class="sidebar-icon">🏠</span> Dashboard
+              <span class="sidebar-icon">🏢</span> Dashboard
             </a>
-          }
+        }
         <a routerLink="/inventory" routerLinkActive="active" class="nav-link">
             <span class="sidebar-icon">📦</span> Inventory
         </a>
@@ -30,34 +30,32 @@
             <span class="sidebar-icon">💸</span> Expenses
         </a>
         <a routerLink="/pointofsale" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">💰</span> Point of Sale
+            <span class="sidebar-icon">💳</span> Point of Sale
         </a>
         <a routerLink="/debtors" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">💵</span> Debtors
+            <span class="sidebar-icon">📈</span> Debtors
         </a>
-        
         <a routerLink="/assets" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">📊</span> Assets
+            <span class="sidebar-icon">🏗️</span> Assets
         </a>
-       
-        
         @if (isAdmin()) {
         <a routerLink="/reports" routerLinkActive="active" class="nav-link">
-            <span class="sidebar-icon">📊</span> Reports
+            <span class="sidebar-icon">📑</span> Reports
         </a>
-       }
-       
-        <button  class="nav-link" (click) = "onLogOut()">
+        <a routerLink="/useranalytics" routerLinkActive="active" class="nav-link">
+            <span class="sidebar-icon">📉</span> Analytics
+        </a>
+        }
+        <button class="nav-link" (click)="onLogOut()">
             <span class="sidebar-icon">🚪</span> Logout
         </button>
     </nav>
 
     <hr>
     <div class="user-profile">
-        <a routerLink="/userprofile"  >
+        <a routerLink="/userprofile">
             <img src="images.jpg" alt="Admin Image" style="border-radius: 50%; width: 50px; height: 50px; margin-right: 10px;">
             <span class="admin-name">Admin Name</span>
         </a>
-        
     </div>
 </div>

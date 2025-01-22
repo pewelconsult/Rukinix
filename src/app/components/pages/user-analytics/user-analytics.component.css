@@ -1,0 +1,26 @@
+/* user-analytics.component.css */
+.content-wrapper {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+  
+  .chart-container {
+    height: 400px;
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  @media print {
+    app-sidebar {
+      display: none;
+    }
+    .content-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+    .controls {
+      display: none !important;
+    }
+  }
