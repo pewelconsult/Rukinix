@@ -39,7 +39,7 @@
                     <div class="card-icon card-blue h2">📅</div>
                     <div class="text-center">
                         <h6>Due This Month</h6>
-                        <h5>GHC {{dueThisMonth}}</h5>
+                        <h5>GHC {{addCommas(dueThisMonth)}}</h5>
                     </div>
                 </div>
             </div>
@@ -87,15 +87,20 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Action Buttons">
-                                <a class="view-icon" data-bs-toggle="modal" data-bs-target="#viewLiabilityModal" (click)="selectedLiability = liability" title="View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a class="payment-icon" data-bs-toggle="modal" data-bs-target="#paymentModal" (click)="openPaymentModal(liability)" title="Make Payment">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </a>
-                                <a class="reminder-icon" title="Send Reminder" (click)="sendReminder(liability.id)">
-                                    <i class="fas fa-paper-plane"></i>
-                                </a>
+                                <button 
+                                    class="btn btn-info btn-sm me-2" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#viewLiabilityModal" 
+                                    (click)="selectedLiability = liability">
+                                    View
+                                </button>
+                                <button 
+                                    class="btn btn-primary btn-sm" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#paymentModal" 
+                                    (click)="openPaymentModal(liability)">
+                                    Pay
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -183,18 +188,45 @@
             <div class="modal-body">
                 <form #paymentForm="ngForm">
                     <div class="mb-3">
-                        <label for="currentAmount" class="form-label">Current Amount Due</label>
-                        <input type="text" class="form-control" id="currentAmount" [value]="selectedLiability.amount" readonly>
+                        <label class="form-label">Liability Name</label>
+                        <input type="text" class="form-control" [value]="selectedLiability.liabilityName" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="paymentAmount" class="form-label">Payment Amount</label>
-                        <input type="number" class="form-control" id="paymentAmount" [(ngModel)]="paymentAmount" name="paymentAmount" required>
+                        <label class="form-label">Current Amount Due</label>
+                        <input type="text" class="form-control" [value]="'GHC ' + addCommas(selectedLiability.amount)" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount Previously Paid</label>
+                        <input type="text" class="form-control" [value]="'GHC ' + addCommas(selectedLiability.amountPaid || 0)" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentAmount" class="form-label">Payment Amount (GHC)</label>
+                        <input 
+                            type="number" 
+                            class="form-control" 
+                            id="paymentAmount" 
+                            name="paymentAmount"
+                            [(ngModel)]="paymentAmount"
+                            required
+                            [max]="selectedLiability.amount"
+                            min="0"
+                        >
+                        <div class="form-text text-muted">
+                            Enter an amount between 0 and GHC {{addCommas(selectedLiability.amount)}}
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="onPaymentSubmit()" [disabled]="!paymentForm.form.valid">Submit Payment</button>
+                <button 
+                    type="button" 
+                    class="btn btn-primary" 
+                    (click)="onPaymentSubmit()"
+                    [disabled]="!paymentForm.form.valid || paymentAmount <= 0 || paymentAmount > selectedLiability.amount"
+                >
+                    Submit Payment
+                </button>
             </div>
         </div>
     </div>
