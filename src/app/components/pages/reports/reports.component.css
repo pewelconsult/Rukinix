@@ -1,169 +1,391 @@
+/* reports.component.css */
 
-  .main-content {
-    margin-left: 240px;
-    padding: 30px;
-  }
-
-  .card-header {
-    background-color: #007bff;
-    color: white;
-    font-size: 1.25rem;
-  }
-
-  .table-container {
-    margin-top: 30px;
-  }
-
-  table {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  table th, table td {
-    text-align: center;
-  }
-
-  .card-footer {
-    text-align: center;
-    background-color: #f8f9fa;
-    padding: 10px;
-  }
-
-  .filter-form {
-    display: flex;
-    gap: 10px;
-  }
-
-
-  /* Base styles with responsive adjustments */
+/* Layout & Container Styles */
 .main-content {
-  margin-left: 240px;
-  padding: 30px;
-  transition: margin-left 0.3s ease;
+  padding: 20px;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  width: 100%;
 }
 
-.filter-form {
+.container,
+.container-fluid {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* Card Styles */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  padding: 1rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  font-size: 1.1rem;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
-  gap: 10px;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.filter-form input,
-.filter-form select,
-.filter-form button {
-  flex: 1;
-  min-width: 200px;
+/* Form Styles */
+.filter-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
+.form-control,
+.form-select {
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  height: 40px;
+  background-color: #fff;
+  font-size: 14px;
+  min-width: 140px;
+}
+
+.filter-form .form-control {
+  flex: 0 1 160px;
+}
+
+.filter-form .form-select {
+  flex: 0 1 200px;
+}
+
+.filter-form .btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Table Styles */
 .table-container {
   overflow-x: auto;
-  margin-top: 30px;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem -1.25rem;
+  padding: 0 1.25rem;
 }
 
-/* Responsive breakpoints */
-@media screen and (max-width: 1200px) {
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.table-active {
+  background-color: #f8f9fa;
+}
+
+/* Profit/Loss Statement Styles */
+.profit-loss-report {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: #007bff;
+  padding: 1rem 0;
+  border-bottom: 2px solid #e9ecef;
+  margin: 1.5rem 0 1rem;
+}
+
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.expense-category {
+  margin: 1rem 0;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.category-header {
+  background: #007bff;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.amount {
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+/* Button Styles */
+.btn {
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 14px;
+  min-width: 120px;
+  width: auto;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.me-2 { margin-right: 0.5rem; }
+.text-success { color: #28a745; }
+.text-danger { color: #dc3545; }
+.fw-bold { font-weight: 700; }
+
+/* Responsive Breakpoints */
+@media screen and (min-width: 1024px) {
   .main-content {
-    margin-left: 200px;
-    padding: 20px;
-    margin-top: 60px;
+    margin-left: 240px;
+    width: calc(100% - 240px);
   }
   
-  .card-header {
-    font-size: 1.1rem;
+  .container {
+    max-width: 1140px;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1023px) {
   .main-content {
     margin-left: 0;
+    padding: 15px;
   }
   
   .filter-form {
-    gap: 15px;
-  }
-  
-  .filter-form input,
-  .filter-form select,
-  .filter-form button {
-    min-width: 180px;
+    gap: 0.5rem;
   }
 }
 
 @media screen and (max-width: 768px) {
   .main-content {
-    padding: 15px;
+    padding: 12px;
   }
   
-  .filter-form {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .filter-form input,
-  .filter-form select,
-  .filter-form button {
-    width: 100%;
-    min-width: unset;
-  }
-  
-  table {
-    font-size: 0.9rem;
+  .card {
+    margin: 0 -15px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
   }
   
   .card-header {
-    font-size: 1rem;
-    padding: 10px 15px;
+    font-size: 1.25rem;
+    padding: 1rem 15px;
+    background-color: #007bff;
+    margin: 0 -15px;
+    border-radius: 0;
   }
   
-  .badge {
-    font-size: 0.75rem;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .main-content {
-    padding: 10px;
+  .card-body {
+    padding: 1rem 0;
   }
   
-  table {
-    font-size: 0.8rem;
+  .filter-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
   
-  table th,
-  table td {
-    padding: 8px 5px;
+  .filter-form select {
+    grid-column: 1 / -1;
+  }
+  
+  .filter-form .btn {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+  }
+  
+  .form-control,
+  .form-select {
+    height: 36px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-size: 14px;
+  }
+  
+  .card-footer {
+    padding: 12px;
+    justify-content: center;
+    background: none;
+  }
+  
+  .card-footer .btn {
+    flex: 1;
+    min-width: 0;
+    max-width: 160px;
   }
   
   h2 {
     font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   
-  .card-footer {
-    padding: 10px;
+  p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 1.5rem;
   }
   
-  .card-footer button {
-    width: 100%;
-  }
-}
-
-/* Print media query for better report printing */
-@media print {
-  .main-content {
-    margin-left: 0;
-    padding: 0;
+  .data-row,
+  .expense-item {
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
-  .filter-form,
-  .card-footer {
-    display: none;
+  .amount {
+    text-align: right;
   }
   
-  .card {
-    border: none;
+  .category-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
   }
   
   .table {
-    font-size: 11pt;
+    font-size: 0.875rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .filter-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-control,
+  .form-select,
+  .btn {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .card-footer {
+    flex-direction: column;
+  }
+  
+  .card-footer .btn {
+    width: 100%;
+    max-width: none;
+  }
+  
+  .main-content {
+    padding: 8px;
+  }
+  
+  .profit-loss-report {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .main-content {
+    margin: 0;
+    padding: 0;
+  }
+  
+  app-sidebar,
+  .filter-form,
+  .btn {
+    display: none !important;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: none;
+  }
+  
+  .card-header {
+    background: none !important;
+    color: black !important;
+    padding: 0.5rem 0;
+  }
+  
+  .table th {
+    background: none !important;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.25rem;
+  }
+  
+  .category-header {
+    background: none !important;
+    color: black !important;
+    border: 1px solid #dee2e6;
   }
 }

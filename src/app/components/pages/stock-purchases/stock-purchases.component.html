@@ -1,0 +1,232 @@
+
+<app-sidebar></app-sidebar>
+
+<div class="content-wrapper">
+  <!-- Header Section -->
+  <div class="content-header">
+    
+    <button class="add-product-btn" data-bs-toggle="modal" data-bs-target="#newProductModal">
+      <i class="bi bi-plus-circle"></i> Add New Product
+    </button>
+  </div>
+
+  <!-- Monthly Purchases Section -->
+<div class="purchases-overview">
+    <div class="section-header">
+      <h2>Stock Purchases for {{getCurrentMonth()}}</h2>
+    </div>
+    <div class="purchases-table-container">
+      @if (monthlyPurchases.length === 0) {
+        <div class="no-purchases">
+          <i class="bi bi-cart"></i>
+          <p>No purchases this month</p>
+        </div>
+      } @else {
+        <table class="purchases-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Unit Cost</th>
+              <th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (purchase of monthlyPurchases; track purchase.id) {
+              <tr>
+                <td>{{(purchase.purchaseDate)}}</td>
+                <td>{{purchase.productName}}</td>
+                <td>{{purchase.quantity}}</td>
+                <td>GHC {{addCommas(purchase.costPrice)}}</td>
+                <td>GHC {{addCommas(purchase.costPrice * purchase.quantity)}}</td>
+              </tr>
+            }
+            <tr class="total-row">
+              <td colspan="4" class="total-label">Total Cost of Purchases for {{getCurrentMonth()}}</td>
+              <td class="total-amount">GHC {{addCommas(calculateMonthlyTotal())}}</td>
+            </tr>
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+
+
+
+  <div class="search-container">
+    <div class="search-box">
+      <i class="bi bi-search search-icon"></i>
+      <input 
+        type="text" 
+        placeholder="Search products..." 
+        [(ngModel)]="searchTerm" 
+        (input)="onSearch($event)">
+    </div>
+  </div>
+
+  <!-- Products Grid Section -->
+  <div class="products-section">
+    <div class="section-header">
+      <h2>Products</h2>
+    </div>
+    <div class="products-grid">
+      @if (filteredProducts.length === 0) {
+        <div class="no-products">
+          <i class="bi bi-box-seam"></i>
+          <p>No products found</p>
+        </div>
+      } @else {
+        @for (product of filteredProducts; track product.id) {
+          <div class="product-card" [class.low-stock]="product.quantity <= product.reorderLevel">
+            <div class="product-info">
+              <h3 class="product-name">{{product.itemName}}</h3>
+              <div class="product-details">
+                <span class="category-badge">{{product.category}}</span>
+                <span class="brand-badge">{{product.brand}}</span>
+              </div>
+              <div class="stock-info">
+                <span class="stock-label">Current Stock:</span>
+                <span class="stock-value" [class.low-stock-text]="product.quantity <= product.reorderLevel">
+                  {{product.quantity}}
+                </span>
+              </div>
+            </div>
+            <button class="add-stock-btn" (click)="onAddStock(product)">
+              <i class="bi bi-plus-circle-fill"></i>
+              Add new purchase
+            </button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Modals remain the same -->
+
+
+
+<!-- Add Stock Modal -->
+<div class="modal fade" id="addStockModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Stock - {{selectedProduct?.itemName}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #stockForm="ngForm">
+          <div class="mb-3">
+            <label class="form-label">Supplier Name</label>
+            <input type="text" class="form-control" [(ngModel)]="stockPurchase.supplierName" name="supplierName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input type="number" class="form-control" [(ngModel)]="stockPurchase.quantity" name="quantity" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Cost Price</label>
+            <input type="number" class="form-control" [(ngModel)]="stockPurchase.costPrice" name="costPrice" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Selling Price</label>
+            <input type="number" class="form-control" [(ngModel)]="stockPurchase.sellingPrice" name="sellingPrice" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Purchase Date</label>
+            <input type="date" class="form-control" [(ngModel)]="stockPurchase.purchaseDate" name="purchaseDate" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="savePurchase()" [disabled]="!stockForm.form.valid">
+          Save Purchase
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Product Modal -->
+<div class="modal fade" id="newProductModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #newProductForm="ngForm">
+          <div class="row g-3">
+            <!-- First Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Product Name</label>
+                <input type="text" class="form-control" [(ngModel)]="newProduct.itemName" name="itemName" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Supplier Name</label>
+                <input type="text" class="form-control" [(ngModel)]="newProduct.supplierName" name="supplierName">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select class="form-select" [(ngModel)]="newProduct.category" name="category" required>
+                  <option value="">Select Category</option>
+                  @for (category of allcategories; track category.id) {
+                    <option [value]="category.categoryName">{{category.categoryName}}</option>
+                  }
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Brand</label>
+                <input type="text" class="form-control" [(ngModel)]="newProduct.brand" name="brand" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Product Code</label>
+                <input type="text" class="form-control" [(ngModel)]="newProduct.itemCode" name="itemCode" required>
+              </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Size</label>
+                <input type="text" class="form-control" [(ngModel)]="newProduct.size" name="size" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Initial Quantity</label>
+                <input type="number" class="form-control" [(ngModel)]="newProduct.quantity" name="quantity" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Cost Price</label>
+                <div class="input-group">
+                  <span class="input-group-text">GHC</span>
+                  <input type="number" class="form-control" [(ngModel)]="newProduct.costPrice" name="costPrice" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Selling Price</label>
+                <div class="input-group">
+                  <span class="input-group-text">GHC</span>
+                  <input type="number" class="form-control" [(ngModel)]="newProduct.sellingPrice" name="sellingPrice" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Reorder Level</label>
+                <input type="number" class="form-control" [(ngModel)]="newProduct.reorderLevel" name="reorderLevel" required>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveNewProduct()" [disabled]="!newProductForm.form.valid">
+          Save Product
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

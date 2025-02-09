@@ -13,9 +13,7 @@
           <option value="">Choose Report Type</option>
           <option value="Sales Report">Sales Report</option>
           <option value="Expenses Report">Expenses Report</option>
-          <option value="Assets Report">Assets Report</option>
-          <option value="Inventory Report">Inventory Report</option>
-          <option value="Supplier Report">Supplier Report</option>
+          <option value="Purchases Report">Purchases Report</option>
           <option value="Profit or Loss">Profit or Loss Statement</option>
         </select>
         <button class="btn btn-primary" (click) = "onGenerateReport()">Generate Report</button>
@@ -93,6 +91,16 @@
               }
                 <!-- Add more report rows here -->
               </tbody>
+              @if (formattedSales.length > 1) {
+                    <tfoot>
+                      <tr class="table-active fw-bold">
+                        <td colspan="4">Totals</td>
+                        <td>{{calculateSalesTotals().totalQuantity}}</td>
+                        <td></td>
+                        <td>GHC {{addCommas(calculateSalesTotals().totalAmount)}}</td>
+                      </tr>
+                    </tfoot>
+              }              
             </table>
           </div>
         }
@@ -110,5 +118,146 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Profit/Loss Statement -->
+<div class="main-content">
+  <div class="container-fluid">
+    <!-- Profit/Loss Statement -->
+    @if (report.reportType === 'Profit or Loss' && profitLossData) {
+      <div class="profit-loss-report">
+        <h3 class="text-center mb-4">Profit & Loss Statement</h3>
+        <div class="text-center mb-4">
+          <small>Period: {{report.startDate}} to {{report.endDate}}</small>
+        </div>
+
+        <div class="section-title">Revenue</div>
+        <div class="data-row">
+          <span>Total Sales</span>
+          <span class="amount">GHC {{addCommas(profitLossData.sales)}}</span>
+        </div>
+
+        <div class="section-title">Costs</div>
+        <div class="data-row">
+          <span>Total Purchases</span>
+          <span class="amount">GHC {{addCommas(profitLossData.purchases)}}</span>
+        </div>
+
+        <div class="section-title">Expenses by Category</div>
+        @for (category of profitLossData.expensesByCategory; track category.category) {
+          <div class="expense-category">
+            <div class="category-header">
+              <strong>{{category.category}}</strong>
+              <span class="amount">GHC {{addCommas(category.subtotal)}}</span>
+            </div>
+            <div class="category-items">
+              @for (item of category.items; track $index) {
+                <div class="expense-item">
+                  <div class="item-details">
+                    <span class="description flex-grow-1">{{item.description}}</span>
+                  </div>
+                  <span class="amount">GHC {{addCommas(item.amount)}}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="data-row">
+          <strong>Total Expenses</strong>
+          <span class="amount">GHC {{addCommas(profitLossData.totalExpenses)}}</span>
+        </div>
+
+        <div class="final-result" [ngClass]="{'text-success': profitLossData.netProfit > 0, 'text-danger': profitLossData.netProfit < 0}">
+          <div class="data-row">
+            <strong>Net Profit/Loss</strong>
+            <span class="amount">GHC {{addCommas(profitLossData.netProfit)}}</span>
+          </div>
+        </div>
+      </div>
+    }
+
+
+
+    @if (report.reportType === 'Expenses Report' && formattedExpenses.length > 0) {
+      <div class="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (expense of formattedExpenses; track $index) {
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td>{{expense.date}}</td>
+                <td>{{expense.category}}</td>
+                <td>{{expense.description}}</td>
+                <td>GHC {{addCommas(expense.amount)}}</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr class="table-active fw-bold">
+              <td colspan="4">Total Expenses</td>
+              <td>GHC {{addCommas(calculateExpensesTotal())}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    }
+    
+    <!-- Purchases Report Table -->
+    @if (report.reportType === 'Purchases Report' && formattedPurchases.length > 0) {
+      <div class="table-container">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date</th>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Unit Cost</th>
+              <th>Total Amount</th>
+              <th>Supplier</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (purchase of formattedPurchases; track $index) {
+              <tr>
+                <td>{{$index + 1}}</td>
+                <td>{{purchase.date}}</td>
+                <td>{{purchase.productName}}</td>
+                <td>{{purchase.quantity}}</td>
+                <td>GHC {{addCommas(purchase.costPrice)}}</td>
+                <td>GHC {{addCommas(purchase.costPrice * purchase.quantity)}}</td>
+                <td>{{purchase.supplierName || 'N/A'}}</td>
+              </tr>
+            }
+          </tbody>
+          <tfoot>
+            <tr class="table-active fw-bold">
+              <td colspan="3">Totals</td>
+              <td>{{calculatePurchasesTotals().totalQuantity}}</td>
+              <td></td>
+              <td>GHC {{addCommas(calculatePurchasesTotals().totalAmount)}}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    }
+
+  </div>
+</div>
+
+
+
+
 
   

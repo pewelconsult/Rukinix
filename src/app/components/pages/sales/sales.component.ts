@@ -4,14 +4,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseUrl } from '../../../interfaces/classes/BaseUrl';
 import { ProcessedSale, Sale } from '../../../interfaces/sales';
 import { SalesTableComponent } from './sales-table/sales-table.component';
-
+import { FormsModule } from '@angular/forms';
 
 
 
 @Component({
   selector: 'app-sales',
   standalone: true,
-  imports: [SidebarComponent, SalesTableComponent],
+  imports: [SidebarComponent, SalesTableComponent, FormsModule],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })
@@ -30,12 +30,15 @@ export class SalesComponent implements OnInit {
   totalSales4TheWeek: number = 0;
   totalSales4TheMonth: number = 0;
   totalOrders4Today: number=0;
+  selectedDate: string = new Date().toISOString().split('T')[0];
+
+
 
   ngOnInit(): void {
-    this.getAllSales(this.startDate, this.endDate, this.processedSales);
-    this.getSaleForToday()
-    this.getSalesForThisWeek()
-    this.getSalesForTheMonth()
+    this.getSaleForToday();
+    this.onDateSubmit();
+    this.getSalesForThisWeek();
+    this.getSalesForTheMonth();
   }
 
   private getAuthHeaders(): HttpHeaders {
@@ -46,36 +49,50 @@ export class SalesComponent implements OnInit {
     });
   }
 
+
+  onDateSubmit() {
+    const startDate = this.selectedDate;
+    const nextDay = new Date(startDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    const endDate = nextDay.toISOString().split('T')[0];
+    this.getAllSales(startDate, endDate, this.processedSales4Today);
+    
+  }
+
   getAllSales(startDate: string, endDate: string, arrey: ProcessedSale[]) {
     const headers = this.getAuthHeaders();
-    const params = { startDate, endDate }; // Query parameters
+    const params = { startDate, endDate };
     this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe({
-        next: (res: any) => {
-            this.mainSales = res.data.sales;
-            const processed = this.mainSales.map(sale => 
-                sale.items.map(item => ({
-                    productCode: item.id,
-                    productName: item.itemName,
-                    customerName: sale.customerName,
-                    quantity: item.quantity,
-                    sellingPrice: item.sellingPrice,
-                    totalAmount: item.sellingPrice * item.quantity,
-                    paymentMode: sale.paymentMode,
-                    date: new Date(sale.createOn).toLocaleDateString(),
-                    createdBy: sale.createdBy,
-                    saleId: sale.id
-                }))
-            ).flat();
-
-            // Update the provided array reference
-            arrey.length = 0; // Clear the existing array
-            arrey.push(...processed); // Add new data
-        },
-        error: (error) => {
-            console.log('Failed to fetch sales data');
+      next: (res: any) => {
+        if (!res.data?.sales) {
+          arrey.length = 0;
+          return;
         }
+        this.mainSales = res.data.sales;
+        const processed = this.mainSales.map(sale => 
+          sale.items.map(item => ({
+            productCode: item.id,
+            productName: item.itemName,
+            customerName: sale.customerName,
+            quantity: item.quantity,
+            sellingPrice: item.sellingPrice,
+            totalAmount: item.sellingPrice * item.quantity,
+            paymentMode: sale.paymentMode,
+            date: new Date(sale.createOn).toLocaleDateString(),
+            createdBy: sale.createdBy,
+            saleId: sale.id
+          }))
+        ).flat();
+
+        arrey.length = 0;
+        arrey.push(...processed);
+      },
+      error: (error) => {
+        console.log('Failed to fetch sales data');
+        arrey.length = 0;
+      }
     });
-}
+  }
 
 
 
@@ -91,7 +108,7 @@ getSaleForToday() {
   this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe({
       next: (res: any) => {
           this.mainSales = res.data.sales;
-          //console.log(this.mainSales)
+          
           const processed = this.mainSales.map(sale => 
               sale.items.map(item => ({
                   productCode: item.id,
@@ -160,6 +177,9 @@ getSalesForThisWeek() {
   });
  }
  
+
+ 
+
  getSalesForTheMonth() {
   const today = new Date();
   const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -176,6 +196,8 @@ getSalesForThisWeek() {
   this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe({
       next: (res: any) => {
           this.mainSales = res.data.sales;
+          
+  
           const processed = this.mainSales.map(sale => 
               sale.items.map(item => ({
                   productCode: item.id,
@@ -192,7 +214,6 @@ getSalesForThisWeek() {
           ).flat();
  
           this.processedSales4Month = processed;
-          // Calculate total sales for the month
           this.totalSales4TheMonth = this.processedSales4Month.reduce((sum, sale) => sum + sale.totalAmount, 0);
       },
       error: (error) => {
@@ -216,6 +237,7 @@ getSalesForThisWeek() {
     
     return numericValue.toLocaleString();
 }
+
 
 
 }

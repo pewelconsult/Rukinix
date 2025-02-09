@@ -81,8 +81,11 @@ export class UserAnalyticsComponent implements OnInit {
         const sales = res.data.sales;
         this.processedData = sales.map((sale: any) => ({
           date: new Date(sale.createOn),
-          total: sale.total,
-          items: sale.items.reduce((sum: number, item: any) => sum + item.quantity, 0),
+          // Calculate total by summing each item's (quantity * sellingPrice)
+          total: sale.items.reduce((sum: number, item: any) => 
+            sum + (item.quantity * item.sellingPrice), 0),
+          items: sale.items.reduce((sum: number, item: any) => 
+            sum + item.quantity, 0),
           paymentMode: sale.paymentMode,
           orderCount: 1
         }));
@@ -94,7 +97,7 @@ export class UserAnalyticsComponent implements OnInit {
         console.error('Failed to fetch analytics data:', error);
       }
     });
-   }
+  }
   
 
  

@@ -276,8 +276,8 @@ calculateCategorySummaries(): Categorysummary[] {
   }
 
 
-  deleteProduct(productId: string) {
-    if (confirm('Are you sure you want to delete this product?')) {
+  deleteProduct(productId: string, productName: string) {
+    if (confirm(`Are you sure you want to delete ${productName}?`)) {
       const headers = this.getAuthHeaders();
       
       this.http.delete(`${this.baseurl.url}delete-product/${productId}`, { headers })

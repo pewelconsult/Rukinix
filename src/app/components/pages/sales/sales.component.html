@@ -46,6 +46,17 @@
         </div>
       </div>
 
+      <div class="mb-4">
+        <form class="row g-3" (ngSubmit)="onDateSubmit()">
+          <div class="col-auto">
+            <input type="date" class="form-control" [(ngModel)]="selectedDate" name="selectedDate">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+          </div>
+        </form>
+      </div>
+      
       <!-- Sales Table -->
       <app-sales-table [processedSales]="processedSales4Today"></app-sales-table>
     </div>

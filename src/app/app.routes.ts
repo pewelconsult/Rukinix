@@ -26,6 +26,7 @@ import { AssetsComponent } from './components/pages/assets/assets.component';
 import { ExpensesComponent } from './components/pages/expenses/expenses.component';
 import { LiabilitiesComponent } from './components/pages/liabilities/liabilities.component';
 import { UserAnalyticsComponent } from './components/pages/user-analytics/user-analytics.component';
+import { StockPurchasesComponent } from './components/pages/stock-purchases/stock-purchases.component';
 
 export const routes: Routes = [
     {
@@ -169,6 +170,13 @@ export const routes: Routes = [
     { 
         path: 'useranalytics', 
         component: UserAnalyticsComponent,
+        canActivate: [authGuard]
+    },
+
+    
+    { 
+        path: 'purchases', 
+        component: StockPurchasesComponent,
         canActivate: [authGuard]
     },
     

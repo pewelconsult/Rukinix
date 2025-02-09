@@ -52,6 +52,7 @@ export class LoginComponent {
             
           } else {
             console.log("An error occured, check and try again");
+            alert("Please check credentials")
           }
           this.login.email = "";
           this.login.password = "";

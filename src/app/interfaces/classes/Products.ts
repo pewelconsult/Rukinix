@@ -8,6 +8,7 @@ export class Product {
     costPrice: number
     sellingPrice:number
     reorderLevel: number
+    supplierName:string
 
 
     constructor () {
@@ -19,6 +20,7 @@ export class Product {
         this.size = ""
         this.costPrice = 0
         this.sellingPrice=0
+        this.supplierName=""
         this.reorderLevel=0
     }
 }

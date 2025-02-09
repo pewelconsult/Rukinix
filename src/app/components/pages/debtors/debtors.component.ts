@@ -113,7 +113,6 @@ export class DebtorsComponent implements OnInit {
 
 
   // Method to fetch all debtors
-  // Method to fetch all debtors
 fetchDebtors() {
   const headers = this.getAuthHeaders();
 
@@ -121,6 +120,7 @@ fetchDebtors() {
     .subscribe({
       next: (response: any) => {
         this.debtors = response.debtors; // Store the fetched debtors
+        //console.log(this.debtors)
         // Calculate totalDebts
         this.totalDebts = this.debtors.reduce((total: number, debtor: any) => {
           return total + (debtor.amountDue || 0); // Ensure debtAmount is a number

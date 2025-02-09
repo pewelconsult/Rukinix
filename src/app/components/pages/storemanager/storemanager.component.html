@@ -42,8 +42,8 @@
             <div class="card p-3 d-flex align-items-center card4">
                 <div class="card-icon card-red">⚠️</div>
                 <div class="text-center">
-                    <h6>Low Stock Items</h6>
-                    <h5>{{totalLowStocks}}</h5>
+                    <h6>Purchases for {{getCurrentMonth()}} </h6>
+                    <h5>GHC {{addCommas(monthlyPurchases)}}</h5>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="card p-3 d-flex align-items-center card7">
                 <div class="card-icon card-yellow">🛒</div>
                 <div class="text-center">
-                    <h6>Expenses for the month</h6>
+                    <h6>Expenses for {{getCurrentMonth()}}</h6>
                     <h5>{{addCommas(totalExpenses)}}</h5>
                 </div>
             </div>
@@ -81,7 +81,7 @@
             <div class="card p-3 d-flex align-items-center card8">
                 <div class="card-icon card-red">📦</div>
                 <div class="text-center">
-                    <h6>Sales for the Month</h6>
+                    <h6>Sales for {{getCurrentMonth()}}</h6>
                     <h5>GHC {{addCommas(salesForTheMonth)}}</h5>
                 </div>
             </div>

@@ -123,7 +123,7 @@
               <option value="">Select Payment Mode</option>
               <option value="cash">Cash</option>
               <option value="momo">Mobile Money</option>
-              <option value="cheque">Cheque</option>
+              <option value="credit">Credit</option>
             </select>
           </div>
       
@@ -151,14 +151,16 @@
       
         
       </div>
-      <button 
+      <!-- Updated sale button -->
+
+        <button 
         class="sale-btn"
-        [disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0"
-        [class.disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0"
+        [disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0 || hasZeroPriceItems()"
+        [class.disabled]="!cartItems.length || !paymentMode || !customerName.trim() || amountPaid <= 0 || hasZeroPriceItems()"
         (click)="makeSale()"
-      >
+        >
         Make Sale
-      </button>
+        </button>
 
     </div>
   </div>

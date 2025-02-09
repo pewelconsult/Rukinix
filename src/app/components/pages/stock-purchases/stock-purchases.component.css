@@ -1,0 +1,349 @@
+/* Layout */
+:host {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .content-wrapper {
+    flex: 1;
+    margin-left: 250px; /* Match your sidebar width */
+    padding: 24px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* Header Section */
+  .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 20px;
+  }
+  
+  /* Search Box */
+  .search-container {
+    flex: 1;
+    max-width: 400px;
+    margin-bottom: 10px;
+  }
+  
+  .search-box {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-icon {
+    color: #6c757d;
+    margin-right: 12px;
+  }
+  
+  .search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    color: #495057;
+  }
+  
+  .search-box input::placeholder {
+    color: #adb5bd;
+  }
+  
+  /* Add Product Button */
+  .add-product-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .add-product-btn:hover {
+    background-color: #34495e;
+    transform: translateY(-1px);
+  }
+  
+  /* Products Grid */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+  }
+  
+  /* Product Cards */
+  .product-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+  
+  .product-card.low-stock {
+    border-left: 4px solid #dc3545;
+  }
+  
+  /* Product Information */
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .product-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .category-badge, .brand-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+  }
+  
+  .category-badge {
+    background-color: #e9ecef;
+    color: #495057;
+  }
+  
+  .brand-badge {
+    background-color: #f8f9fa;
+    color: #6c757d;
+  }
+  
+  /* Stock Information */
+  .stock-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stock-label {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .stock-value {
+    font-weight: 600;
+    color: #198754;
+  }
+  
+  .stock-value.low-stock-text {
+    color: #dc3545;
+  }
+  
+  /* Add Stock Button */
+  .add-stock-btn {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+  
+  .add-stock-btn:hover {
+    background-color: #34495e;
+  }
+  
+  /* No Products State */
+  .no-products {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    background: white;
+    border-radius: 16px;
+    color: #6c757d;
+  }
+  
+  .no-products i {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .no-products p {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .content-wrapper {
+      margin-left: 0;
+      padding: 16px;
+    }
+  
+    .content-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .search-container {
+      max-width: 100%;
+    }
+  
+    .add-product-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  /* Purchases Overview Section */
+.purchases-overview {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .section-header {
+    margin-bottom: 20px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.25rem;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .purchases-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .purchases-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 0;
+  }
+  
+  .purchases-table thead th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+    white-space: nowrap;
+  }
+  
+  .purchases-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+  }
+  
+  .purchases-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .purchases-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+  
+  .purchases-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .purchases-table td:first-child {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .no-purchases {
+    text-align: center;
+    padding: 40px;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .no-purchases i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .no-purchases p {
+    margin: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .purchases-overview {
+      padding: 15px;
+    }
+  
+    .purchases-table td,
+    .purchases-table th {
+      padding: 10px;
+    }
+  }
+
+  .total-row {
+    border-top: 2px solid #e9ecef;
+    background-color: #f8f9fa;
+    font-weight: 600;
+  }
+  
+  .total-row td {
+    padding: 15px 12px !important;
+  }
+  
+  .total-label {
+    text-align: right;
+    color: #2c3e50 !important;
+    font-size: 1rem !important;
+  }
+  
+  .total-amount {
+    color: #2c3e50 !important;
+    font-size: 1rem;
+  }

@@ -70,22 +70,19 @@
                       <th>Period</th>
                       <th class="text-end">Total Sales</th>
                       <th class="text-end">Number of Orders</th>
-                      <th class="text-end">Average Order Value</th>
-                    </tr>
+                      </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let period of Object.keys(groupedData)">
                       <td>{{period}}</td>
                       <td class="text-end">GHC {{addCommas(groupedData[period])}}</td>
                       <td class="text-end">{{orderCounts[period]}}</td>
-                      <td class="text-end">GHC {{addCommas(groupedData[period] / orderCounts[period])}}</td>
                     </tr>
                     <tr class="table-active fw-bold">
                       <td>Total</td>
                       <td class="text-end">GHC {{addCommas(getTotalSales())}}</td>
                       <td class="text-end">{{getTotalOrders()}}</td>
-                      <td class="text-end">GHC {{addCommas(getAverageOrderValue())}}</td>
-                    </tr>
+                     </tr>
                   </tbody>
                 </table>
               </div>

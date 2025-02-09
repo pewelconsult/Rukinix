@@ -19,7 +19,7 @@
                     <div class="card-icon card-blue h2">💳</div>
                     <div class="text-center">
                         <h6>Total Liabilities</h6>
-                        <h5>GHC 15,000</h5>
+                        <h5>GHC {{addCommas(totalLiabilities)}}</h5>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <div class="card-icon card-yellow h2">⚠️</div>
                     <div class="text-center">
                         <h6>Overdue Liabilities</h6>
-                        <h5>GHC 5,000</h5>
+                        <h5>GHC {{addCommas(overdueLiabilities)}}</h5>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <div class="card-icon card-blue h2">📅</div>
                     <div class="text-center">
                         <h6>Due This Month</h6>
-                        <h5>GHC 3,000</h5>
+                        <h5>GHC {{dueThisMonth}}</h5>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <div class="card-icon card-blue h2">💵</div>
                     <div class="text-center">
                         <h6>Total Amount (GHC)</h6>
-                        <h5>GHC 15,000</h5>
+                        <h5>GHC {{addCommas(totalLiabilities)}}</h5>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,6 @@
                 <span class="search-icon">🔍</span>
                 <input type="text" placeholder="Search liabilities..." class="search-input">
             </div>
-            
         </div>
 
         <!-- Liabilities Table -->
@@ -77,55 +76,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Supplier Payment</td>
-                        <td>5,000</td>
-                        <td>15-10-2023</td>
+                    <tr *ngFor="let liability of liabilities">
+                        <td>{{liability.liabilityName}}</td>
+                        <td>{{addCommas(liability.amount)}}</td>
+                        <td>{{liability.dueDate | date}}</td>
                         <td>
-                            <span class="status-badge status-low">Overdue</span>
+                            <span class="status-badge" [ngClass]="{'status-low': liability.status === 'Overdue', 'status-ok': liability.status === 'Pending'}">
+                                {{liability.status}}
+                            </span>
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Action Buttons">
-                                <a class="view-icon" data-bs-toggle="modal" data-bs-target="#viewLiabilityModal" title="View">
+                                <a class="view-icon" data-bs-toggle="modal" data-bs-target="#viewLiabilityModal" (click)="selectedLiability = liability" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a class="reminder-icon" title="Send Reminder">
-                                    <i class="fas fa-paper-plane"></i>
+                                <a class="payment-icon" data-bs-toggle="modal" data-bs-target="#paymentModal" (click)="openPaymentModal(liability)" title="Make Payment">
+                                    <i class="fas fa-dollar-sign"></i>
                                 </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Loan Repayment</td>
-                        <td>10,000</td>
-                        <td>30-10-2023</td>
-                        <td>
-                            <span class="status-badge status-ok">Pending</span>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Action Buttons">
-                                <a class="view-icon" data-bs-toggle="modal" data-bs-target="#viewLiabilityModal" title="View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a class="reminder-icon" title="Send Reminder">
-                                    <i class="fas fa-paper-plane"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Utility Bills</td>
-                        <td>2,000</td>
-                        <td>25-10-2023</td>
-                        <td>
-                            <span class="status-badge status-ok">Pending</span>
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Action Buttons">
-                                <a class="view-icon" data-bs-toggle="modal" data-bs-target="#viewLiabilityModal" title="View">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a class="reminder-icon" title="Send Reminder">
+                                <a class="reminder-icon" title="Send Reminder" (click)="sendReminder(liability.id)">
                                     <i class="fas fa-paper-plane"></i>
                                 </a>
                             </div>
@@ -146,28 +114,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addLiabilityForm">
+                <form #liabilityForm="ngForm">
                     <div class="mb-3">
                         <label for="liabilityName" class="form-label">Liability Name</label>
-                        <input type="text" class="form-control" id="liabilityName" required>
+                        <input type="text" class="form-control" id="liabilityName" [(ngModel)]="liability.liabilityName" name="liabilityName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="liabilityAmount" class="form-label">Amount (GHC)</label>
-                        <input type="number" class="form-control" id="liabilityAmount" required>
+                        <label for="amount" class="form-label">Amount (GHC)</label>
+                        <input type="number" class="form-control" id="amount" [(ngModel)]="liability.amount" name="amount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="supplyDate" class="form-label">Supply Date</label>
+                        <input type="date" class="form-control" id="supplyDate" [(ngModel)]="liability.supplyDate" name="supplyDate" required>
                     </div>
                     <div class="mb-3">
                         <label for="dueDate" class="form-label">Due Date</label>
-                        <input type="date" class="form-control" id="dueDate" required>
+                        <input type="date" class="form-control" id="dueDate" [(ngModel)]="liability.dueDate" name="dueDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="contactNumber" class="form-label">Contact Number</label>
+                        <input type="tel" class="form-control" id="contactNumber" [(ngModel)]="liability.contactNumber" name="contactNumber" required>
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Notes</label>
-                        <textarea class="form-control" id="notes" rows="3"></textarea>
+                        <textarea class="form-control" id="notes" [(ngModel)]="liability.notes" name="notes" rows="3"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="addLiabilityForm" class="btn btn-primary">Add Liability</button>
+                <button type="button" class="btn btn-primary" (click)="onSaveLiability()" [disabled]="!liabilityForm.form.valid">Add Liability</button>
             </div>
         </div>
     </div>
@@ -182,14 +158,43 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Liability Name:</strong> Supplier Payment</p>
-                <p><strong>Amount:</strong> GHC 5,000</p>
-                <p><strong>Due Date:</strong> 15-10-2023</p>
-                <p><strong>Status:</strong> Overdue</p>
-                <p><strong>Notes:</strong> Payment for raw materials.</p>
+                <p><strong>Liability Name:</strong> {{selectedLiability.liabilityName}}</p>
+                <p><strong>Amount:</strong> GHC {{addCommas(selectedLiability.amount)}}</p>
+                <p><strong>Due Date:</strong> {{selectedLiability.dueDate | date}}</p>
+                <p><strong>Status:</strong> {{selectedLiability.status}}</p>
+                <p><strong>Contact Number:</strong> {{selectedLiability.contactNumber}}</p>
+                <p><strong>Notes:</strong> {{selectedLiability.notes}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Make Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #paymentForm="ngForm">
+                    <div class="mb-3">
+                        <label for="currentAmount" class="form-label">Current Amount Due</label>
+                        <input type="text" class="form-control" id="currentAmount" [value]="selectedLiability.amount" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentAmount" class="form-label">Payment Amount</label>
+                        <input type="number" class="form-control" id="paymentAmount" [(ngModel)]="paymentAmount" name="paymentAmount" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="onPaymentSubmit()" [disabled]="!paymentForm.form.valid">Submit Payment</button>
             </div>
         </div>
     </div>

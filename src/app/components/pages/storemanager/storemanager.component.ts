@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseUrl } from '../../../interfaces/classes/BaseUrl';
 import { Chart, registerables } from 'chart.js';
 
+
+
 @Component({
   selector: 'app-storemanager',
   standalone: true,
@@ -13,6 +15,8 @@ import { Chart, registerables } from 'chart.js';
 })
 export class StoremanagerComponent implements OnInit{
 
+  monthlyPurchases: number = 0;
+
   totalItems: any;
   
   ngOnInit(): void {
@@ -21,6 +25,8 @@ export class StoremanagerComponent implements OnInit{
     this.getAllSales();
     this.fetchDebtors()
     this.fetchExpenses(this.getStartOfMonth(), this.getEndOfMonth())
+    this.getTotalMonthlyPurchases();
+
   }
 
   salesForTheWeek: number = 0;
@@ -29,8 +35,6 @@ export class StoremanagerComponent implements OnInit{
   thisCurrentYear = new Date().getFullYear(); 
   allproducts: any[] = [];
   totalCost = 0;
-  lowStockItems: any[] = []
-  totalLowStocks=0
   totalProducts = 0;
   salesForToday = 0;
   pendingOrderTotal=0;
@@ -75,11 +79,12 @@ export class StoremanagerComponent implements OnInit{
       (res: any) => {
         if (res.success) {
           const sales = res.data.sales;
+          
           this.salesOverviewForTheDayArray = this.getSalesOverviewForTheDay(sales);
 
-          this.calculateSalesForToday(sales); // Calculate sales for today
-          this.calculateSalesForTheWeek(sales); // Calculate sales for the week
-          this.calculateSalesForTheMonth(sales); // Calculate sales for the month
+          this.calculateSalesForToday(sales); 
+          this.calculateSalesForTheWeek(sales); 
+          this.calculateSalesForTheMonth(sales); 
 
           // Calculate top 10 products
           this.getTop10ProductsForToday(sales);
@@ -97,31 +102,33 @@ export class StoremanagerComponent implements OnInit{
 
 
   getTotalRevenueForTheYear() {
-      const currentYear = new Date().getFullYear();
-      const startDate = `${currentYear}-01-01`;
-      const nextYear = currentYear + 1;
-      const endDate = `${nextYear}-01-01`;
-      const params = {
-          startDate: startDate,
-          endDate: endDate
-      };
-      const headers = this.getAuthHeaders();
-  
-      this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe(
-          (res: any) => {
-              if (res.success) {
-                  const sales = res.data.sales;
-                  this.totalRevenue = sales.reduce((acc: number, sale: any) => acc + sale.total, 0);
-                  
-              } else {
-                  //alert("Failed to fetch sales data");
-              }
-          },
-          (err: any) => {
-              //alert("Error fetching total revenue");
-          }
-      );
-  }
+    const currentYear = new Date().getFullYear();
+    const startDate = `${currentYear}-01-01`;
+    const nextYear = currentYear + 1;
+    const endDate = `${nextYear}-01-01`;
+    const params = {
+        startDate: startDate,
+        endDate: endDate
+    };
+    const headers = this.getAuthHeaders();
+
+    this.http.get(this.baseurl.url + "sales", { headers, params }).subscribe({
+        next: (res: any) => {
+            if (res.success) {
+                const sales = res.data.sales;
+                this.totalRevenue = sales.reduce((acc: number, sale: any) => {
+                    // Calculate total for each sale by summing its items
+                    const saleTotal = sale.items.reduce((itemAcc: number, item: any) => 
+                        itemAcc + (item.quantity * item.sellingPrice), 0);
+                    return acc + saleTotal;
+                }, 0);
+            }
+        },
+        error: (err: any) => {
+            console.error("Error fetching total revenue:", err);
+        }
+    });
+}
   
 
   getAllProducts() {
@@ -130,7 +137,6 @@ export class StoremanagerComponent implements OnInit{
       this.allproducts = res.data;
       this.totalItems = this.allproducts.length
       this.calculateTotals();
-      this.calculateLowStocks()
     }, error => {
     })
    }
@@ -138,57 +144,60 @@ export class StoremanagerComponent implements OnInit{
    
    calculateTotals() {
     this.totalCost = this.allproducts.reduce((sum, product) => 
-      sum + (product.costPrice * product.quantity), 0);
-    
-   
+      sum + (product.costPrice * product.quantity), 0); 
   }
   
-  
-  calculateLowStocks() {
-    // Filter products where quantity is less than or equal to reorderLevel
-    this.lowStockItems = this.allproducts.filter(product => 
-      product.quantity <= product.reorderLevel
-    );
-    this.totalLowStocks = this.lowStockItems.length;
-  }
   
 
   calculateSalesForToday(sales: any[]) {
     const today = new Date();
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
-
+ 
     this.salesForToday = sales
       .filter(sale => {
-        const saleDate = new Date(sale.createOn); // Use the `createOn` property
+        const saleDate = new Date(sale.createOn);
         return saleDate >= startOfDay && saleDate <= endOfDay;
       })
-      .reduce((acc, sale) => acc + sale.total, 0);
+      .reduce((acc, sale) => {
+        return acc + sale.items.reduce((itemAcc: number, item: any) => {
+          return itemAcc + (item.quantity * item.sellingPrice);
+        }, 0);
+      }, 0);
   }
-
+ 
   calculateSalesForTheWeek(sales: any[]) {
     const now = new Date();
     const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
     const endOfWeek = new Date(now.setDate(now.getDate() + 6));
+ 
     this.salesForTheWeek = sales
       .filter(sale => {
-        const saleDate = new Date(sale.createOn); // Use the `createOn` property
+        const saleDate = new Date(sale.createOn);
         return saleDate >= startOfWeek && saleDate <= endOfWeek;
       })
-      .reduce((acc, sale) => acc + sale.total, 0);
+      .reduce((acc, sale) => {
+        return acc + sale.items.reduce((itemAcc: number, item: any) => {
+          return itemAcc + (item.quantity * item.sellingPrice);
+        }, 0);
+      }, 0);
   }
-
+ 
   calculateSalesForTheMonth(sales: any[]) {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
+ 
     this.salesForTheMonth = sales
       .filter(sale => {
-        const saleDate = new Date(sale.createOn); // Use the `createOn` property
+        const saleDate = new Date(sale.createOn);
         return saleDate >= startOfMonth && saleDate <= endOfMonth;
       })
-      .reduce((acc, sale) => acc + sale.total, 0);
+      .reduce((acc, sale) => {
+        return acc + sale.items.reduce((itemAcc: number, item: any) => {
+          return itemAcc + (item.quantity * item.sellingPrice);
+        }, 0);
+      }, 0);
   }
 
   getTop10ProductsForToday(sales: any[]) {
@@ -268,7 +277,7 @@ export class StoremanagerComponent implements OnInit{
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
   
-    // Filter sales for the day
+   
     const todaySales = sales.filter(sale => {
       const saleDate = new Date(sale.createOn);
       return saleDate >= startOfDay && saleDate <= endOfDay;
@@ -364,5 +373,57 @@ export class StoremanagerComponent implements OnInit{
         return new Date(date.getFullYear(), date.getMonth() + 1, 0);
       }
   
+
+getCurrentMonth(): string {
+    return new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+  }
+
+
+
+  getTotalMonthlyPurchases() {
+      const now = new Date();
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
+  
+      const headers = this.getAuthHeaders();
+      const params = { startDate: startOfMonth, endDate: endOfMonth };
+  
+      return this.http.get(this.baseurl.url + "purchases", { headers, params })
+        .subscribe({
+          next: (res: any) => {
+            if (res.success && res.data) {
+              // Calculate total purchases amount
+              const totalAmount = res.data.reduce((total: number, purchase: any) =>
+                total + (purchase.quantity * purchase.costPrice), 0
+              );
+  
+              // Calculate total items purchased
+              const totalItems = res.data.reduce((total: number, purchase: any) =>
+                total + purchase.quantity, 0
+              );
+  
+              // Set the monthlyPurchases to the total amount
+              this.monthlyPurchases = totalAmount;
+  
+              return {
+                totalAmount,
+                totalItems,
+                purchaseCount: res.data.length
+              };
+            }
+            
+            // If no data, set monthlyPurchases to 0
+            this.monthlyPurchases = 0;
+            return { totalAmount: 0, totalItems: 0, purchaseCount: 0 };
+          },
+          error: (error) => {
+            console.error('Error fetching monthly purchases:', error);
+            
+            // If error, set monthlyPurchases to 0
+            this.monthlyPurchases = 0;
+            return { totalAmount: 0, totalItems: 0, purchaseCount: 0 };
+          }
+        });
+  }
 
 }

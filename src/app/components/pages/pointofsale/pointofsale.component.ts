@@ -145,19 +145,31 @@ export class PointofsaleComponent {
     }
   }
 
+// Add this method to the component class
+hasZeroPriceItems(): boolean {
+  return this.cartItems.some(item => item.sellingPrice <= 0);
+}
+
   // Modified updatePrice method
-  updatePrice(itemId: number, event: Event) {
-    const target = event.target as HTMLInputElement;
-    const newPrice = parseFloat(target.value);
-    
-    if (!isNaN(newPrice)) {
-      const item = this.cartItems.find(item => item.id === itemId);
-      if (item) {
-        item.sellingPrice = Math.max(0, newPrice);
-        this.updateCartTotals();
-      }
+updatePrice(itemId: number, event: Event) {
+  const target = event.target as HTMLInputElement;
+  const newPrice = parseFloat(target.value);
+  
+  if (!isNaN(newPrice) && newPrice > 0) {
+    const item = this.cartItems.find(item => item.id === itemId);
+    if (item) {
+      item.sellingPrice = newPrice;
+      this.updateCartTotals();
+    }
+  } else {
+    alert('Price must be greater than 0');
+    // Reset to previous valid price
+    const item = this.cartItems.find(item => item.id === itemId);
+    if (item) {
+      (target as HTMLInputElement).value = item.sellingPrice.toString();
     }
   }
+}
 
   calculateChange(): number {
     return this.amountPaid - this.amount2BePaid;
@@ -166,6 +178,7 @@ export class PointofsaleComponent {
 
 
   makeSale(): void {
+    if (this.isProcessing || this.cartItems.some(item => item.sellingPrice <= 0)) return;
     if (this.isProcessing) return;
     this.receiptNumber = `${uuidv4()}`;
     const saleData = {
@@ -387,6 +400,8 @@ export class PointofsaleComponent {
     }
   }
 
+
+ 
 
 }
 
